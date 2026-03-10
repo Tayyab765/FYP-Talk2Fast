@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: talk2fast-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: talk2fast
+
+  gateway:
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
+    container_name: talk2fast-gateway
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - CHATBOT_SERVICE_URL=http://chatbot-service:5002
+      - CAREER_SERVICE_URL=http://career-counselling:3003
+    depends_on:
+      - auth-service
+      - chatbot-service
+      - career-counselling
+
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    container_name: talk2fast-auth
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - MONGODB_URI=mongodb://mongodb:27017/talk2fast
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - FRONTEND_URL=${FRONTEND_URL}
+    depends_on:
+      - mongodb
+
+  chatbot-service:
+    build:
+      context: ./services/chatbot-service
+      dockerfile: Dockerfile
+    container_name: talk2fast-chatbot
+    restart: unless-stopped
+    ports:
+      - "5002:5002"
+    environment:
+      - PORT=5002
+      - MONGODB_URI=mongodb://mongodb:27017/talk2fast
+      - RAG_API_URL=${RAG_API_URL}
+      - AUTH_SERVICE_URL=http://auth-service:5001
+    depends_on:
+      - mongodb
+      - auth-service
+
+  career-counselling:
+    build:
+      context: ./services/career-counselling
+      dockerfile: Dockerfile
+    container_name: talk2fast-career
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/talk2fast
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=gpt-4o-mini
+      - SESSION_EXPIRY_DAYS=30
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - CORS_ORIGIN=*
+    depends_on:
+      - mongodb
+      - auth-service
+
+volumes:
+  mongodb_data:
+    driver: local

@@ -1,0 +1,113 @@
+###
+POST http://localhost:5000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "tayyabattiq908@gmail.com",
+  "password": "tayyab456",
+  "full_name": "Tayyab Attiq"
+}
+### login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "tayyabattiq908@gmail.com",
+  "password": "tayyab456"
+}
+
+### guest login
+POST http://localhost:5000/api/auth/guest-session
+
+### guest login (returning guest)
+POST http://localhost:5000/api/auth/guest-session
+x-guest-id: guest_abc123xyz
+
+
+### get profile
+GET http://localhost:5000/api/auth/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYzNjIzNTM1LCJpYXQiOjE3NjM2MTk5MzUsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYzNjE5OTM1fV0sInNlc3Npb25faWQiOiJlODJiYmRkNS1iYmM5LTQ2OWYtYjY4NS02ZTRjZGM0OTdkNGEiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.d-vif0nzNBt_adD5EYmeDoVT6wqX6RZi1ve6MX55oxk
+
+### forgot password
+POST http://localhost:5000/api/auth/forgot-password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYxMTI3NjYxLCJpYXQiOjE3NjExMjQwNjEsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYxMTI0MDYxfV0sInNlc3Npb25faWQiOiI1MWMyOTk1My0zZDdlLTQyYmMtYjM4My04MTZmMDJkYjBkMDgiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.q3yojt4pw6q18HUfKDE90tbSvPVXZU4Vwy_7xn1s4mU
+
+{
+  "email": "tayyabattiq908@gmail.com"
+}
+
+### logout
+POST http://localhost:5000/api/auth/logout
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYxMDU0NDQxLCJpYXQiOjE3NjEwNTA4NDEsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYxMDUwODQxfV0sIn
+
+
+### send message
+POST http://localhost:5000/api/chatbot/message
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYxMTI2ODI1LCJpYXQiOjE3NjExMjMyMjUsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYxMTIzMjI1fV0sInNlc3Npb25faWQiOiIwZTQyMjIxMi02MDk4LTQ1YTMtYWUzNC0wMzEwNWJjMTdmZjMiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.KJjfUeySxb6owuN_PrcGyJGlgTKfCzYDhBSkTCTTjGc
+
+{
+  "recipient_id": "recipient-id-123",
+  "message": "can youhelp me."
+}
+
+### get conversation history
+GET http://localhost:5000/api/chatbot/history/4a87fcec-bbfa-4c2e-8a30-e12cef082c5d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYxMjE5MzI2LCJpYXQiOjE3NjEyMTU3MjYsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYxMjE1NzI2fV0sInNlc3Npb25faWQiOiI3YWYyNDk0Ny1iNjVjLTRiZDgtOTg1Mi1jNGQ5NzQ0MmIyNzkiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.EA2tv-lobd-mlGVHR28otcnKGUk7WLbwZ1kUEAwlqec
+
+
+### clear conversation history
+DELETE http://localhost:5000/api/chatbot/history/68f899cd298a64f50eee6ebe
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsImtpZCI6IlRabGxpVjdtTm13V1AxVHYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2VydnlkZWdpZGl4eGVkZ25vcGJrLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiI0YTg3ZmNlYy1iYmZhLTRjMmUtOGEzMC1lMTJjZWYwODJjNWQiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzYxMjIyMTg2LCJpYXQiOjE3NjEyMTg1ODYsImVtYWlsIjoidGF5eWFiYXR0aXE5MDhAZ21haWwuY29tIiwicGhvbmUiOiIiLCJhcHBfbWV0YWRhdGEiOnsicHJvdmlkZXIiOiJlbWFpbCIsInByb3ZpZGVycyI6WyJlbWFpbCJdfSwidXNlcl9tZXRhZGF0YSI6eyJlbWFpbCI6InRheXlhYmF0dGlxOTA4QGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJmdWxsX25hbWUiOiJUYXl5YWIgQXR0aXEiLCJwaG9uZV92ZXJpZmllZCI6ZmFsc2UsInN1YiI6IjRhODdmY2VjLWJiZmEtNGMyZS04YTMwLWUxMmNlZjA4MmM1ZCJ9LCJyb2xlIjoiYXV0aGVudGljYXRlZCIsImFhbCI6ImFhbDEiLCJhbXIiOlt7Im1ldGhvZCI6InBhc3N3b3JkIiwidGltZXN0YW1wIjoxNzYxMjE4NTg2fV0sInNlc3Npb25faWQiOiIwNjIwNThlYS1hYzYzLTQ2ZGEtYWY0OC1jNTU2ZWE3YzFkY2IiLCJpc19hbm9ueW1vdXMiOmZhbHNlfQ.Z_3OKad8gw2l37l9_u0aEBH3RqUFf27j-NH9GaQnG4I
+
+
+############################
+### GUEST USER CHATBOT   ###
+############################
+
+### Guest: send message (first request, will create new guest session)
+POST http://localhost:5000/api/chatbot/message
+Content-Type: application/json
+x-guest-id: guest_67d6c77b-7915-416e-9f9c-3f91af9ce7b2
+
+{
+  "recipient_id": "ai-bot",
+  "message": "Hello, I'm a guest user. Can you help me?"
+}
+
+### Guest: send another message (returning guest)
+POST http://localhost:5000/api/chatbot/message
+Content-Type: application/json
+x-guest-id: guest_ce16dcca-54e7-4412-bc25-780cf3cf5977
+
+{
+  "recipient_id": "ai-bot",
+  "message": "What services do you offer?"
+}
+
+### Guest: get conversation history by guest ID
+GET http://localhost:5000/api/chatbot/history/guest_abc123xyz
+x-guest-id: guest_67d6c77b-7915-416e-9f9c-3f91af9ce7b2
+
+### Guest: get conversation history by conversation ID
+GET http://localhost:5000/api/chatbot/history/691f18a5fa3a4e3e8965507e
+x-guest-id: guest_67d6c77b-7915-416e-9f9c-3f91af9ce7b2
+
+
+### Guest: clear conversation history
+DELETE http://localhost:5000/api/chatbot/history/691f18a5fa3a4e3e8965507e
+x-guest-id: guest_67d6c77b-7915-416e-9f9c-3f91af9ce7b2
+
+
+####################
+### Google OAuth ###
+####################
+
+### Step 1: Initiate Google OAuth login
+# This will return a Google OAuth URL - copy it and open in browser
+GET http://localhost:5000/api/auth/google?mobile=true
+### Step 2: After Google login, you'll be redirected to /api/auth/google/callback
+# Then redirected to frontend with tokens in URL
+# Example callback (this is automatic, for testing only):
+GET http://localhost:5000/api/auth/google/callback?code=AUTHORIZATION_CODE

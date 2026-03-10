@@ -1,0 +1,305 @@
+###############################################################################
+# Career Counseling API - Profile Testing for Different Career Paths
+# Test profiles designed to recommend specific fields
+###############################################################################
+
+@baseUrl = http://localhost:5000
+
+###############################################################################
+# PROFILE 1: SOFTWARE ENGINEERING PATH
+# Strong technical skills, loves coding, problem-solving oriented
+###############################################################################
+
+### 1A. Submit Software Engineering Profile
+POST {{baseUrl}}/api/career/profile
+Content-Type: application/json
+
+{
+  "userId": "student_software_001",
+  "answers": {
+    
+    // ===== ACADEMIC BACKGROUND =====
+    "academic_level": "intermediate",
+    "field_of_study": "computer_science",
+    "academic_performance": "excellent",
+    "favorite_subjects": ["computer_science", "mathematics", "physics"],
+    "challenging_subjects": [],
+    
+    // ===== INTEREST ASSESSMENT =====
+    // Strong interest in technology and problem-solving
+    "enjoy_solving_logical_problems": 5,
+    "like_working_with_computers": 5,
+    "enjoy_creative_tasks": 4,
+    "like_analyzing_data": 5,
+    "enjoy_understanding_systems": 5,
+    "prefer_planning_over_execution": 3,
+    "enjoy_helping_people": 3,
+    "curious_about_business": 2,
+    "enjoy_research": 4,
+    "like_learning_new_tools": 5,
+    "hobbies": ["coding", "gaming", "diy"],
+    
+    // ===== SKILLS & STRENGTHS =====
+    // Excellent technical skills
+    "mathematical_skills": 5,
+    "learn_programming_quickly": 5,
+    "communicate_ideas_clearly": 4,
+    "problem_solving_under_pressure": 5,
+    "comfortable_with_data": 5,
+    "lead_team_effectively": 3,
+    "logical_reasoning": 5,
+    "adapt_to_challenges": 5,
+    "attention_to_detail": 5,
+    "creative_problem_solving": 5,
+    "learning_preference": "hands_on",
+    
+    // ===== PERSONALITY TRAITS =====
+    // Independent, practical, enjoys challenges
+    "prefer_working_independently": 4,
+    "enjoy_taking_responsibility": 4,
+    "remain_calm_under_pressure": 5,
+    "like_structured_environments": 3,
+    "comfortable_taking_risks": 4,
+    "prefer_routine": 2,
+    "enjoy_interacting_with_people": 3,
+    "motivated_by_long_term_goals": 5,
+    "like_abstract_problems": 5,
+    "enjoy_practical_work": 5,
+    
+    // ===== WORK STYLE & PREFERENCES =====
+    // Tech environment, continuous learning
+    "preferred_work_environment": "remote",
+    "problem_solving_approach": "logic_data",
+    "career_motivation": "learning_growth",
+    "exciting_work_type": "designing_systems",
+    "continuous_learning_attitude": "enjoy_pursue",
+    "preferred_location": "international",
+    
+    // ===== CAREER INCLINATION =====
+    "appealing_role": "software_engineer"
+  }
+}
+
+
+
+### 1B. Generate Recommendations for Software Engineering Profile
+POST {{baseUrl}}/api/career/recommend
+Content-Type: application/json
+
+{
+  "userId": "student_software_001"
+}
+
+
+###############################################################################
+# PROFILE 2: BBA (BUSINESS ADMINISTRATION) PATH
+# Strong leadership, business-minded, people-oriented
+###############################################################################
+
+### 2A. Submit BBA Profile
+POST {{baseUrl}}/api/career/profile
+Content-Type: application/json
+
+{
+  "userId": "student_bba_002",
+  "answers": {
+    
+    // ===== ACADEMIC BACKGROUND =====
+    "academic_level": "intermediate",
+    "field_of_study": "commerce",
+    "academic_performance": "good",
+    "favorite_subjects": ["business_studies", "economics", "mathematics"],
+    "challenging_subjects": [],
+    
+    // ===== INTEREST ASSESSMENT =====
+    // Strong interest in business, management, and helping people
+    "enjoy_solving_logical_problems": 4,
+    "like_working_with_computers": 3,
+    "enjoy_creative_tasks": 4,
+    "like_analyzing_data": 4,
+    "enjoy_understanding_systems": 3,
+    "prefer_planning_over_execution": 5,
+    "enjoy_helping_people": 5,
+    "curious_about_business": 5,
+    "enjoy_research": 3,
+    "like_learning_new_tools": 4,
+    "hobbies": ["debating", "volunteering", "reading_writing"],
+    
+    // ===== SKILLS & STRENGTHS =====
+    // Strong communication and leadership
+    "mathematical_skills": 4,
+    "learn_programming_quickly": 2,
+    "communicate_ideas_clearly": 5,
+    "problem_solving_under_pressure": 5,
+    "comfortable_with_data": 4,
+    "lead_team_effectively": 5,
+    "logical_reasoning": 4,
+    "adapt_to_challenges": 5,
+    "attention_to_detail": 4,
+    "creative_problem_solving": 4,
+    "learning_preference": "mixed",
+    
+    // ===== PERSONALITY TRAITS =====
+    // People-oriented, leadership qualities, comfortable with risks
+    "prefer_working_independently": 2,
+    "enjoy_taking_responsibility": 5,
+    "remain_calm_under_pressure": 5,
+    "like_structured_environments": 4,
+    "comfortable_taking_risks": 5,
+    "prefer_routine": 2,
+    "enjoy_interacting_with_people": 5,
+    "motivated_by_long_term_goals": 5,
+    "like_abstract_problems": 3,
+    "enjoy_practical_work": 4,
+    
+    // ===== WORK STYLE & PREFERENCES =====
+    // Office environment, people management focus
+    "preferred_work_environment": "office",
+    "problem_solving_approach": "communication",
+    "career_motivation": "leadership",
+    "exciting_work_type": "managing",
+    "continuous_learning_attitude": "enjoy_pursue",
+    "preferred_location": "international",
+    
+    // ===== CAREER INCLINATION =====
+    "appealing_role": "business_manager"
+  }
+}
+
+### 2B. Generate Recommendations for BBA Profile
+POST {{baseUrl}}/api/career/recommend
+Content-Type: application/json
+
+{
+  "userId": "student_bba_002"
+}
+
+
+###############################################################################
+# PROFILE 3: MEDICAL/HEALTHCARE PATH
+# Compassionate, detail-oriented, wants to help people
+###############################################################################
+
+### 3A. Submit Medical Profile
+POST {{baseUrl}}/api/career/profile
+Content-Type: application/json
+
+{
+  "userId": "student_medical_003",
+  "answers": {
+    
+    // ===== ACADEMIC BACKGROUND =====
+    "academic_level": "intermediate",
+    "field_of_study": "science",
+    "academic_performance": "excellent",
+    "favorite_subjects": ["biology", "chemistry", "physics"],
+    "challenging_subjects": [],
+    
+    // ===== INTEREST ASSESSMENT =====
+    // Strong desire to help people and understand biological systems
+    "enjoy_solving_logical_problems": 5,
+    "like_working_with_computers": 2,
+    "enjoy_creative_tasks": 3,
+    "like_analyzing_data": 4,
+    "enjoy_understanding_systems": 5,
+    "prefer_planning_over_execution": 3,
+    "enjoy_helping_people": 5,
+    "curious_about_business": 2,
+    "enjoy_research": 5,
+    "like_learning_new_tools": 3,
+    "hobbies": ["volunteering", "reading_writing", "sports"],
+    
+    // ===== SKILLS & STRENGTHS =====
+    // Strong attention to detail, good memory, patient
+    "mathematical_skills": 4,
+    "learn_programming_quickly": 2,
+    "communicate_ideas_clearly": 5,
+    "problem_solving_under_pressure": 5,
+    "comfortable_with_data": 4,
+    "lead_team_effectively": 4,
+    "logical_reasoning": 5,
+    "adapt_to_challenges": 5,
+    "attention_to_detail": 5,
+    "creative_problem_solving": 4,
+    "learning_preference": "mixed",
+    
+    // ===== PERSONALITY TRAITS =====
+    // Compassionate, calm under pressure, people-oriented
+    "prefer_working_independently": 3,
+    "enjoy_taking_responsibility": 5,
+    "remain_calm_under_pressure": 5,
+    "like_structured_environments": 5,
+    "comfortable_taking_risks": 3,
+    "prefer_routine": 3,
+    "enjoy_interacting_with_people": 5,
+    "motivated_by_long_term_goals": 5,
+    "like_abstract_problems": 4,
+    "enjoy_practical_work": 5,
+    
+    // ===== WORK STYLE & PREFERENCES =====
+    // Lab/clinical environment, helping others
+    "preferred_work_environment": "lab",
+    "problem_solving_approach": "logic_data",
+    "career_motivation": "learning_growth",
+    "exciting_work_type": "analyzing_data",
+    "continuous_learning_attitude": "enjoy_pursue",
+    "preferred_location": "national",
+    
+    // ===== CAREER INCLINATION =====
+    "appealing_role": "researcher"
+  }
+}
+
+### 3B. Generate Recommendations for Medical Profile
+POST {{baseUrl}}/api/career/recommend
+Content-Type: application/json
+
+{
+  "userId": "student_medical_003"
+}
+
+
+###############################################################################
+# BONUS: Get All Profiles for Comparison
+###############################################################################
+
+### Get Software Engineering Profile
+GET {{baseUrl}}/api/career/profile/student_software_001
+
+### Get BBA Profile
+GET {{baseUrl}}/api/career/profile/student_bba_002
+
+### Get Medical Profile
+GET {{baseUrl}}/api/career/profile/student_medical_003
+
+
+###############################################################################
+# PROFILE CHARACTERISTICS SUMMARY
+###############################################################################
+
+# SOFTWARE ENGINEERING PROFILE:
+# ✓ Excellent mathematical & logical reasoning skills (5/5)
+# ✓ Strong programming aptitude (5/5)
+# ✓ Loves solving problems and learning new tech (5/5)
+# ✓ Independent worker, practical approach
+# ✓ Preferred subjects: CS, Math, Physics
+# ✓ Remote work preference, international outlook
+# Expected: Should recommend Computer Science, Software Engineering
+
+# BBA PROFILE:
+# ✓ Strong leadership & communication skills (5/5)
+# ✓ Business-minded, curious about growth (5/5)
+# ✓ People-oriented, enjoys managing (5/5)
+# ✓ Risk-taker, motivated by leadership
+# ✓ Preferred subjects: Business, Economics, Math
+# ✓ Office environment, international outlook
+# Expected: Should recommend BBA, Business Administration, Management
+
+# MEDICAL PROFILE:
+# ✓ Excellent attention to detail (5/5)
+# ✓ Strong desire to help people (5/5)
+# ✓ Interested in understanding biological systems (5/5)
+# ✓ Calm under pressure, compassionate
+# ✓ Preferred subjects: Biology, Chemistry, Physics
+# ✓ Lab environment, research-oriented
+# Expected: Should recommend MBBS, Medicine, Healthcare, Pharmacy, Medical Research
