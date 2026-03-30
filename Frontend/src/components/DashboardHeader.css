@@ -1,0 +1,117 @@
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: white;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.intake-tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  background: var(--bg-input);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 999px;
+}
+
+.dashboard-header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  border-radius: var(--radius);
+}
+
+.icon-btn:hover {
+  background: var(--bg-input);
+  color: var(--text-dark);
+}
+
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  position: relative;
+}
+
+.user-menu:hover {
+  background: var(--bg-input);
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.3;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.user-role {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.user-menu svg {
+  color: var(--text-muted);
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  min-width: 140px;
+  background: #ffffff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 0.35rem 0;
+  z-index: 200;
+}
+
+.user-menu-dropdown button {
+  width: 100%;
+  padding: 0.45rem 0.9rem;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+
+.user-menu-dropdown button:hover {
+  background: var(--bg-input);
+}

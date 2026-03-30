@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Local env (may contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Logs & debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Optional: Vite cache
+.vite/

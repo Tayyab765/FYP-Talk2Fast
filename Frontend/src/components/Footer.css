@@ -1,0 +1,32 @@
+.footer {
+  padding: 1.5rem 2rem;
+  text-align: center;
+  background: var(--sidebar-bg);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.875rem;
+}
+
+.footer-copy {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.footer-links a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+.footer .dot {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
