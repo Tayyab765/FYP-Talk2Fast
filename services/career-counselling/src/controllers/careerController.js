@@ -114,9 +114,13 @@ class CareerController {
           sessionId: result.sessionId,
           recommendations: result.recommendations,
           tokenUsage: {
-            total: result.tokenUsage.total_tokens,
-            prompt: result.tokenUsage.prompt_tokens,
-            completion: result.tokenUsage.completion_tokens
+            total: result?.tokenUsage?.total_tokens ?? 0,
+            prompt: result?.tokenUsage?.prompt_tokens ?? 0,
+            completion: result?.tokenUsage?.completion_tokens ?? 0,
+            evalCount: result?.tokenUsage?.eval_count ?? 0,
+            evalDuration: result?.tokenUsage?.eval_duration ?? 0,
+            promptEvalCount: result?.tokenUsage?.prompt_eval_count ?? 0,
+            promptEvalDuration: result?.tokenUsage?.prompt_eval_duration ?? 0
           }
         }
       });
@@ -152,11 +156,15 @@ class CareerController {
         data: {
           response: result.response,
           tokenUsage: {
-            total: result.tokenUsage.total_tokens,
-            prompt: result.tokenUsage.prompt_tokens,
-            completion: result.tokenUsage.completion_tokens
+            total: result?.tokenUsage?.total_tokens ?? 0,
+            prompt: result?.tokenUsage?.prompt_tokens ?? 0,
+            completion: result?.tokenUsage?.completion_tokens ?? 0,
+            evalCount: result?.tokenUsage?.eval_count ?? 0,
+            evalDuration: result?.tokenUsage?.eval_duration ?? 0,
+            promptEvalCount: result?.tokenUsage?.prompt_eval_count ?? 0,
+            promptEvalDuration: result?.tokenUsage?.prompt_eval_duration ?? 0
           },
-          sessionCost: result.totalSessionCost
+          sessionCost: result?.totalSessionCost ?? 0
         }
       });
       
@@ -221,6 +229,66 @@ class CareerController {
       next(error);
     }
   };
+
+  /**
+   * PUT /api/career/profile
+   * Update user's latest profile
+   * Body: { answers: {...} }
+   */
+  updateUserProfile = async (req, res, next) => {
+    try {
+      const userId = req.user?.id || req.user?.userId || req.user?.guestId;
+
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: 'User authentication required'
+        });
+      }
+
+      const { answers } = req.body;
+      const profile = await this.careerService.updateUserProfile(userId, answers);
+
+      res.status(200).json({
+        success: true,
+        message: 'Profile updated successfully',
+        data: {
+          profileId: profile._id,
+          userId: profile.userId,
+          updatedAt: profile.updatedAt
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  /**
+   * DELETE /api/career/profile
+   * Delete user's latest profile
+   */
+  deleteUserProfile = async (req, res, next) => {
+    try {
+      const userId = req.user?.id || req.user?.userId || req.user?.guestId;
+
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: 'User authentication required'
+        });
+      }
+
+      const result = await this.careerService.deleteUserProfile(userId);
+
+      res.status(200).json({
+        success: true,
+        message: 'Profile deleted successfully',
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
   
   /**
    * GET /api/career/session/active
@@ -263,7 +331,6 @@ class CareerController {
   getSessionAnalytics = async (req, res, next) => {
     try {
       const { sessionId } = req.params;
-      const userId = req.user?.id || req.user?.userId || req.user?.guestId;
       
       const analytics = await this.careerService.getSessionAnalytics(sessionId);
       

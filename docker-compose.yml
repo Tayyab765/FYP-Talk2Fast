@@ -24,7 +24,7 @@ services:
       - PORT=5000
       - AUTH_SERVICE_URL=http://auth-service:5001
       - CHATBOT_SERVICE_URL=http://chatbot-service:5002
-      - CAREER_SERVICE_URL=http://career-counselling:3003
+      - CAREER_SERVICE_URL=http://career-counselling:5003
     depends_on:
       - auth-service
       - chatbot-service
@@ -72,9 +72,9 @@ services:
     container_name: talk2fast-career
     restart: unless-stopped
     ports:
-      - "3003:3003"
+      - "5003:5003"
     environment:
-      - PORT=3003
+      - PORT=5003
       - NODE_ENV=production
       - MONGODB_URI=mongodb://mongodb:27017/talk2fast
       - OPENAI_API_KEY=${OPENAI_API_KEY}

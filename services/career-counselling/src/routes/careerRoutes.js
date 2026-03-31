@@ -30,6 +30,31 @@ router.post(
 );
 
 /**
+ * @route   PUT /api/career/profile
+ * @desc    Update user's latest career profile
+ * @access  Private (authenticated user or guest session)
+ * @body    { answers: {...} }
+ */
+router.put(
+  '/profile',
+  authenticateOrGuest,
+  validateRequest(schemas.profileSubmissionSchema),
+  careerController.updateUserProfile
+);
+
+/**
+ * @route   DELETE /api/career/profile
+ * @desc    Delete user's latest career profile
+ * @access  Private (authenticated user or guest session)
+ */
+router.delete(
+  '/profile',
+  authenticateOrGuest,
+  validateRequest(schemas.profileDeleteSchema),
+  careerController.deleteUserProfile
+);
+
+/**
  * @route   POST /api/career/recommend
  * @desc    Generate AI recommendations for user
  * @access  Private (authenticated user or guest session)
@@ -49,7 +74,7 @@ router.post(
  * @body    { message }
  */
 router.post(
-  '/chat/:sessionId',
+  '/chat/:sessionId([0-9a-fA-F]{24})',
   authenticateOrGuest,
   validateRequest(schemas.chatMessageSchema),
   careerController.sendChatMessage
@@ -62,7 +87,7 @@ router.post(
  * @params  sessionId
  */
 router.get(
-  '/session/:sessionId',
+  '/session/:sessionId([0-9a-fA-F]{24})',
   authenticateOrGuest,
   careerController.getSession
 );

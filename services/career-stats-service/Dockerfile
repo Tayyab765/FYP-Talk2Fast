@@ -4,10 +4,11 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --production
+# Use npm install
+RUN npm install
 
 COPY . .
 
-EXPOSE 5003
+EXPOSE 5004
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]

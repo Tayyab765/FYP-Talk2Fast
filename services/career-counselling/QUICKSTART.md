@@ -25,7 +25,7 @@ cp .env.example .env
 
 Edit `.env` file:
 ```env
-PORT=3003
+PORT=5003
 NODE_ENV=development
 MONGODB_URI=mongodb://localhost:27017/talk2fast
 OPENAI_API_KEY=sk-your-actual-key-here
@@ -69,25 +69,25 @@ docker-compose logs -f career-counselling
 
 ### 1. Health Check
 ```bash
-curl http://localhost:3003/health
+curl http://localhost:5003/health
 ```
 
 ### 2. Get Questions (No Auth Required)
 ```bash
-curl http://localhost:3003/api/career/questions
+curl http://localhost:5003/api/career/questions
 ```
 
 ### 3. Submit Profile (Auth Required)
 
 **With Bearer Token:**
 ```bash
-curl -X POST http://localhost:3003/api/career/profile \
+curl -X POST http://localhost:5003/api/career/profile \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "answers": {
-      "academic_level": "intermediate",
-      "field_of_study": "science",
+      "qualification_type": "local_board",
+      "study_stream": "pre_engineering",
       "academic_performance": "good",
       "favorite_subjects": ["Mathematics", "Physics"],
       "enjoy_solving_logical_problems": 5,
@@ -133,7 +133,7 @@ curl -X POST http://localhost:3003/api/career/profile \
 
 **With Guest Session:**
 ```bash
-curl -X POST http://localhost:3003/api/career/profile \
+curl -X POST http://localhost:5003/api/career/profile \
   -H "x-guest-id: guest_123456789" \
   -H "Content-Type: application/json" \
   -d '{ ... same answers as above ... }'
@@ -141,19 +141,19 @@ curl -X POST http://localhost:3003/api/career/profile \
 
 ### 4. Generate Recommendations
 ```bash
-curl -X POST http://localhost:3003/api/career/recommend \
+curl -X POST http://localhost:5003/api/career/recommend \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 ### 5. Get Active Session
 ```bash
-curl http://localhost:3003/api/career/session/active \
+curl http://localhost:5003/api/career/session/active \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
 ### 6. Send Chat Message
 ```bash
-curl -X POST http://localhost:3003/api/career/chat/SESSION_ID \
+curl -X POST http://localhost:5003/api/career/chat/SESSION_ID \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
@@ -199,9 +199,9 @@ curl -X POST http://localhost:5000/api/career/profile \
 
 ## Service URLs
 
-- **Development**: http://localhost:3003
+- **Development**: http://localhost:5003
 - **Via Gateway**: http://localhost:5000/api/career
-- **Health Check**: http://localhost:3003/health
+- **Health Check**: http://localhost:5003/health
 
 ## Logs Location
 

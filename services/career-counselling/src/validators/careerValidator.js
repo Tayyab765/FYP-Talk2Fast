@@ -9,12 +9,12 @@ import Joi from 'joi';
 const profileSubmissionSchema = Joi.object({
   answers: Joi.object({
     // ===== ACADEMIC BACKGROUND (5 questions) =====
-    academic_level: Joi.string()
-      .valid('matric', 'intermediate', 'bachelors', 'masters', 'other')
+    qualification_type: Joi.string()
+      .valid('local_board', 'alevels', 'other')
       .required(),
     
-    field_of_study: Joi.string()
-      .valid('science', 'arts', 'commerce', 'engineering', 'medical', 'computer_science', 'other')
+    study_stream: Joi.string()
+      .valid('pre_engineering', 'pre_medical', 'ics', 'icom', 'fa', 'alevel_science', 'alevel_business', 'other')
       .required(),
     
     academic_performance: Joi.string()
@@ -109,6 +109,9 @@ const profileSubmissionSchema = Joi.object({
 // Recommendation request validation (no userId needed - from auth context)
 const recommendationRequestSchema = Joi.object({});
 
+// Profile deletion validation (empty body)
+const profileDeleteSchema = Joi.object({});
+
 // Chat message validation
 const chatMessageSchema = Joi.object({
   message: Joi.string()
@@ -166,6 +169,7 @@ export function validateRequest(schema, property = 'body') {
 export const schemas = {
   profileSubmissionSchema,
   recommendationRequestSchema,
+  profileDeleteSchema,
   chatMessageSchema,
   sessionIdSchema
 };

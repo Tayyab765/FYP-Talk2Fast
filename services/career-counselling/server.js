@@ -10,7 +10,7 @@ import { logger } from './src/utils/logger.js';
  * Initializes database connection and starts HTTP server
  */
 
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT || 5003;
 const HOST = process.env.HOST || '0.0.0.0';
 
 // Initialize database connection

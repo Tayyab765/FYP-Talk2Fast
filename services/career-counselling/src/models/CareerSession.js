@@ -81,15 +81,21 @@ const careerSessionSchema = new mongoose.Schema({
     required: true
   },
   
-  // Chat history
+  // Chat history - stores full conversation
   chatHistory: [messageSchema],
   
-  // Token usage tracking
+  // Token usage tracking (kept for compatibility, but not critical for Ollama)
   tokenUsage: {
     total_tokens: { type: Number, default: 0 },
     prompt_tokens: { type: Number, default: 0 },
     completion_tokens: { type: Number, default: 0 },
     estimated_cost: { type: Number, default: 0 }
+  },
+  
+  // Message count tracking
+  messageCount: {
+    type: Number,
+    default: 0
   },
   
   // Session management
@@ -118,7 +124,13 @@ careerSessionSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 // Instance methods
 careerSessionSchema.methods.addMessage = function(role, content, tokenCount = 0) {
-  this.chatHistory.push({ role, content, tokenCount });
+  this.chatHistory.push({ 
+    role, 
+    content, 
+    tokenCount,
+    timestamp: new Date()
+  });
+  this.messageCount += 1;
   this.lastActivityAt = new Date();
   
   if (tokenCount > 0) {
@@ -127,14 +139,15 @@ careerSessionSchema.methods.addMessage = function(role, content, tokenCount = 0)
 };
 
 careerSessionSchema.methods.updateTokenUsage = function(usage) {
-  this.tokenUsage.total_tokens += usage.total_tokens || 0;
-  this.tokenUsage.prompt_tokens += usage.prompt_tokens || 0;
-  this.tokenUsage.completion_tokens += usage.completion_tokens || 0;
-  
-  // Estimate cost (GPT-4 Turbo pricing as of 2024)
-  const promptCost = (usage.prompt_tokens / 1000) * 0.01;
-  const completionCost = (usage.completion_tokens / 1000) * 0.03;
-  this.tokenUsage.estimated_cost += promptCost + completionCost;
+  // Keep method for backward compatibility, but Ollama doesn't require cost tracking
+  if (usage && typeof usage === 'object') {
+    this.tokenUsage.total_tokens += usage.total_tokens || 0;
+    this.tokenUsage.prompt_tokens += usage.prompt_tokens || 0;
+    this.tokenUsage.completion_tokens += usage.completion_tokens || 0;
+    
+    // For Ollama, cost is 0 (local inference)
+    this.tokenUsage.estimated_cost = 0;
+  }
 };
 
 careerSessionSchema.methods.getRecentMessages = function(limit = 10) {

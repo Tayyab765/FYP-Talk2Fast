@@ -2,13 +2,24 @@
 
 AI-powered career counselling service with comprehensive student assessment and personalized degree recommendations.
 
+## 🚀 Now Using Ollama Local AI
+
+This service has been migrated from OpenAI to **Ollama** for local AI inference. See [OLLAMA_INTEGRATION.md](./OLLAMA_INTEGRATION.md) for complete details.
+
+**Benefits:**
+- ✅ Zero API costs
+- ✅ Complete data privacy
+- ✅ Offline capability
+- ✅ Faster response times (after initial load)
+- ✅ No rate limits
+
 ## Features
 
 ### Core Functionality
 - **Student Assessment**: Comprehensive questionnaire covering academic background, interests, skills, personality traits, and career preferences
-- **AI-Powered Recommendations**: OpenAI integration for intelligent degree program suggestions
+- **AI-Powered Recommendations**: Ollama local LLM (qwen2.5:7b) for intelligent degree program suggestions
 - **Follow-up Chat**: Context-aware conversational AI for career guidance
-- **Session Management**: Persistent session storage with chat history and token tracking
+- **Session Management**: Persistent session storage with chat history tracking
 
 ### User Management
 - **Authenticated Users**: JWT-based authentication via Auth Service
@@ -41,14 +52,31 @@ All require either Bearer token or x-guest-id header:
 ## Environment Variables
 
 ```env
-PORT=3003
+PORT=5003
 NODE_ENV=development
 MONGODB_URI=mongodb://mongodb:27017/talk2fast
-OPENAI_API_KEY=your_openai_api_key
-OPENAI_MODEL=gpt-4o-mini
+OLLAMA_API_URL=http://localhost:11434
+OLLAMA_MODEL=qwen2.5:7b
+OLLAMA_TIMEOUT=120000
 SESSION_EXPIRY_DAYS=30
 AUTH_SERVICE_URL=http://auth-service:3001
 CORS_ORIGIN=*
+```
+
+## Prerequisites
+
+### 1. Install Ollama
+- Download from: https://ollama.ai/download
+- Install for your operating system
+
+### 2. Pull the Model
+```bash
+ollama pull qwen2.5:7b
+```
+
+### 3. Verify Setup
+```bash
+npm run verify-ollama
 ```
 
 ## Authentication
@@ -85,10 +113,18 @@ x-guest-id: <guest_session_id>
 
 ### Local Setup
 ```bash
+# 1. Install Ollama and pull model
+ollama pull qwen2.5:7b
+
+# 2. Setup service
 cd services/career-counselling
 npm install
 cp .env.example .env
-# Configure environment variables
+
+# 3. Verify Ollama is ready
+npm run verify-ollama
+
+# 4. Start development server
 npm run dev
 ```
 
@@ -113,20 +149,22 @@ This service was migrated from the monolithic backend with the following enhance
 ```
 Gateway (port 5000)
   ↓
-/api/career/* → Career Counselling Service (port 3003)
+/api/career/* → Career Counselling Service (port 5003)
                   ↓
                 MongoDB (career_profiles, career_sessions)
                   ↓
-                OpenAI API (recommendations & chat)
+                Ollama API (http://localhost:11434)
+                  ↓
+                qwen2.5:7b Model (Local Inference)
 ```
 
-## Token Usage & Cost Tracking
+## Session Tracking
 
-The service tracks OpenAI API usage:
-- Token count per request
-- Cumulative session tokens
-- Estimated cost calculation
-- Available in analytics endpoint
+The service tracks session details:
+- Message count per session
+- Chat history (last 6-10 messages for context)
+- Memory summaries for token efficiency
+- Session status and expiry
 
 ## Session Management
 

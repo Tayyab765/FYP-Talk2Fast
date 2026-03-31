@@ -19,8 +19,8 @@ export function transformAnswersToProfile(userId, answers) {
     
     // Academic Background
     academic_background: {
-      current_education_level: answers.academic_level,
-      field_of_study: answers.field_of_study,
+      qualification_type: answers.qualification_type,
+      study_stream: answers.study_stream,
       academic_performance: answers.academic_performance,
       favorite_subjects: answers.favorite_subjects || [],
       challenging_subjects: answers.challenging_subjects || []
@@ -94,30 +94,29 @@ export function transformAnswersToProfile(userId, answers) {
  * Converts codes and numbers into human-readable descriptions
  */
 export function transformProfileToAIFormat(profile) {
-  // Helper function to format education level
-  const formatEducationLevel = (level) => {
+  // Helper function to format qualification type
+  const formatQualificationType = (type) => {
     const mapping = {
-      'matric': 'Matriculation/O-Levels',
-      'intermediate': 'Intermediate/A-Levels',
-      'bachelors': "Bachelor's Degree",
-      'masters': "Master's Degree",
+      'local_board': 'Matric + Intermediate (FSc/FA/ICS/ICom)',
+      'alevels': 'O-Levels + A-Levels',
       'other': 'Other'
     };
-    return mapping[level] || level;
+    return mapping[type] || type;
   };
   
-  // Helper function to format field of study
-  const formatFieldOfStudy = (field) => {
+  // Helper function to format study stream
+  const formatStudyStream = (stream) => {
     const mapping = {
-      'science': 'General Science (Physics, Chemistry, Biology)',
-      'arts': 'Arts & Humanities',
-      'commerce': 'Commerce & Business Studies',
-      'engineering': 'Engineering',
-      'medical': 'Medical Sciences',
-      'computer_science': 'Computer Science',
+      'pre_engineering': 'Pre-Engineering (Physics, Chemistry, Math)',
+      'pre_medical': 'Pre-Medical (Biology, Physics, Chemistry)',
+      'ics': 'ICS (Computer Science)',
+      'icom': 'ICom (Commerce)',
+      'fa': 'FA (Arts/Humanities)',
+      'alevel_science': 'A-Levels (Sciences)',
+      'alevel_business': 'A-Levels (Business/Commerce)',
       'other': 'Other'
     };
-    return mapping[field] || field;
+    return mapping[stream] || stream;
   };
   
   // Helper function to format performance
@@ -156,11 +155,16 @@ export function transformProfileToAIFormat(profile) {
   };
   
   // Build descriptive profile
+  const qualificationType = profile.academic_background.qualification_type
+    || profile.academic_background.current_education_level;
+  const studyStream = profile.academic_background.study_stream
+    || profile.academic_background.field_of_study;
+
   const descriptiveProfile = {
     // Academic Background
     student_background: {
-      education_level: formatEducationLevel(profile.academic_background.current_education_level),
-      field_of_study: formatFieldOfStudy(profile.academic_background.field_of_study),
+      qualification_type: formatQualificationType(qualificationType),
+      study_stream: formatStudyStream(studyStream),
       academic_performance: formatPerformance(profile.academic_background.academic_performance),
       favorite_subjects: profile.academic_background.favorite_subjects.join(', '),
       challenging_subjects: profile.academic_background.challenging_subjects.join(', ') || 'None specified'
@@ -268,7 +272,8 @@ export function generateProfileSummary(profile) {
   
   const traitsStr = traits.length > 0 ? `, ${traits.slice(0, 2).join(' and ')}` : '';
   
-  const summary = `Student in ${profile.academic_background.field_of_study} with ${profile.academic_background.academic_performance} performance. Interested in: ${interestsStr}. Strong skills: ${skillsStr}${traitsStr}. Prefers ${profile.work_style.preferred_work_environment} environment, motivated by ${profile.work_style.career_motivation}.`;
+  const studyStream = profile.academic_background.study_stream || profile.academic_background.field_of_study;
+  const summary = `Student in ${studyStream} with ${profile.academic_background.academic_performance} performance. Interested in: ${interestsStr}. Strong skills: ${skillsStr}${traitsStr}. Prefers ${profile.work_style.preferred_work_environment} environment, motivated by ${profile.work_style.career_motivation}.`;
   
   return summary;
 }
@@ -277,9 +282,12 @@ export function generateProfileSummary(profile) {
  * Extract key profile features for AI context
  */
 export function extractKeyFeatures(profile) {
+  const qualificationType = profile.academic_background.qualification_type || profile.academic_background.current_education_level;
+  const studyStream = profile.academic_background.study_stream || profile.academic_background.field_of_study;
+
   return {
-    educationLevel: profile.academic_background.current_education_level,
-    fieldOfStudy: profile.academic_background.field_of_study,
+    qualificationType,
+    studyStream,
     performance: profile.academic_background.academic_performance,
     strongInterests: getStrongInterests(profile.interests),
     strongSkills: getStrongSkills(profile.skills),

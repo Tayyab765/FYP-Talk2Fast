@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 // Service URLs
 const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:5001';
 const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:5002';
-const CAREER_SERVICE_URL = process.env.CAREER_SERVICE_URL || 'http://localhost:3003';
+const CAREER_SERVICE_URL = process.env.CAREER_SERVICE_URL || 'http://localhost:5003';
 
 // Proxy configuration
 const proxyOptions = {

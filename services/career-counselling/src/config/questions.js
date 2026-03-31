@@ -27,72 +27,71 @@
 // ========================================================================
 const academicBackgroundQuestions = [
   {
-    id: 'academic_level',
+    id: 'qualification_type',
     category: 'academic_background',
-    question: 'What is your current education level?',
+    question: 'Which qualification have you completed or are currently completing?',
     type: 'single_select',
     required: true,
     options: [
-      { id: 'opt_1', label: 'Matric/O-Levels', value: 'matric' },
-      { id: 'opt_2', label: 'Intermediate/A-Levels', value: 'intermediate' },
-      { id: 'opt_3', label: 'Bachelor\'s Degree', value: 'bachelors' },
-      { id: 'opt_4', label: 'Master\'s Degree', value: 'masters' },
-      { id: 'opt_5', label: 'Other', value: 'other' }
+      { id: 'opt_1', label: 'Matric + Intermediate (FSc/FA/ICS/ICom)', value: 'local_board' },
+      { id: 'opt_2', label: 'O-Levels + A-Levels', value: 'alevels' },
+      { id: 'opt_3', label: 'Other Equivalent Qualification', value: 'other' }
     ]
   },
   {
-    id: 'field_of_study',
+    id: 'study_stream',
     category: 'academic_background',
-    question: 'What is your field of study?',
+    question: 'What was your major study stream in Intermediate / A-Levels?',
     type: 'single_select',
     required: true,
     options: [
-      { id: 'opt_1', label: 'Science (Physics, Chemistry, Biology)', value: 'science' },
-      { id: 'opt_2', label: 'Arts & Humanities', value: 'arts' },
-      { id: 'opt_3', label: 'Commerce & Business', value: 'commerce' },
-      { id: 'opt_4', label: 'Engineering', value: 'engineering' },
-      { id: 'opt_5', label: 'Medical Sciences', value: 'medical' },
-      { id: 'opt_6', label: 'Computer Science', value: 'computer_science' },
-      { id: 'opt_7', label: 'Other', value: 'other' }
+      { id: 'opt_1', label: 'Pre-Engineering (Physics, Chemistry, Math)', value: 'pre_engineering' },
+      { id: 'opt_2', label: 'Pre-Medical (Biology, Physics, Chemistry)', value: 'pre_medical' },
+      { id: 'opt_3', label: 'ICS (Computer Science)', value: 'ics' },
+      { id: 'opt_4', label: 'ICom (Commerce)', value: 'icom' },
+      { id: 'opt_5', label: 'FA (Arts/Humanities)', value: 'fa' },
+      { id: 'opt_6', label: 'A-Levels (Sciences)', value: 'alevel_science' },
+      { id: 'opt_7', label: 'A-Levels (Business/Commerce)', value: 'alevel_business' },
+      { id: 'opt_8', label: 'Other', value: 'other' }
     ]
   },
   {
     id: 'academic_performance',
     category: 'academic_background',
-    question: 'How would you rate your academic performance?',
+    question: 'What is your overall academic performance in your latest qualification?',
     type: 'single_select',
     required: true,
     options: [
-      { id: 'opt_1', label: 'Excellent (85%+)', value: 'excellent' },
-      { id: 'opt_2', label: 'Good (70-84%)', value: 'good' },
-      { id: 'opt_3', label: 'Average (55-69%)', value: 'average' },
-      { id: 'opt_4', label: 'Below Average (<55%)', value: 'below_average' }
+      { id: 'opt_1', label: 'Excellent (85%+ / A & A*)', value: 'excellent' },
+      { id: 'opt_2', label: 'Good (70–84% / B)', value: 'good' },
+      { id: 'opt_3', label: 'Average (55–69% / C)', value: 'average' },
+      { id: 'opt_4', label: 'Below Average (<55% / D or below)', value: 'below_average' }
     ]
   },
   {
     id: 'favorite_subjects',
     category: 'academic_background',
-    question: 'Which subjects did you enjoy most in school? (Select up to 3)',
+    question: 'Which subjects did you enjoy most in your studies? (Select up to 3)',
     type: 'multi_select',
     required: true,
     maxSelections: 3,
     options: [
       { id: 'opt_1', label: 'Mathematics', value: 'mathematics' },
       { id: 'opt_2', label: 'Physics', value: 'physics' },
-      { id: 'opt_3', label: 'Computer Science', value: 'computer_science' },
+      { id: 'opt_3', label: 'Computer Science / IT', value: 'computer_science' },
       { id: 'opt_4', label: 'Biology', value: 'biology' },
-      { id: 'opt_5', label: 'Business Studies', value: 'business_studies' },
-      { id: 'opt_6', label: 'Economics', value: 'economics' },
-      { id: 'opt_7', label: 'Arts / Design', value: 'arts_design' },
-      { id: 'opt_8', label: 'Chemistry', value: 'chemistry' },
+      { id: 'opt_5', label: 'Chemistry', value: 'chemistry' },
+      { id: 'opt_6', label: 'Business Studies', value: 'business_studies' },
+      { id: 'opt_7', label: 'Economics', value: 'economics' },
+      { id: 'opt_8', label: 'Accounting', value: 'accounting' },
       { id: 'opt_9', label: 'English', value: 'english' },
-      { id: 'opt_10', label: 'Social Studies', value: 'social_studies' }
+      { id: 'opt_10', label: 'Arts / Design', value: 'arts_design' }
     ]
   },
   {
     id: 'challenging_subjects',
     category: 'academic_background',
-    question: 'Which subjects do you find challenging?',
+    question: 'Which subjects did you find challenging? (Optional)',
     type: 'multi_select',
     required: false,
     maxSelections: 3,
@@ -103,7 +102,7 @@ const academicBackgroundQuestions = [
       { id: 'opt_4', label: 'Biology', value: 'biology' },
       { id: 'opt_5', label: 'Computer Science', value: 'computer_science' },
       { id: 'opt_6', label: 'English', value: 'english' },
-      { id: 'opt_7', label: 'Social Studies', value: 'social_studies' },
+      { id: 'opt_7', label: 'Accounting / Economics', value: 'commerce_subjects' },
       { id: 'opt_8', label: 'None', value: 'none' }
     ]
   }

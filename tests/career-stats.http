@@ -1,0 +1,38 @@
+### Career Stats Service - HTTP tests
+# Instructions: Start the service (default port 5004) and run these requests with the VSCode REST Client or curl.
+
+### Health check
+GET http://localhost:5004/health
+Accept: application/json
+
+# Expected: 200, JSON { "status": "ok" }
+
+### List all careers (payscale data)
+GET http://localhost:5004/api/careers
+Accept: application/json
+
+# Expected: 200, JSON { success: true, count: <number>, careers: [ ... ] }
+
+### Search careers by query (case-insensitive)
+GET http://localhost:5004/api/careers/search?q=developer
+Accept: application/json
+
+# Expected: 200, JSON { success: true, count: <number>, careers: [ ...matching jobs... ] }
+
+### Search with empty query (should return full list)
+GET http://localhost:5004/api/careers/search
+Accept: application/json
+
+# Expected: 200, same as /api/careers
+
+### Get aggregated salary stats
+GET http://localhost:5004/api/careers/stats
+Accept: application/json
+
+# Expected: 200, JSON { success: true, stats: { total_jobs, min_salary, max_salary, avg_salary, median_salary } }
+
+### Non-existing route (verify 404 or default behavior)
+GET http://localhost:5004/api/unknown
+Accept: application/json
+
+# Expected: 404 or other appropriate status

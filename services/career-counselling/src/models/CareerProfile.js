@@ -13,14 +13,14 @@ const careerProfileSchema = new mongoose.Schema({
   
   // Academic Background
   academic_background: {
-    current_education_level: {
+    qualification_type: {
       type: String,
-      enum: ['matric', 'intermediate', 'bachelors', 'masters', 'other'],
+      enum: ['local_board', 'alevels', 'other'],
       required: true
     },
-    field_of_study: {
+    study_stream: {
       type: String,
-      enum: ['science', 'arts', 'commerce', 'engineering', 'medical', 'computer_science', 'other'],
+      enum: ['pre_engineering', 'pre_medical', 'ics', 'icom', 'fa', 'alevel_science', 'alevel_business', 'other'],
       required: true
     },
     academic_performance: {

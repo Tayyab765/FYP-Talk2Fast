@@ -1,21 +1,18 @@
 import { CareerProfile, CareerSession } from '../models/index.js';
-import { getOpenAIService } from './openai.service.js';
-import { 
-  transformAnswersToProfile, 
-  transformProfileToAIFormat,
-  generateProfileSummary 
-} from '../utils/transformers.js';
+import { getOllamaService } from './ollama.service.js';
+import { transformAnswersToProfile } from '../utils/transformers.js';
 import { logger } from '../utils/logger.js';
 
 /**
  * Career Service
  * Business logic for career counseling module
  * Orchestrates profile management, AI recommendations, and chat sessions
+ * Now using Ollama for local AI inference
  */
 
 class CareerService {
   constructor() {
-    this.openAIService = getOpenAIService();
+    this.aiService = getOllamaService();
   }
   
   /**
@@ -51,7 +48,7 @@ class CareerService {
   
   /**
    * PHASE 3: Generate AI-powered recommendations
-   * Fetches profile, transforms to AI format, calls OpenAI, stores session
+    * Fetches profile, compresses context, calls Ollama, stores session
    */
   async generateRecommendations(userId) {
     try {
@@ -64,17 +61,17 @@ class CareerService {
         throw new Error('No profile found for user. Please complete assessment first.');
       }
       
-      // 2. Transform to AI-friendly descriptive format
-      const aiProfile = transformProfileToAIFormat(profile);
-      
-      // 3. Call OpenAI for recommendations
-      const { recommendations, usage } = await this.openAIService.generateRecommendation(aiProfile);
+      // 2. Call Ollama with compressed profile context (no full JSON payload)
+      const profileForAI = profile.toObject();
+
+      // 3. Generate recommendations
+      const recommendations = await this.aiService.generateRecommendation(profileForAI);
       
       // 4. Generate memory summary
-      const memorySummary = await this.openAIService.generateMemorySummary(aiProfile, recommendations);
+      const memorySummary = await this.aiService.generateMemorySummary(profileForAI, recommendations);
       
       // 5. Calculate session expiry
-      const expiryDays = parseInt(process.env.SESSION_EXPIRY_DAYS) || 30;
+      const expiryDays = Number.parseInt(process.env.SESSION_EXPIRY_DAYS, 10) || 30;
       const expiresAt = new Date();
       expiresAt.setDate(expiresAt.getDate() + expiryDays);
       
@@ -87,28 +84,35 @@ class CareerService {
         memorySummary,
         chatHistory: [],
         tokenUsage: {
-          total_tokens: usage.total_tokens || 0,
-          prompt_tokens: usage.prompt_tokens || 0,
-          completion_tokens: usage.completion_tokens || 0
+          total_tokens: 0,
+          prompt_tokens: 0,
+          completion_tokens: 0,
+          estimated_cost: 0 // Ollama is free (local inference)
         },
+        messageCount: 0,
         status: 'active',
         expiresAt
       });
       
-      // Calculate and store estimated cost
-      session.updateTokenUsage(usage);
       await session.save();
       
       logger.info('Recommendations generated successfully', { 
         userId, 
-        sessionId: session._id,
-        tokenUsage: usage.total_tokens
+        sessionId: session._id
       });
       
       return {
         sessionId: session._id,
         recommendations: recommendations,
-        tokenUsage: usage
+        tokenUsage: {
+          total_tokens: 0,
+          prompt_tokens: 0,
+          completion_tokens: 0,
+          eval_count: 0,
+          eval_duration: 0,
+          prompt_eval_count: 0,
+          prompt_eval_duration: 0
+        }
       };
       
     } catch (error) {
@@ -150,30 +154,35 @@ class CareerService {
         chatHistory: session.getRecentMessages(10)
       };
       
-      // 4. Call OpenAI for response
-      const { response, usage } = await this.openAIService.continueCareerChat(
+      // 4. Call Ollama for response
+      const ollamaResult = await this.aiService.continueCareerChat(
         sessionData,
         userMessage
       );
+      const response = ollamaResult?.response || '';
+      const usage = {
+        eval_count: ollamaResult?.usage?.eval_count ?? 0,
+        eval_duration: ollamaResult?.usage?.eval_duration ?? 0,
+        prompt_eval_count: ollamaResult?.usage?.prompt_eval_count ?? 0,
+        prompt_eval_duration: ollamaResult?.usage?.prompt_eval_duration ?? 0
+      };
       
       // 5. Add AI response to history
-      session.addMessage('assistant', response, usage.completion_tokens);
+      session.addMessage('assistant', response, 0);
       
-      // 6. Update token usage
-      session.updateTokenUsage(usage);
-      
-      // 7. Save session
+      // 6. Save session
       await session.save();
       
       logger.info('Chat message processed successfully', { 
         sessionId,
-        tokenUsage: usage.total_tokens
+        messageCount: session.messageCount
       });
       
       return {
         response,
         tokenUsage: usage,
-        totalSessionCost: session.tokenUsage.estimated_cost
+        messageCount: session.messageCount,
+        totalSessionCost: 0 // Ollama is free
       };
       
     } catch (error) {
@@ -242,6 +251,80 @@ class CareerService {
       logger.error('Failed to retrieve user profile', { 
         userId, 
         error: error.message 
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * Update user's latest profile
+   */
+  async updateUserProfile(userId, answers) {
+    try {
+      const existingProfile = await CareerProfile.getLatestByUserId(userId);
+
+      if (!existingProfile) {
+        throw new Error('No profile found for user');
+      }
+
+      const profileData = transformAnswersToProfile(userId, answers);
+
+      const updatedProfile = await CareerProfile.findByIdAndUpdate(
+        existingProfile._id,
+        profileData,
+        {
+          new: true,
+          runValidators: true
+        }
+      );
+
+      logger.info('Career profile updated successfully', {
+        userId,
+        profileId: existingProfile._id
+      });
+
+      return updatedProfile;
+    } catch (error) {
+      logger.error('Failed to update user profile', {
+        userId,
+        error: error.message
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * Delete user's latest profile and related sessions
+   */
+  async deleteUserProfile(userId) {
+    try {
+      const profile = await CareerProfile.getLatestByUserId(userId);
+
+      if (!profile) {
+        throw new Error('No profile found for user');
+      }
+
+      const deletedSessions = await CareerSession.deleteMany({
+        userId,
+        profileId: profile._id
+      });
+
+      await CareerProfile.findByIdAndDelete(profile._id);
+
+      logger.info('Career profile deleted successfully', {
+        userId,
+        profileId: profile._id,
+        deletedSessions: deletedSessions.deletedCount || 0
+      });
+
+      return {
+        profileId: profile._id,
+        deletedSessions: deletedSessions.deletedCount || 0
+      };
+    } catch (error) {
+      logger.error('Failed to delete user profile', {
+        userId,
+        error: error.message
       });
       throw error;
     }
