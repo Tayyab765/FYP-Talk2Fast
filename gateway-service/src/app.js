@@ -48,9 +48,6 @@ const proxyOptions = {
 app.use('/api/auth', createProxyMiddleware({
   ...proxyOptions,
   target: AUTH_SERVICE_URL,
-  pathRewrite: {
-    '^/': '/api/auth/'  // Add /api/auth prefix back
-  }
 }));
 
 app.use('/api/chatbot', createProxyMiddleware({
