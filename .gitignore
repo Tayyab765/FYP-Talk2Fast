@@ -1,11 +1,9 @@
 # Repo root ignores (keep backend/frontend clean)
 node_modules/
-.env
-.env.*
 
 # In case old paths exist at repo root
-gateway-service/
-services/
+/gateway-service/
+/services/
 
 # Python artifacts if present at root
 __pycache__/

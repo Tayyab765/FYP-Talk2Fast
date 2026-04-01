@@ -4,12 +4,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Local env files (never commit secrets)
-.env
-.env.*
-
 # Embedded Python RAG workspace artifacts
+services/chatbot-service/FYP/
 services/chatbot-service/FYP/.venv/
+services/chatbot-service/FYP/.venv*/
 services/chatbot-service/FYP/vector_store/
 
 
