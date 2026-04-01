@@ -50,20 +50,25 @@ app.use('/api/auth', createProxyMiddleware({
   target: AUTH_SERVICE_URL,
 }));
 
+// Mount strips /api/chatbot; some setups pass "/message", others full "/api/chatbot/message".
+// Never double-prefix or we get 404 on the target service.
+function rewriteServicePath(prefix) {
+  return (path) => {
+    if (path.startsWith(prefix)) return path;
+    return prefix + (path.startsWith('/') ? path : `/${path}`);
+  };
+}
+
 app.use('/api/chatbot', createProxyMiddleware({
   ...proxyOptions,
   target: CHATBOT_SERVICE_URL,
-  pathRewrite: {
-    '^/': '/api/chatbot/'  // Add /api/chatbot prefix back
-  }
+  pathRewrite: rewriteServicePath('/api/chatbot'),
 }));
 
 app.use('/api/career', createProxyMiddleware({
   ...proxyOptions,
   target: CAREER_SERVICE_URL,
-  pathRewrite: {
-    '^/': '/api/career/'  // Add /api/career prefix back
-  }
+  pathRewrite: rewriteServicePath('/api/career'),
 }));
 
 // Body parsing only for non-proxied routes

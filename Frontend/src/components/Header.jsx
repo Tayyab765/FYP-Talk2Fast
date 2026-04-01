@@ -11,37 +11,46 @@ const LOGO_ICON = (
 export default function Header() {
   const location = useLocation()
   const isSignup = location.pathname === '/signup'
+  const isLanding = location.pathname === '/'
 
   return (
     <header className="header">
-      <Link to="/login" className="logo">
+      <Link to={isLanding ? '/' : '/login'} className="logo">
         {LOGO_ICON}
         <div className="logo-text">
           <span className="logo-name">Talk2FAST</span>
           <span className="logo-tagline">ADMISSION ASSISTANT</span>
         </div>
       </Link>
-      <nav className="nav-links">
-        {isSignup ? (
-          <>
-            <Link to="/login">Home</Link>
-            <Link to="/login">Admissions</Link>
-            <Link to="/login">Contact</Link>
-          </>
-        ) : (
-          <>
-            <Link to="/login">How it works</Link>
-            <Link to="/login">Programs</Link>
-            <Link to="/login">Support</Link>
-          </>
-        )}
-      </nav>
-      <Link
-        to={isSignup ? '/login' : '/signup'}
-        className="header-cta"
-      >
-        {isSignup ? 'Login' : 'Apply Now'}
-      </Link>
+      {isLanding ? (
+        <div />
+      ) : (
+        <nav className="nav-links">
+          {isSignup ? (
+            <>
+              <Link to="/login">Home</Link>
+              <Link to="/login">Admissions</Link>
+              <Link to="/login">Contact</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/login">How it works</Link>
+              <Link to="/login">Programs</Link>
+              <Link to="/login">Support</Link>
+            </>
+          )}
+        </nav>
+      )}
+
+      {isLanding ? (
+        <Link to="/login" className="header-cta">
+          Explore more
+        </Link>
+      ) : (
+        <Link to={isSignup ? '/login' : '/signup'} className="header-cta">
+          {isSignup ? 'Login' : 'Apply Now'}
+        </Link>
+      )}
     </header>
   )
 }
