@@ -64,3 +64,65 @@
 .sidebar-link.active .sidebar-link-icon {
   color: white;
 }
+
+/* Button variant (for expandable items) */
+.sidebar-link-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.sidebar-link-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* Sub-navigation */
+.sidebar-subnav {
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.25rem 0;
+}
+
+.sidebar-sublink {
+  display: block;
+  padding: 0.55rem 1.5rem 0.55rem 3.5rem;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  transition: color 0.18s, background 0.18s;
+  position: relative;
+}
+
+.sidebar-sublink::before {
+  content: '';
+  position: absolute;
+  left: 2.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.18s;
+}
+
+.sidebar-sublink:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-sublink:hover::before {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.sidebar-sublink.active {
+  color: white;
+  font-weight: 600;
+}
+
+.sidebar-sublink.active::before {
+  background: var(--primary);
+}
