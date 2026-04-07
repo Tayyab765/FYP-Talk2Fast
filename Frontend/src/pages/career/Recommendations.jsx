@@ -22,6 +22,14 @@ function RefreshIcon() {
     </svg>
   )
 }
+function CloseIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  )
+}
 
 /* ── Match ring ─────────────────────────────────────────────────────────── */
 function MatchRing({ pct, color }) {
@@ -55,50 +63,77 @@ function EligBadge({ status }) {
 /* ── Colour palette (cycles through for cards) ─────────────────────────── */
 const COLOURS = ['#CD2B40', '#7c3aed', '#0d9488', '#d97706', '#6366f1', '#ec4899']
 
-/* ── Recommendation card ────────────────────────────────────────────────── */
-function RecCard({ item, idx }) {
-  const [expanded, setExpanded] = useState(false)
-  const color = item.color || COLOURS[idx % COLOURS.length]
+function formatKey(key) {
+  return String(key)
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, ch => ch.toUpperCase())
+}
 
-  // Normalise response fields — backend may use different key names
-  const degree     = item.degree || item.program || item.title || 'Program'
-  const field      = item.field  || item.category || item.domain || ''
-  const matchPct   = item.match_percentage ?? item.match ?? item.matchScore ?? item.score ?? 80
-  const reasoning  = item.reasoning || item.rationale || item.explanation || ''
+function renderTextValue(value) {
+  if (Array.isArray(value)) {
+    return value.join(', ')
+  }
+  if (value && typeof value === 'object') {
+    return Object.entries(value).map(([k, v]) => `${formatKey(k)}: ${v}`).join(', ')
+  }
+  return String(value)
+}
+
+function normalizeRecommendation(item, idx) {
+  const color = item.color || COLOURS[idx % COLOURS.length]
+  const degree = item.degree_name || item.degree || item.program || item.title || 'Program'
+  const field = item.field || item.category || item.domain || ''
+  const matchPct = item.match_percentage ?? item.match ?? item.matchScore ?? item.score ?? 80
+  const reasoning = item.reasoning || item.rationale || item.explanation || ''
   const eligibility = item.eligibility || 'eligible'
-  const details    = item.details || {}
+  const details = item.details || {}
   const degreeLevel = item.degree_level || item.level || ''
   const careerPaths = Array.isArray(item.career_paths) ? item.career_paths : []
   const careerOutlook = item.career_outlook || {}
   const universities = Array.isArray(item.recommended_universities) ? item.recommended_universities : []
   const skillGap = item.skill_gap_analysis || {}
 
-  const hasExpandedDetails =
-    Boolean(degreeLevel)
-    || Object.keys(careerOutlook).length > 0
-    || careerPaths.length > 0
-    || universities.length > 0
-    || Object.keys(skillGap).length > 0
-    || Object.keys(details).length > 0
-
-  function formatKey(key) {
-    return String(key)
-      .replace(/_/g, ' ')
-      .replace(/\b\w/g, ch => ch.toUpperCase())
+  return {
+    color,
+    degree,
+    field,
+    matchPct,
+    reasoning,
+    eligibility,
+    details,
+    degreeLevel,
+    careerPaths,
+    careerOutlook,
+    universities,
+    skillGap,
   }
+}
 
-  function renderTextValue(value) {
-    if (Array.isArray(value)) {
-      return value.join(', ')
-    }
-    if (value && typeof value === 'object') {
-      return Object.entries(value).map(([k, v]) => `${formatKey(k)}: ${v}`).join(', ')
-    }
-    return String(value)
-  }
+/* ── Recommendation card ────────────────────────────────────────────────── */
+function RecCard({ item, idx, onOpen }) {
+  const normalized = normalizeRecommendation(item, idx)
+  const {
+    color,
+    degree,
+    field,
+    matchPct,
+    reasoning,
+    eligibility,
+  } = normalized
 
   return (
-    <div className="rec-card">
+    <div
+      className="rec-card rec-card-clickable"
+      role="button"
+      tabIndex={0}
+      onClick={() => onOpen(normalized)}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          onOpen(normalized)
+        }
+      }}
+    >
       <div className="rec-card-top">
         <div className="rec-card-left">
           <div className="rec-degree-name">{degree}</div>
@@ -110,99 +145,135 @@ function RecCard({ item, idx }) {
         {reasoning && <p className="rec-reasoning">{reasoning}</p>}
         <EligBadge status={eligibility} />
       </div>
-      {hasExpandedDetails && (
-        <>
-          <button className="rec-expand-btn" onClick={() => setExpanded(v => !v)} type="button">
-            {expanded ? 'Hide Details' : 'View Details'} <ChevronIcon open={expanded} />
-          </button>
-          {expanded && (
-            <div className="rec-detail">
-              {degreeLevel && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Degree Level</div>
-                  <div className="rec-detail-val">{degreeLevel}</div>
-                </div>
-              )}
+      <div className="rec-card-footer">
+        <span className="rec-preview-link">Preview Full Details <ChevronIcon /></span>
+      </div>
+    </div>
+  )
+}
 
-              {careerPaths.length > 0 && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Career Paths</div>
-                  <div className="rec-chip-list">
-                    {careerPaths.map(path => (
-                      <span key={path} className="rec-chip">{path}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
+function RecommendationModal({ item, onClose }) {
+  if (!item) return null
 
-              {Object.keys(careerOutlook).length > 0 && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Career Outlook</div>
-                  <div className="rec-detail-grid">
-                    {Object.entries(careerOutlook).map(([k, v]) => (
-                      <div key={k} className="rec-detail-item">
-                        <span className="rec-detail-key">{formatKey(k)}</span>
-                        <span className="rec-detail-val">{renderTextValue(v)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+  const {
+    color,
+    degree,
+    field,
+    matchPct,
+    reasoning,
+    eligibility,
+    details,
+    degreeLevel,
+    careerPaths,
+    careerOutlook,
+    universities,
+    skillGap,
+  } = item
 
-              {universities.length > 0 && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Recommended Universities</div>
-                  <div className="rec-universities-list">
-                    {universities.map((uni, index) => (
-                      <div className="rec-university-item" key={`${uni.name || 'uni'}-${index}`}>
-                        <div className="rec-detail-val">{uni.name || 'University'}</div>
-                        <div className="rec-university-sub">
-                          {[uni.location, uni.specialization].filter(Boolean).join(' • ')}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+  return (
+    <div className="rec-modal-backdrop" onClick={onClose}>
+      <div className="rec-modal" onClick={event => event.stopPropagation()}>
+        <div className="rec-modal-header">
+          <div>
+            <div className="rec-degree-name">{degree}</div>
+            {field && <span className="rec-field-tag">{field}</span>}
+          </div>
+          <div className="rec-modal-header-right">
+            <MatchRing pct={Math.round(Number(matchPct))} color={color} />
+            <button className="rec-modal-close" type="button" onClick={onClose} aria-label="Close details">
+              <CloseIcon />
+            </button>
+          </div>
+        </div>
 
-              {Object.keys(skillGap).length > 0 && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Skill Gap Analysis</div>
-                  {Object.entries(skillGap).map(([k, v]) => (
-                    <div key={k} className="rec-skill-gap-block">
-                      <div className="rec-detail-key">{formatKey(k)}</div>
-                      {Array.isArray(v)
-                        ? (
-                          <div className="rec-chip-list">
-                            {v.map(value => (
-                              <span key={value} className="rec-chip">{value}</span>
-                            ))}
-                          </div>
-                        )
-                        : <div className="rec-detail-val">{renderTextValue(v)}</div>
-                      }
-                    </div>
-                  ))}
-                </div>
-              )}
+        <div className="rec-modal-body">
+          {reasoning && <p className="rec-reasoning">{reasoning}</p>}
+          <EligBadge status={eligibility} />
 
-              {Object.keys(details).length > 0 && (
-                <div className="rec-detail-section">
-                  <div className="rec-detail-section-title">Additional Details</div>
-                  <div className="rec-detail-grid">
-                    {Object.entries(details).map(([k, v]) => (
-                      <div key={k} className="rec-detail-item">
-                        <span className="rec-detail-key">{formatKey(k)}</span>
-                        <span className="rec-detail-val">{renderTextValue(v)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+          {degreeLevel && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Degree Level</div>
+              <div className="rec-detail-val">{degreeLevel}</div>
             </div>
           )}
-        </>
-      )}
+
+          {careerPaths.length > 0 && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Career Paths</div>
+              <div className="rec-chip-list">
+                {careerPaths.map(path => (
+                  <span key={path} className="rec-chip">{path}</span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {Object.keys(careerOutlook).length > 0 && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Career Outlook</div>
+              <div className="rec-detail-grid">
+                {Object.entries(careerOutlook).map(([k, v]) => (
+                  <div key={k} className="rec-detail-item">
+                    <span className="rec-detail-key">{formatKey(k)}</span>
+                    <span className="rec-detail-val">{renderTextValue(v)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {universities.length > 0 && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Recommended Universities</div>
+              <div className="rec-universities-list">
+                {universities.map((uni, index) => (
+                  <div className="rec-university-item" key={`${uni.name || 'uni'}-${index}`}>
+                    <div className="rec-detail-val">{uni.name || 'University'}</div>
+                    <div className="rec-university-sub">
+                      {[uni.location, uni.specialization].filter(Boolean).join(' • ')}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {Object.keys(skillGap).length > 0 && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Skill Gap Analysis</div>
+              {Object.entries(skillGap).map(([k, v]) => (
+                <div key={k} className="rec-skill-gap-block">
+                  <div className="rec-detail-key">{formatKey(k)}</div>
+                  {Array.isArray(v)
+                    ? (
+                      <div className="rec-chip-list">
+                        {v.map(value => (
+                          <span key={value} className="rec-chip">{value}</span>
+                        ))}
+                      </div>
+                    )
+                    : <div className="rec-detail-val">{renderTextValue(v)}</div>
+                  }
+                </div>
+              ))}
+            </div>
+          )}
+
+          {Object.keys(details).length > 0 && (
+            <div className="rec-detail-section">
+              <div className="rec-detail-section-title">Additional Details</div>
+              <div className="rec-detail-grid">
+                {Object.entries(details).map(([k, v]) => (
+                  <div key={k} className="rec-detail-item">
+                    <span className="rec-detail-key">{formatKey(k)}</span>
+                    <span className="rec-detail-val">{renderTextValue(v)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
@@ -226,6 +297,7 @@ export default function Recommendations() {
   const [regenerating, setRegenerating] = useState(false)
   const [error, setError] = useState(null)
   const [errorType, setErrorType] = useState(null) // 'no_profile' | 'llm_unavailable' | 'no_saved_recommendations' | 'generic'
+  const [selectedRec, setSelectedRec] = useState(null)
 
   const [activeFilter, setActiveFilter] = useState('All Fields')
 
@@ -320,6 +392,17 @@ export default function Recommendations() {
   }
 
   useEffect(() => { loadStored() }, [])
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      if (event.key === 'Escape') {
+        setSelectedRec(null)
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [])
 
   /* ── Dynamic filter list from real data ─────────────────────────────────── */
   const fields = ['All Fields', ...new Set(recs.map(r => r.field || r.category || r.domain).filter(Boolean))]
@@ -468,7 +551,14 @@ export default function Recommendations() {
       {!loading && (
         <div className="rec-cards-grid">
           {filtered.length > 0
-            ? filtered.map((item, i) => <RecCard key={i} item={item} idx={i} />)
+            ? filtered.map((item, i) => (
+              <RecCard
+                key={i}
+                item={item}
+                idx={i}
+                onOpen={(normalized) => setSelectedRec(normalized)}
+              />
+            ))
             : (
               <div className="rec-empty" style={{ gridColumn: '1/-1' }}>
                 <div className="rec-empty-icon">🎓</div>
@@ -479,6 +569,8 @@ export default function Recommendations() {
           }
         </div>
       )}
+
+      <RecommendationModal item={selectedRec} onClose={() => setSelectedRec(null)} />
     </div>
   )
 }

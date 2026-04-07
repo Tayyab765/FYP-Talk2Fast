@@ -2,6 +2,7 @@
 .recommendations-page {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 0.2rem 0.1rem 1rem;
   animation: fadeInUp 0.4s ease;
 }
 
@@ -20,6 +21,7 @@
   font-size: 0.9rem;
   color: var(--text-muted);
   margin-top: 0.25rem;
+  max-width: 760px;
 }
 
 /* --- Tabs --- */
@@ -64,6 +66,7 @@
   margin-bottom: 1.5rem;
   flex-wrap: wrap;
   align-items: center;
+  padding: 0.3rem 0;
 }
 
 .rec-filter-label {
@@ -100,16 +103,26 @@
 
 /* --- Rec Card --- */
 .rec-card {
-  background: white;
+  background: linear-gradient(180deg, #ffffff 0%, #fcfcff 100%);
   border-radius: var(--radius-lg);
+  border: 1px solid #eceef5;
   box-shadow: var(--shadow);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.rec-card-clickable {
+  cursor: pointer;
+}
+
 .rec-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 14px 32px -4px rgb(0 0 0 / 0.13);
+}
+
+.rec-card:focus-visible {
+  outline: 2px solid #f87171;
+  outline-offset: 2px;
 }
 
 .rec-card-top {
@@ -188,6 +201,7 @@
 /* Card body */
 .rec-card-body {
   padding: 1rem 1.5rem;
+  min-height: 114px;
 }
 
 .rec-reasoning {
@@ -195,6 +209,30 @@
   color: var(--text-muted);
   line-height: 1.55;
   margin-bottom: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.rec-card-footer {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--border);
+  background: #fafbff;
+}
+
+.rec-preview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #4b5563;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.rec-card:hover .rec-preview-link {
+  color: var(--primary);
 }
 
 /* Eligibility */
@@ -309,7 +347,7 @@
   align-items: center;
   padding: 0.28rem 0.65rem;
   border-radius: 999px;
-  background: #f3f4f6;
+  background: #eef2ff;
   color: var(--text-dark);
   font-size: 0.78rem;
   font-weight: 600;
@@ -407,6 +445,11 @@
 }
 .rec-refresh-btn:hover { background: #fee2e2; }
 
+.rec-refresh-btn:disabled {
+  opacity: 0.72;
+  cursor: not-allowed;
+}
+
 /* ── CTA button (inside error / empty states) ───────────────────────────── */
 .rec-cta-btn {
   display: inline-flex;
@@ -425,6 +468,11 @@
   transition: background 0.2s;
 }
 .rec-cta-btn:hover { background: var(--primary-dark); }
+
+.rec-cta-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
 
 /* ── LLM offline banner ──────────────────────────────────────────────────── */
 .rec-llm-error {
@@ -457,4 +505,90 @@
 @keyframes pulse-dot {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ── Recommendation modal ──────────────────────────────────────────────── */
+.rec-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1200;
+  backdrop-filter: blur(2px);
+}
+
+.rec-modal {
+  width: min(920px, 100%);
+  max-height: 88vh;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #e8ebf3;
+  box-shadow: 0 24px 54px -18px rgba(0, 0, 0, 0.38);
+  animation: recModalIn 0.2s ease;
+}
+
+@keyframes recModalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.rec-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+  background: #fcfcff;
+}
+
+.rec-modal-header-right {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.rec-modal-close {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  color: #6b7280;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.rec-modal-close:hover {
+  color: #111827;
+  background: #f9fafb;
+}
+
+.rec-modal-body {
+  padding: 1rem 1.1rem 1.2rem;
+  overflow: auto;
+  max-height: calc(88vh - 86px);
+}
+
+@media (max-width: 640px) {
+  .rec-modal {
+    max-height: 94vh;
+    border-radius: 12px;
+  }
+
+  .rec-modal-body {
+    max-height: calc(94vh - 86px);
+  }
+
+  .rec-refresh-btn {
+    position: static;
+    margin-top: 0.7rem;
+    width: fit-content;
+  }
 }
