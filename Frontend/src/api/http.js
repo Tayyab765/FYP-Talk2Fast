@@ -16,10 +16,15 @@ export async function httpJson(path, options = {}) {
     headers.Authorization = `Bearer ${token}`
   }
 
-  const response = await fetch(url, {
-    ...options,
-    headers,
-  })
+  let response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      headers,
+    });
+  } catch (error) {
+    throw new Error('Network error: Unable to connect to backend services.');
+  }
 
   let data = null
   const contentType = response.headers.get('content-type') || ''

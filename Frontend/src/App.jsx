@@ -12,6 +12,7 @@ import CareerProfile from './pages/career/CareerProfile'
 import Recommendations from './pages/career/Recommendations'
 import CareerChat from './pages/career/CareerChat'
 import Payscale from './pages/career/Payscale'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
-        <Route element={<DashboardLayout />}>
+        <Route element={<ErrorBoundary><DashboardLayout /></ErrorBoundary>}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/chat" element={<ChatAssistant />} />
           <Route path="/dashboard/mock-tests" element={<Dashboard />} />
