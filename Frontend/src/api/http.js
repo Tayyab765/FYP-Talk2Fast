@@ -32,9 +32,10 @@ export async function httpJson(path, options = {}) {
   if (isJson) data = await response.json()
 
   if (!response.ok) {
-    const message =
-      (data && (data.error || data.message || data.msg)) ||
-      `Request failed with status ${response.status}`
+    let message = (data && (data.error || data.message || data.msg)) || `Request failed with status ${response.status}`
+    if (data && data.errors && Array.isArray(data.errors)) {
+      message += ': ' + data.errors.map(e => `${e.field || ''} ${e.message || ''}`.trim()).join(', ')
+    }
     throw new Error(message)
   }
 

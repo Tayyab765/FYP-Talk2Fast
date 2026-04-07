@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { generateRecommendations } from '../../api/career'
+import { fetchStoredRecommendations, generateRecommendations } from '../../api/career'
 import './Recommendations.css'
 
 const circumference = 2 * Math.PI * 24
@@ -67,6 +67,35 @@ function RecCard({ item, idx }) {
   const reasoning  = item.reasoning || item.rationale || item.explanation || ''
   const eligibility = item.eligibility || 'eligible'
   const details    = item.details || {}
+  const degreeLevel = item.degree_level || item.level || ''
+  const careerPaths = Array.isArray(item.career_paths) ? item.career_paths : []
+  const careerOutlook = item.career_outlook || {}
+  const universities = Array.isArray(item.recommended_universities) ? item.recommended_universities : []
+  const skillGap = item.skill_gap_analysis || {}
+
+  const hasExpandedDetails =
+    Boolean(degreeLevel)
+    || Object.keys(careerOutlook).length > 0
+    || careerPaths.length > 0
+    || universities.length > 0
+    || Object.keys(skillGap).length > 0
+    || Object.keys(details).length > 0
+
+  function formatKey(key) {
+    return String(key)
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, ch => ch.toUpperCase())
+  }
+
+  function renderTextValue(value) {
+    if (Array.isArray(value)) {
+      return value.join(', ')
+    }
+    if (value && typeof value === 'object') {
+      return Object.entries(value).map(([k, v]) => `${formatKey(k)}: ${v}`).join(', ')
+    }
+    return String(value)
+  }
 
   return (
     <div className="rec-card">
@@ -81,21 +110,95 @@ function RecCard({ item, idx }) {
         {reasoning && <p className="rec-reasoning">{reasoning}</p>}
         <EligBadge status={eligibility} />
       </div>
-      {Object.keys(details).length > 0 && (
+      {hasExpandedDetails && (
         <>
           <button className="rec-expand-btn" onClick={() => setExpanded(v => !v)} type="button">
             {expanded ? 'Hide Details' : 'View Details'} <ChevronIcon open={expanded} />
           </button>
           {expanded && (
             <div className="rec-detail">
-              <div className="rec-detail-grid">
-                {Object.entries(details).map(([k, v]) => (
-                  <div key={k} className="rec-detail-item">
-                    <span className="rec-detail-key">{k}</span>
-                    <span className="rec-detail-val">{v}</span>
+              {degreeLevel && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Degree Level</div>
+                  <div className="rec-detail-val">{degreeLevel}</div>
+                </div>
+              )}
+
+              {careerPaths.length > 0 && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Career Paths</div>
+                  <div className="rec-chip-list">
+                    {careerPaths.map(path => (
+                      <span key={path} className="rec-chip">{path}</span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
+
+              {Object.keys(careerOutlook).length > 0 && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Career Outlook</div>
+                  <div className="rec-detail-grid">
+                    {Object.entries(careerOutlook).map(([k, v]) => (
+                      <div key={k} className="rec-detail-item">
+                        <span className="rec-detail-key">{formatKey(k)}</span>
+                        <span className="rec-detail-val">{renderTextValue(v)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {universities.length > 0 && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Recommended Universities</div>
+                  <div className="rec-universities-list">
+                    {universities.map((uni, index) => (
+                      <div className="rec-university-item" key={`${uni.name || 'uni'}-${index}`}>
+                        <div className="rec-detail-val">{uni.name || 'University'}</div>
+                        <div className="rec-university-sub">
+                          {[uni.location, uni.specialization].filter(Boolean).join(' • ')}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {Object.keys(skillGap).length > 0 && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Skill Gap Analysis</div>
+                  {Object.entries(skillGap).map(([k, v]) => (
+                    <div key={k} className="rec-skill-gap-block">
+                      <div className="rec-detail-key">{formatKey(k)}</div>
+                      {Array.isArray(v)
+                        ? (
+                          <div className="rec-chip-list">
+                            {v.map(value => (
+                              <span key={value} className="rec-chip">{value}</span>
+                            ))}
+                          </div>
+                        )
+                        : <div className="rec-detail-val">{renderTextValue(v)}</div>
+                      }
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {Object.keys(details).length > 0 && (
+                <div className="rec-detail-section">
+                  <div className="rec-detail-section-title">Additional Details</div>
+                  <div className="rec-detail-grid">
+                    {Object.entries(details).map(([k, v]) => (
+                      <div key={k} className="rec-detail-item">
+                        <span className="rec-detail-key">{formatKey(k)}</span>
+                        <span className="rec-detail-val">{renderTextValue(v)}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
         </>
@@ -120,20 +223,80 @@ function SkeletonCards() {
 export default function Recommendations() {
   const [recs, setRecs] = useState([])
   const [loading, setLoading] = useState(true)
+  const [regenerating, setRegenerating] = useState(false)
   const [error, setError] = useState(null)
-  const [errorType, setErrorType] = useState(null) // 'no_profile' | 'llm_unavailable' | 'generic'
+  const [errorType, setErrorType] = useState(null) // 'no_profile' | 'llm_unavailable' | 'no_saved_recommendations' | 'generic'
 
   const [activeFilter, setActiveFilter] = useState('All Fields')
 
-  function load() {
+  function normalizeRecommendationList(payload) {
+    const recommendationData = payload?.data?.recommendations
+      || payload?.data?.recommendationJSON
+      || payload?.recommendations
+      || payload?.recommendationJSON
+
+    if (Array.isArray(recommendationData)) {
+      return recommendationData
+    }
+
+    if (Array.isArray(recommendationData?.top_3_degrees)) {
+      return recommendationData.top_3_degrees
+    }
+
+    return []
+  }
+
+  function loadStored() {
     setLoading(true)
     setError(null)
     setErrorType(null)
+
+    fetchStoredRecommendations()
+      .then(data => {
+        const list = normalizeRecommendationList(data)
+        setRecs(Array.isArray(list) ? list : [])
+
+        if (!list.length) {
+          setErrorType('no_saved_recommendations')
+        }
+
+        setLoading(false)
+      })
+      .catch(err => {
+        const msg = err.message || ''
+        if (msg.toLowerCase().includes('no active session') || msg.includes('404')) {
+          setErrorType('no_saved_recommendations')
+          setRecs([])
+          setError(null)
+        } else if (
+          msg.toLowerCase().includes('ollama') ||
+          msg.toLowerCase().includes('llm') ||
+          msg.toLowerCase().includes('connect') ||
+          msg.toLowerCase().includes('econnrefused') ||
+          msg.toLowerCase().includes('unavailable') ||
+          msg.includes('503') || msg.includes('502')
+        ) {
+          setErrorType('llm_unavailable')
+        } else {
+          setErrorType('generic')
+        }
+        if (!msg.toLowerCase().includes('no active session') && !msg.includes('404')) {
+          setError(msg || 'Something went wrong.')
+        }
+        setLoading(false)
+      })
+  }
+
+  function regenerateWithOllama() {
+    setRegenerating(true)
+    setError(null)
+    setErrorType(null)
+
     generateRecommendations()
       .then(data => {
-        const list = data?.data?.recommendations || []
+        const list = normalizeRecommendationList(data)
         setRecs(Array.isArray(list) ? list : [])
-        setLoading(false)
+        setRegenerating(false)
       })
       .catch(err => {
         const msg = err.message || ''
@@ -152,11 +315,11 @@ export default function Recommendations() {
           setErrorType('generic')
         }
         setError(msg || 'Something went wrong.')
-        setLoading(false)
+        setRegenerating(false)
       })
   }
 
-  useEffect(() => { load() }, [])
+  useEffect(() => { loadStored() }, [])
 
   /* ── Dynamic filter list from real data ─────────────────────────────────── */
   const fields = ['All Fields', ...new Set(recs.map(r => r.field || r.category || r.domain).filter(Boolean))]
@@ -199,8 +362,29 @@ export default function Recommendations() {
           <div className="rec-empty-desc">
             The recommendation engine (Ollama / LLM) is currently offline or unreachable. Please make sure Ollama is running locally, then try again.
           </div>
-          <button className="rec-cta-btn" onClick={load} type="button">
-            <RefreshIcon /> Retry
+          <button className="rec-cta-btn" onClick={regenerateWithOllama} type="button" disabled={regenerating}>
+            <RefreshIcon /> {regenerating ? 'Requesting...' : 'Try Re-recommendation'}
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (!loading && errorType === 'no_saved_recommendations') {
+    return (
+      <div className="recommendations-page">
+        <div className="rec-header">
+          <div className="rec-title">Career Recommendations</div>
+          <div className="rec-subtitle">Load saved recommendations instantly, then request fresh AI recommendations only when needed.</div>
+        </div>
+        <div className="rec-empty" style={{ marginTop: '2rem' }}>
+          <div className="rec-empty-icon">💾</div>
+          <div className="rec-empty-title">No Saved Recommendations Yet</div>
+          <div className="rec-empty-desc">
+            We couldn't find a stored recommendation session for your account. You can request one now from Ollama.
+          </div>
+          <button className="rec-cta-btn" onClick={regenerateWithOllama} type="button" disabled={regenerating}>
+            <RefreshIcon /> {regenerating ? 'Requesting from Ollama...' : 'Get Recommendations from Ollama'}
           </button>
         </div>
       </div>
@@ -217,7 +401,7 @@ export default function Recommendations() {
           <div className="rec-empty-icon">⚠️</div>
           <div className="rec-empty-title">Something Went Wrong</div>
           <div className="rec-empty-desc">{error}</div>
-          <button className="rec-cta-btn" onClick={load} type="button">
+          <button className="rec-cta-btn" onClick={loadStored} type="button">
             <RefreshIcon /> Retry
           </button>
         </div>
@@ -229,10 +413,16 @@ export default function Recommendations() {
     <div className="recommendations-page">
       <div className="rec-header">
         <div className="rec-title">Career Recommendations</div>
-        <div className="rec-subtitle">AI-matched degrees based on your profile and assessment results.</div>
+        <div className="rec-subtitle">Showing your stored recommendations. Request fresh AI output only when you need it.</div>
         {!loading && (
-          <button className="rec-refresh-btn" onClick={load} type="button" title="Regenerate">
-            <RefreshIcon /> Regenerate
+          <button
+            className="rec-refresh-btn"
+            onClick={regenerateWithOllama}
+            type="button"
+            title="Re-recommend with Ollama"
+            disabled={regenerating}
+          >
+            <RefreshIcon /> {regenerating ? 'Requesting...' : 'Re-recommend with Ollama'}
           </button>
         )}
       </div>
@@ -242,12 +432,19 @@ export default function Recommendations() {
         <>
           <div className="rec-loading-notice">
             <span className="rec-loading-dot" />
-            AI is analysing your profile… this may take up to 30 seconds.
+            Loading saved recommendations from backend...
           </div>
           <div className="rec-cards-grid">
             <SkeletonCards />
           </div>
         </>
+      )}
+
+      {!loading && regenerating && (
+        <div className="rec-loading-notice" style={{ marginBottom: '1rem' }}>
+          <span className="rec-loading-dot" />
+          Requesting fresh recommendations from Ollama... this may take up to 30 seconds.
+        </div>
       )}
 
       {/* Filters — only show once we have data */}

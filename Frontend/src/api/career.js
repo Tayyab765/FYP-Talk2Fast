@@ -63,6 +63,15 @@ export async function generateRecommendations() {
   return httpJson('/api/career/recommend', { method: 'POST' })
 }
 
+/**
+ * GET /api/career/session/active
+ * Fetch latest stored recommendation session without invoking Ollama.
+ * Returns session payload containing recommendationJSON when available.
+ */
+export async function fetchStoredRecommendations() {
+  return httpJson('/api/career/session/active', { method: 'GET' })
+}
+
 // ─── Career Chat ────────────────────────────────────────────────────────────
 
 /**

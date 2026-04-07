@@ -116,7 +116,7 @@ export default function CareerProfile() {
     fetchProfile()
       .then(data => {
         // Backend: { success, data: { answers: {...}, ... } }  OR  { success, data: null }
-        setProfile(data?.data?.answers || null)
+        setProfile(data?.data?.answers || data?.data?.profile || data?.data || null)
         setLoading(false)
       })
       .catch(err => {

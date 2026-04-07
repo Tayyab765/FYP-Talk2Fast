@@ -281,6 +281,66 @@
   color: var(--text-dark);
 }
 
+.rec-detail-section {
+  margin-bottom: 1rem;
+}
+
+.rec-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.rec-detail-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.rec-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.rec-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: var(--text-dark);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.rec-universities-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.rec-university-item {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 0.6rem 0.7rem;
+}
+
+.rec-university-sub {
+  margin-top: 0.2rem;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.rec-skill-gap-block {
+  margin-bottom: 0.7rem;
+}
+
+.rec-skill-gap-block:last-child {
+  margin-bottom: 0;
+}
+
 /* Loading skeleton */
 .rec-skeleton-card {
   background: white;

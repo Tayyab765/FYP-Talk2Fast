@@ -1,6 +1,7 @@
 import { getCareerService } from '../services/career.service.js';
 import { getAllQuestions, getCategories } from '../config/questions.js';
 import { logger } from '../utils/logger.js';
+import { transformProfileToAnswers } from '../utils/transformers.js';
 
 /**
  * Career Controller
@@ -219,10 +220,16 @@ class CareerController {
       }
       
       const profile = await this.careerService.getUserProfile(userId);
+      const profileData = profile?.toObject ? profile.toObject() : profile;
+      const answers = transformProfileToAnswers(profileData);
       
       res.status(200).json({
         success: true,
-        data: profile
+        data: {
+          ...profileData,
+          answers,
+          profile: profileData
+        }
       });
       
     } catch (error) {

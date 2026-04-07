@@ -76,7 +76,7 @@ export default function Questionnaire() {
   useEffect(() => {
     fetchQuestions()
       .then(data => {
-        setQuestions(data.data.questions)
+        setQuestions(data?.data?.questions || data?.questions || [])
         setLoading(false)
       })
       .catch(err => {

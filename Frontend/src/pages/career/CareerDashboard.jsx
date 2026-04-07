@@ -102,7 +102,7 @@ export default function CareerDashboard() {
   useEffect(() => {
     fetchProfile()
       .then(data => {
-        const answers = data?.data?.answers
+        const answers = data?.data?.answers || data?.data?.profile || data?.data
         if (answers) {
           const answered = REQUIRED_KEYS.filter(k => answers[k] !== undefined && answers[k] !== null).length
           const pct = Math.round((answered / REQUIRED_KEYS.length) * 100)
