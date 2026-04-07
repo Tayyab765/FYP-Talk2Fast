@@ -1,0 +1,709 @@
+/* ===== Payscale / Salary Insights ===== */
+.payscale-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  animation: fadeInUp 0.4s ease;
+}
+
+/* --- Header --- */
+.pay-header { margin-bottom: 1.5rem; }
+.pay-title { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+.pay-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-top: 0.25rem; }
+
+/* --- Market Tabs --- */
+.pay-tabs {
+  display: flex;
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 0.35rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.pay-tab {
+  padding: 0.55rem 1.4rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pay-tab.active { background: var(--primary); color: white; }
+.pay-tab:not(.active):hover { background: #f3f4f6; color: var(--text-dark); }
+
+/* ─── Aggregate Stats (Total/Avg/Min/Max) ─────────────── */
+.pay-agg-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.pay-agg-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.pay-agg-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.pay-agg-icon { font-size: 1.1rem; }
+
+.pay-agg-value {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* --- Summary Cards --- */
+.pay-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.pay-summary-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.pay-summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--card-color, var(--primary));
+}
+
+.pay-summary-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.pay-summary-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.1;
+  margin-bottom: 0.25rem;
+}
+
+.pay-summary-sub { font-size: 0.78rem; color: var(--text-muted); }
+
+.pay-growth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  background: #f0fdf4;
+  color: #16a34a;
+  margin-top: 0.3rem;
+}
+
+/* ─── 3-Panel Charts Row ──────────────────────────────── */
+.pay-three-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .pay-three-charts { grid-template-columns: 1fr; }
+  .pay-agg-row { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Salary Distribution chart --- */
+.pay-dist-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  height: 160px;
+  margin-top: 0.5rem;
+  padding-left: 2.5rem;
+  position: relative;
+}
+
+.pay-dist-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.pay-dist-count {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  min-height: 14px;
+}
+
+.pay-dist-fill {
+  width: 100%;
+  max-width: 36px;
+  background: #3b82f6;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.4s ease;
+}
+
+.pay-dist-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: center;
+  transform: rotate(-30deg);
+  white-space: nowrap;
+  margin-top: 4px;
+}
+
+.pay-dist-yaxis {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-right: 6px;
+}
+
+.pay-dist-ytick {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  line-height: 1;
+}
+
+/* --- Pie Chart --- */
+.pie-chart-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.pie-svg {
+  width: 140px;
+  height: 140px;
+}
+
+.pie-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pie-legend-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* --- Benefits Coverage (horizontal bars) --- */
+.pay-benefits-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.pay-benefit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.pay-benefit-name {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  width: 52px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.pay-benefit-bar-wrap {
+  flex: 1;
+  height: 14px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pay-benefit-fill {
+  height: 100%;
+  background: #f97316;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.pay-benefit-pct {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 22px;
+  text-align: right;
+}
+
+/* --- Main chart card --- */
+.pay-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.pay-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+}
+
+.pay-card-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+/* Degree bar chart */
+.pay-charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .pay-charts-grid { grid-template-columns: 1fr; }
+}
+
+.pay-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  height: 200px;
+  padding-bottom: 0.5rem;
+}
+
+.pay-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.pay-bar-val { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); }
+
+.pay-bar-fill {
+  width: 100%;
+  max-width: 40px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: height 0.5s ease;
+  cursor: pointer;
+}
+
+.pay-bar-fill:hover { opacity: 0.8; }
+
+.pay-bar-label {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.3;
+  max-width: 54px;
+}
+
+/* Demand trends */
+.pay-demand-list { display: flex; flex-direction: column; gap: 1rem; }
+
+.pay-demand-item { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.pay-demand-row { display: flex; justify-content: space-between; align-items: center; }
+
+.pay-demand-name { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); }
+
+.pay-demand-pct { font-size: 0.8rem; font-weight: 700; color: var(--primary); }
+
+.pay-demand-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pay-demand-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+/* ─── All Careers Section ─────────────────────────────── */
+.careers-section { margin-bottom: 2rem; }
+
+/* Search row */
+.careers-search-row {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  align-items: center;
+}
+
+.careers-search-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  box-shadow: var(--shadow);
+  transition: border-color 0.18s;
+}
+
+.careers-search-wrap:focus-within { border-color: var(--primary); }
+
+.careers-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: none;
+}
+
+.careers-filter-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.9rem;
+  box-shadow: var(--shadow);
+  color: var(--text-muted);
+}
+
+.careers-filter-select {
+  border: none;
+  outline: none;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* List header */
+.careers-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.careers-list-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.careers-page-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Careers grid */
+.careers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 900px) {
+  .careers-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .careers-grid { grid-template-columns: 1fr; }
+}
+
+/* Career Card */
+.career-card-item {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.career-card-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -4px rgb(0 0 0 / 0.12);
+}
+
+.career-card-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.career-card-item-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+}
+
+.career-salary-badge {
+  background: #f3f4f6;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Stats */
+.career-card-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.career-stat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.career-stat-row:last-child { border-bottom: none; }
+
+.career-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.career-stat-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* Growth badges */
+.career-growth-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.career-growth-label {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.career-growth-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.career-growth-badge {
+  font-size: 0.72rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.career-growth-badge.up { background: #f0fdf4; color: #16a34a; }
+.career-growth-badge.down { background: #fef2f2; color: var(--primary); }
+.career-growth-badge strong { font-weight: 700; }
+
+/* View Details button */
+.career-view-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  padding: 0.6rem;
+  background: #1d4ed8;
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  margin-top: auto;
+}
+
+.career-view-btn:hover { background: #1e40af; }
+.career-view-btn:active { transform: scale(0.97); }
+
+/* Empty */
+.careers-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* Pagination */
+.careers-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.pag-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.pag-btn:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); }
+.pag-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.pag-dots { display: flex; gap: 0.35rem; }
+
+.pag-dot {
+  width: 32px; height: 32px;
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  background: white;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.pag-dot:hover { border-color: var(--primary); color: var(--primary); }
+.pag-dot.active { background: var(--primary); border-color: var(--primary); color: white; }
+
+/* ─── Top Roles ─────────────────────────────────────── */
+.pay-roles-section { margin-top: 0; }
+
+.pay-roles-list {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.pay-role-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+
+.pay-role-item:last-child { border-bottom: none; }
+.pay-role-item:hover { background: #fafafa; }
+
+.pay-role-rank {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: #fef2f2;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.pay-role-info { flex: 1; }
+.pay-role-name { font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+.pay-role-sub  { font-size: 0.78rem; color: var(--text-muted); }
+
+.pay-role-salary {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  white-space: nowrap;
+}
+
+/* section title reuse */
+.career-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .pay-summary-cards { grid-template-columns: 1fr 1fr; }
+  .pay-agg-row { grid-template-columns: 1fr 1fr; }
+  .pay-tabs { flex-wrap: wrap; width: 100%; }
+}

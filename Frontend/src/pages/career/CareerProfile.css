@@ -1,0 +1,317 @@
+/* ===== Career Profile ===== */
+.career-profile-page {
+  max-width: 860px;
+  margin: 0 auto;
+  animation: fadeInUp 0.4s ease;
+}
+
+.profile-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.profile-page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.profile-page-subtitle {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+.profile-completion-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border-radius: var(--radius);
+  padding: 0.6rem 1rem;
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.profile-completion-track {
+  width: 120px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.profile-completion-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #CD2B40, #e05570);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.profile-completion-text {
+  color: var(--primary);
+}
+
+/* Grid */
+.profile-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Card */
+.profile-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.profile-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.profile-card-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: #fef2f2;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.profile-edit-btn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.profile-edit-btn:hover { background: #fef2f2; }
+
+.profile-save-btn {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: white;
+  background: var(--primary);
+  border: none;
+  cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.profile-save-btn:hover { background: var(--primary-dark); }
+
+.profile-card-body {
+  padding: 1.25rem 1.5rem;
+}
+
+/* Form Fields */
+.profile-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .profile-fields-grid { grid-template-columns: 1fr; }
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.profile-field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.profile-field-input {
+  padding: 0.6rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  background: var(--bg-input);
+  outline: none;
+  transition: border-color 0.18s, background 0.18s;
+}
+
+.profile-field-input:focus {
+  border-color: var(--primary);
+  background: white;
+}
+
+.profile-field-input.error {
+  border-color: #ef4444;
+}
+
+.profile-field-input[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-error-msg {
+  font-size: 0.74rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+/* Chips / Tags */
+.profile-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--text-muted);
+  transition: all 0.18s;
+  user-select: none;
+}
+
+.profile-chip.selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.profile-chip:hover:not(.selected) {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Skill tags */
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  background: #f0fdfa;
+  color: #0d9488;
+  border: 1.5px solid #99f6e4;
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.skill-tag-remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0d9488;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.skill-tag-remove:hover { opacity: 1; }
+
+.skill-add-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.skill-add-input {
+  flex: 1;
+  padding: 0.5rem 0.85rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.18s;
+}
+
+.skill-add-input:focus { border-color: var(--primary); }
+
+.skill-add-btn {
+  padding: 0.5rem 0.9rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.skill-add-btn:hover { background: var(--primary-dark); }
+
+/* Toast */
+.profile-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #10b981;
+  color: white;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.15);
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 1.8s forwards;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 999;
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(12px); }
+}
