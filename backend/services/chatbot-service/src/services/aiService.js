@@ -26,7 +26,10 @@ export const generateAIResponse = async ({ userId, message, context = [] }) => {
         const res = await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question: message, use_llm: true }),
+            body: JSON.stringify({
+                question: message,
+                use_llm: process.env.RAG_USE_LLM !== 'false',
+            }),
             signal: controller.signal
         });
         clearTimeout(timeout);

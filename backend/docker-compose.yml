@@ -48,6 +48,28 @@ services:
     depends_on:
       - mongodb
 
+  rag-service:
+    build:
+      context: ./services/chatbot-service/FYP
+      dockerfile: Dockerfile
+    container_name: talk2fast-rag
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - RAG_USE_LLM=${RAG_USE_LLM:-false}
+      - RAG_LLM_MODEL=${RAG_LLM_MODEL:-qwen2.5:3b}
+      - RAG_LLM_TEMP=${RAG_LLM_TEMP:-0.2}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - python -c 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8000/health")'
+      interval: 20s
+      timeout: 5s
+      retries: 6
+      start_period: 120s
+
   chatbot-service:
     build:
       context: ./services/chatbot-service
@@ -59,11 +81,13 @@ services:
     environment:
       - PORT=5002
       - MONGODB_URI=mongodb://mongodb:27017/talk2fast
-      - RAG_API_URL=${RAG_API_URL}
+      - RAG_API_URL=${RAG_API_URL:-http://rag-service:8000}
+      - RAG_USE_LLM=${RAG_USE_LLM:-false}
       - AUTH_SERVICE_URL=http://auth-service:5001
     depends_on:
       - mongodb
       - auth-service
+      - rag-service
 
   career-counselling:
     build:
