@@ -220,3 +220,52 @@
   .cc-msg { max-width: 90%; }
   .cc-context-badge { display: none; }
 }
+
+/* ── Error bubble ────────────────────────────────────────────────────────── */
+.cc-bubble-error {
+  background: #fef2f2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fecaca;
+}
+
+/* ── Loading text ───────────────────────────────────────────────────────── */
+.cc-session-loading {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* ── Empty / error state (no session / connection error) ─────────────────── */
+.cc-empty-state {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f9fafb;
+}
+.cc-empty-icon { font-size: 3rem; margin-bottom: 1rem; }
+.cc-empty-title { font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.5rem; }
+.cc-empty-desc { font-size: 0.88rem; color: var(--text-muted); max-width: 360px; line-height: 1.6; }
+
+/* ── CTA button ─────────────────────────────────────────────────────────── */
+.cc-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.cc-cta-btn:hover { background: var(--primary-dark); }

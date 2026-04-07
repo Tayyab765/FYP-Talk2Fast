@@ -1,103 +1,37 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { generateRecommendations } from '../../api/career'
 import './Recommendations.css'
 
-const CATEGORY_DATA = {
-  'Top Matches': [
-    {
-      degree: 'BS Computer Science',
-      field: 'Technology',
-      match: 92,
-      color: '#CD2B40',
-      reasoning: 'Your strong analytical skills, interest in technology, and high mathematics scores closely align with this field.',
-      eligibility: 'eligible',
-      details: { duration: '4 Years', salaryAvg: 'PKR 80k–150k/mo', demand: 'Very High', universities: 'FAST, LUMS, GIKI' },
-    },
-    {
-      degree: 'BS Software Engineering',
-      field: 'Technology',
-      match: 88,
-      color: '#7c3aed',
-      reasoning: 'Problem-solving aptitude combined with your logical reasoning profile makes this an excellent fit.',
-      eligibility: 'eligible',
-      details: { duration: '4 Years', salaryAvg: 'PKR 75k–140k/mo', demand: 'Very High', universities: 'UET, NUST, ITU' },
-    },
-    {
-      degree: 'BS Data Science',
-      field: 'Technology',
-      match: 84,
-      color: '#0d9488',
-      reasoning: 'Your quantitative background and research interest make data science a great emerging field for you.',
-      eligibility: 'conditional',
-      details: { duration: '4 Years', salaryAvg: 'PKR 90k–180k/mo', demand: 'High', universities: 'LUMS, IBA, Habib' },
-    },
-  ],
-  'Alternative Options': [
-    {
-      degree: 'BS Electrical Engineering',
-      field: 'Engineering',
-      match: 76,
-      color: '#d97706',
-      reasoning: 'Strong physics and math results suggest you could excel in EE, though it requires extra dedication.',
-      eligibility: 'eligible',
-      details: { duration: '4 Years', salaryAvg: 'PKR 70k–130k/mo', demand: 'High', universities: 'UET, NUST, PIEAS' },
-    },
-    {
-      degree: 'BBA Marketing',
-      field: 'Business',
-      match: 68,
-      color: '#7c3aed',
-      reasoning: 'Your communication preference score is moderate. Business studies remain a solid alternative.',
-      eligibility: 'eligible',
-      details: { duration: '4 Years', salaryAvg: 'PKR 50k–100k/mo', demand: 'Moderate', universities: 'IBA, LUMS, CBM' },
-    },
-  ],
-  'Emerging Fields': [
-    {
-      degree: 'BS Artificial Intelligence',
-      field: 'Technology',
-      match: 81,
-      color: '#0d9488',
-      reasoning: 'AI is a rapidly growing field that matches your analytical aptitude and innovation interest.',
-      eligibility: 'conditional',
-      details: { duration: '4 Years', salaryAvg: 'PKR 100k–200k/mo', demand: 'Very High', universities: 'NUCES, NUST, KICS' },
-    },
-    {
-      degree: 'BS Cybersecurity',
-      field: 'Technology',
-      match: 77,
-      color: '#CD2B40',
-      reasoning: 'Growing demand for cybersecurity professionals. Your logical profile fits this niche field well.',
-      eligibility: 'eligible',
-      details: { duration: '4 Years', salaryAvg: 'PKR 80k–160k/mo', demand: 'High', universities: 'FAST, GIKI, Air Uni' },
-    },
-  ],
-}
-
-const FILTERS = ['All Fields', 'Technology', 'Engineering', 'Business']
 const circumference = 2 * Math.PI * 24
 
-function EligBadge({ status }) {
-  const map = {
-    eligible: { label: '✓ Eligible', cls: 'eligible' },
-    conditional: { label: '⚠ Conditional', cls: 'conditional' },
-    ineligible: { label: '✗ Not Eligible', cls: 'ineligible' },
-  }
-  const { label, cls } = map[status] || map.eligible
-  return <span className={`rec-eligibility ${cls}`}>{label}</span>
+/* ── Icons ──────────────────────────────────────────────────────────────── */
+function ChevronIcon({ open }) {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+      style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  )
+}
+function RefreshIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+    </svg>
+  )
 }
 
+/* ── Match ring ─────────────────────────────────────────────────────────── */
 function MatchRing({ pct, color }) {
   const dash = circumference * (pct / 100)
   return (
     <div className="rec-ring-wrap">
       <svg className="rec-ring-svg" viewBox="0 0 58 58">
         <circle className="rec-ring-bg" cx="29" cy="29" r="24" fill="none" strokeWidth="5" />
-        <circle
-          className="rec-ring-fill"
-          cx="29" cy="29" r="24" fill="none" strokeWidth="5"
-          stroke={color}
-          strokeDasharray={`${dash} ${circumference}`}
-        />
+        <circle className="rec-ring-fill" cx="29" cy="29" r="24" fill="none" strokeWidth="5"
+          stroke={color} strokeDasharray={`${dash} ${circumference}`} />
       </svg>
       <div className="rec-ring-label">
         <span className="rec-ring-pct">{pct}%</span>
@@ -107,49 +41,70 @@ function MatchRing({ pct, color }) {
   )
 }
 
-function ChevronIcon({ open }) {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-      style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-      <polyline points="6 9 12 15 18 9" />
-    </svg>
-  )
+/* ── Eligibility badge ─────────────────────────────────────────────────── */
+function EligBadge({ status }) {
+  const map = {
+    eligible:    { label: '✓ Eligible',      cls: 'eligible' },
+    conditional: { label: '⚠ Conditional',   cls: 'conditional' },
+    ineligible:  { label: '✗ Not Eligible',  cls: 'ineligible' },
+  }
+  const { label, cls } = map[status] || map.eligible
+  return <span className={`rec-eligibility ${cls}`}>{label}</span>
 }
 
-function RecCard({ item }) {
+/* ── Colour palette (cycles through for cards) ─────────────────────────── */
+const COLOURS = ['#CD2B40', '#7c3aed', '#0d9488', '#d97706', '#6366f1', '#ec4899']
+
+/* ── Recommendation card ────────────────────────────────────────────────── */
+function RecCard({ item, idx }) {
   const [expanded, setExpanded] = useState(false)
+  const color = item.color || COLOURS[idx % COLOURS.length]
+
+  // Normalise response fields — backend may use different key names
+  const degree     = item.degree || item.program || item.title || 'Program'
+  const field      = item.field  || item.category || item.domain || ''
+  const matchPct   = item.match_percentage ?? item.match ?? item.matchScore ?? item.score ?? 80
+  const reasoning  = item.reasoning || item.rationale || item.explanation || ''
+  const eligibility = item.eligibility || 'eligible'
+  const details    = item.details || {}
+
   return (
     <div className="rec-card">
       <div className="rec-card-top">
         <div className="rec-card-left">
-          <div className="rec-degree-name">{item.degree}</div>
-          <span className="rec-field-tag">{item.field}</span>
+          <div className="rec-degree-name">{degree}</div>
+          {field && <span className="rec-field-tag">{field}</span>}
         </div>
-        <MatchRing pct={item.match} color={item.color} />
+        <MatchRing pct={Math.round(Number(matchPct))} color={color} />
       </div>
       <div className="rec-card-body">
-        <p className="rec-reasoning">{item.reasoning}</p>
-        <EligBadge status={item.eligibility} />
+        {reasoning && <p className="rec-reasoning">{reasoning}</p>}
+        <EligBadge status={eligibility} />
       </div>
-      <button className="rec-expand-btn" onClick={() => setExpanded((v) => !v)} type="button">
-        {expanded ? 'Hide Details' : 'View Details'} <ChevronIcon open={expanded} />
-      </button>
-      {expanded && (
-        <div className="rec-detail">
-          <div className="rec-detail-grid">
-            {Object.entries(item.details).map(([k, v]) => (
-              <div key={k} className="rec-detail-item">
-                <span className="rec-detail-key">{k}</span>
-                <span className="rec-detail-val">{v}</span>
+      {Object.keys(details).length > 0 && (
+        <>
+          <button className="rec-expand-btn" onClick={() => setExpanded(v => !v)} type="button">
+            {expanded ? 'Hide Details' : 'View Details'} <ChevronIcon open={expanded} />
+          </button>
+          {expanded && (
+            <div className="rec-detail">
+              <div className="rec-detail-grid">
+                {Object.entries(details).map(([k, v]) => (
+                  <div key={k} className="rec-detail-item">
+                    <span className="rec-detail-key">{k}</span>
+                    <span className="rec-detail-val">{v}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   )
 }
 
+/* ── Skeleton ───────────────────────────────────────────────────────────── */
 function SkeletonCards() {
   return Array.from({ length: 3 }).map((_, i) => (
     <div key={i} className="rec-skeleton-card">
@@ -161,67 +116,172 @@ function SkeletonCards() {
   ))
 }
 
+/* ── Main Component ─────────────────────────────────────────────────────── */
 export default function Recommendations() {
-  const [activeTab, setActiveTab] = useState('Top Matches')
-  const [activeFilter, setActiveFilter] = useState('All Fields')
-  const [loading] = useState(false)
+  const [recs, setRecs] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [errorType, setErrorType] = useState(null) // 'no_profile' | 'llm_unavailable' | 'generic'
 
-  const allItems = CATEGORY_DATA[activeTab] || []
+  const [activeFilter, setActiveFilter] = useState('All Fields')
+
+  function load() {
+    setLoading(true)
+    setError(null)
+    setErrorType(null)
+    generateRecommendations()
+      .then(data => {
+        const list = data?.data?.recommendations || []
+        setRecs(Array.isArray(list) ? list : [])
+        setLoading(false)
+      })
+      .catch(err => {
+        const msg = err.message || ''
+        if (msg.toLowerCase().includes('profile') || msg.toLowerCase().includes('not found') || msg.includes('404')) {
+          setErrorType('no_profile')
+        } else if (
+          msg.toLowerCase().includes('ollama') ||
+          msg.toLowerCase().includes('llm') ||
+          msg.toLowerCase().includes('connect') ||
+          msg.toLowerCase().includes('econnrefused') ||
+          msg.toLowerCase().includes('unavailable') ||
+          msg.includes('503') || msg.includes('502')
+        ) {
+          setErrorType('llm_unavailable')
+        } else {
+          setErrorType('generic')
+        }
+        setError(msg || 'Something went wrong.')
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => { load() }, [])
+
+  /* ── Dynamic filter list from real data ─────────────────────────────────── */
+  const fields = ['All Fields', ...new Set(recs.map(r => r.field || r.category || r.domain).filter(Boolean))]
   const filtered = activeFilter === 'All Fields'
-    ? allItems
-    : allItems.filter((item) => item.field === activeFilter)
+    ? recs
+    : recs.filter(r => (r.field || r.category || r.domain) === activeFilter)
+
+  /* ── Error States ───────────────────────────────────────────────────────── */
+  if (!loading && errorType === 'no_profile') {
+    return (
+      <div className="recommendations-page">
+        <div className="rec-header">
+          <div className="rec-title">Career Recommendations</div>
+          <div className="rec-subtitle">AI-matched degrees based on your profile and assessment results.</div>
+        </div>
+        <div className="rec-empty" style={{ marginTop: '2rem' }}>
+          <div className="rec-empty-icon">📋</div>
+          <div className="rec-empty-title">Complete Your Assessment First</div>
+          <div className="rec-empty-desc">
+            You haven't submitted a career profile yet. Complete the aptitude questionnaire so our AI can generate personalised recommendations for you.
+          </div>
+          <Link to="/dashboard/career/questionnaire" className="rec-cta-btn">
+            Start Questionnaire →
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  if (!loading && errorType === 'llm_unavailable') {
+    return (
+      <div className="recommendations-page">
+        <div className="rec-header">
+          <div className="rec-title">Career Recommendations</div>
+          <div className="rec-subtitle">AI-matched degrees based on your profile and assessment results.</div>
+        </div>
+        <div className="rec-empty rec-llm-error" style={{ marginTop: '2rem' }}>
+          <div className="rec-empty-icon">🤖</div>
+          <div className="rec-empty-title">AI Service Temporarily Unavailable</div>
+          <div className="rec-empty-desc">
+            The recommendation engine (Ollama / LLM) is currently offline or unreachable. Please make sure Ollama is running locally, then try again.
+          </div>
+          <button className="rec-cta-btn" onClick={load} type="button">
+            <RefreshIcon /> Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  if (!loading && errorType === 'generic') {
+    return (
+      <div className="recommendations-page">
+        <div className="rec-header">
+          <div className="rec-title">Career Recommendations</div>
+        </div>
+        <div className="rec-empty" style={{ marginTop: '2rem' }}>
+          <div className="rec-empty-icon">⚠️</div>
+          <div className="rec-empty-title">Something Went Wrong</div>
+          <div className="rec-empty-desc">{error}</div>
+          <button className="rec-cta-btn" onClick={load} type="button">
+            <RefreshIcon /> Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="recommendations-page">
       <div className="rec-header">
         <div className="rec-title">Career Recommendations</div>
         <div className="rec-subtitle">AI-matched degrees based on your profile and assessment results.</div>
+        {!loading && (
+          <button className="rec-refresh-btn" onClick={load} type="button" title="Regenerate">
+            <RefreshIcon /> Regenerate
+          </button>
+        )}
       </div>
 
-      {/* Category Tabs */}
-      <div className="rec-tabs">
-        {Object.keys(CATEGORY_DATA).map((tab) => (
-          <button
-            key={tab}
-            className={`rec-tab${activeTab === tab ? ' active' : ''}`}
-            onClick={() => setActiveTab(tab)}
-            type="button"
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
+      {/* Loading state */}
+      {loading && (
+        <>
+          <div className="rec-loading-notice">
+            <span className="rec-loading-dot" />
+            AI is analysing your profile… this may take up to 30 seconds.
+          </div>
+          <div className="rec-cards-grid">
+            <SkeletonCards />
+          </div>
+        </>
+      )}
 
-      {/* Filter Bar */}
-      <div className="rec-filter-bar">
-        <span className="rec-filter-label">Filter by:</span>
-        {FILTERS.map((f) => (
-          <button
-            key={f}
-            className={`rec-filter-btn${activeFilter === f ? ' active' : ''}`}
-            onClick={() => setActiveFilter(f)}
-            type="button"
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+      {/* Filters — only show once we have data */}
+      {!loading && recs.length > 0 && (
+        <div className="rec-filter-bar">
+          <span className="rec-filter-label">Filter by:</span>
+          {fields.map(f => (
+            <button
+              key={f}
+              className={`rec-filter-btn${activeFilter === f ? ' active' : ''}`}
+              onClick={() => setActiveFilter(f)}
+              type="button"
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Cards */}
-      <div className="rec-cards-grid">
-        {loading
-          ? <SkeletonCards />
-          : filtered.length > 0
-            ? filtered.map((item) => <RecCard key={item.degree} item={item} />)
+      {!loading && (
+        <div className="rec-cards-grid">
+          {filtered.length > 0
+            ? filtered.map((item, i) => <RecCard key={i} item={item} idx={i} />)
             : (
               <div className="rec-empty" style={{ gridColumn: '1/-1' }}>
                 <div className="rec-empty-icon">🎓</div>
-                <div className="rec-empty-title">No results found</div>
-                <div className="rec-empty-desc">Try a different filter or category.</div>
+                <div className="rec-empty-title">No results for this filter</div>
+                <div className="rec-empty-desc">Try selecting a different field.</div>
               </div>
             )
-        }
-      </div>
+          }
+        </div>
+      )}
     </div>
   )
 }

@@ -321,3 +321,80 @@
   .rec-cards-grid { grid-template-columns: 1fr; }
   .rec-tabs { flex-wrap: wrap; width: 100%; }
 }
+
+/* ── Header row with refresh button ─────────────────────────────────────── */
+.rec-header {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.rec-refresh-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.rec-refresh-btn:hover { background: #fee2e2; }
+
+/* ── CTA button (inside error / empty states) ───────────────────────────── */
+.rec-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.25rem;
+  padding: 0.65rem 1.4rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.rec-cta-btn:hover { background: var(--primary-dark); }
+
+/* ── LLM offline banner ──────────────────────────────────────────────────── */
+.rec-llm-error {
+  border: 2px dashed #fca5a5;
+  border-radius: var(--radius-lg);
+  background: #fef2f2;
+}
+
+/* ── Loading notice ─────────────────────────────────────────────────────── */
+.rec-loading-notice {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: #7c3aed;
+  font-weight: 500;
+  background: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.rec-loading-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #7c3aed;
+  animation: pulse-dot 1s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}

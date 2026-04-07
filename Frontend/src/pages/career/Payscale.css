@@ -707,3 +707,29 @@
   .pay-agg-row { grid-template-columns: 1fr 1fr; }
   .pay-tabs { flex-wrap: wrap; width: 100%; }
 }
+
+/* ── Error banner ────────────────────────────────────────────────────────── */
+.careers-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* ── Skeleton shimmer ───────────────────────────────────────────────────── */
+.skeleton-line {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

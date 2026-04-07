@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:5001';
 const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:5002';
 const CAREER_SERVICE_URL = process.env.CAREER_SERVICE_URL || 'http://localhost:5003';
+const CAREER_STATS_URL = process.env.CAREER_STATS_URL || 'http://localhost:5004';
 
 // Proxy configuration
 const proxyOptions = {
@@ -65,6 +66,13 @@ app.use('/api/chatbot', createProxyMiddleware({
   pathRewrite: rewriteServicePath('/api/chatbot'),
 }));
 
+// /api/careers MUST be registered before /api/career — Express matches the first prefix
+app.use('/api/careers', createProxyMiddleware({
+  ...proxyOptions,
+  target: CAREER_STATS_URL,
+  pathRewrite: rewriteServicePath('/api/careers'),
+}));
+
 app.use('/api/career', createProxyMiddleware({
   ...proxyOptions,
   target: CAREER_SERVICE_URL,
@@ -85,7 +93,8 @@ app.get('/', (req, res) => res.json({
   routes: {
     auth: '/api/auth',
     chatbot: '/api/chatbot',
-    career: '/api/career'
+    career: '/api/career',
+    careers: '/api/careers'
   }
 }));
 
@@ -95,7 +104,8 @@ app.get('/health', (req, res) => res.json({
   services: {
     auth: AUTH_SERVICE_URL,
     chatbot: CHATBOT_SERVICE_URL,
-    career: CAREER_SERVICE_URL
+    career: CAREER_SERVICE_URL,
+    careerStats: CAREER_STATS_URL
   }
 }));
 

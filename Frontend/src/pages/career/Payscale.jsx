@@ -1,138 +1,73 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { fetchCareers, fetchCareerStats } from '../../api/career'
 import './Payscale.css'
 
-/* ── Static market data ─────────────────────────────────────────── */
-const MARKET_DATA = {
-  Local: {
-    totalCareers: 97,
-    avgSalary: 'PKR 684k',
-    minSalary: 'PKR 29k',
-    maxSalary: 'PKR 3.5M',
-    summary: [
-      { label: 'Avg Starting Salary', value: 'PKR 65k', sub: 'per month', color: '#CD2B40', growth: '+12%' },
-      { label: 'Mid-Level Avg', value: 'PKR 130k', sub: 'per month', color: '#7c3aed', growth: '+18%' },
-      { label: 'Senior Avg', value: 'PKR 250k', sub: 'per month', color: '#0d9488', growth: '+22%' },
-      { label: 'Freelance Potential', value: 'PKR 400k', sub: 'per month', color: '#d97706', growth: '+35%' },
-    ],
-    bars: [
-      { label: 'CS / SE', value: 140, max: 200, color: '#CD2B40' },
-      { label: 'Data Sci', value: 160, max: 200, color: '#7c3aed' },
-      { label: 'AI / ML', value: 180, max: 200, color: '#0d9488' },
-      { label: 'Cyber Sec', value: 155, max: 200, color: '#d97706' },
-      { label: 'Elect Eng', value: 110, max: 200, color: '#6366f1' },
-      { label: 'BBA', value: 85, max: 200, color: '#ec4899' },
-    ],
-    demand: [
-      { field: 'AI / Machine Learning', pct: 94, color: '#0d9488' },
-      { field: 'Cybersecurity', pct: 88, color: '#CD2B40' },
-      { field: 'Data Science', pct: 82, color: '#7c3aed' },
-      { field: 'Cloud Engineering', pct: 79, color: '#d97706' },
-      { field: 'Software Engineering', pct: 91, color: '#6366f1' },
-    ],
-    roles: [
-      { name: 'AI / ML Engineer', sub: 'AI & Data Science', salary: 'PKR 180k–300k' },
-      { name: 'Full Stack Developer', sub: 'Software Engineering', salary: 'PKR 120k–220k' },
-      { name: 'Cybersecurity Analyst', sub: 'Information Security', salary: 'PKR 130k–250k' },
-      { name: 'Data Analyst', sub: 'Data Science', salary: 'PKR 100k–180k' },
-      { name: 'Cloud Architect', sub: 'Cloud / DevOps', salary: 'PKR 150k–280k' },
-    ],
-    salaryDist: [
-      { range: '0–300K', count: 19 },
-      { range: '300k–600k', count: 25 },
-      { range: '600k–1M', count: 36 },
-      { range: '1M–2M', count: 14 },
-      { range: '2M+', count: 3 },
-    ],
-    genderSplit: { male: 78, female: 22 },
-    benefits: [
-      { name: 'Medical', pct: 62 },
-      { name: 'Dental', pct: 18 },
-      { name: 'Vision', pct: 14 },
-      { name: 'None', pct: 35 },
-    ],
-    careers: [
-      { title: 'Finance Manager', badge: 'PKR 1m', avgSalary: 'Rs 1,196,663 / year', gender: 'M: 86.9% / F: 13.1%', growth: { entry: '▼44%', early: '▼35%', mid: '▲9%' }, field: 'Business' },
-      { title: 'Computer Operator', badge: 'PKR 189k', avgSalary: 'Rs 188,571 / year', gender: 'M: 90.9% / F: 9.1%', growth: { entry: '▲19%', early: '▲13%', mid: '▲245%' }, field: 'Technology' },
-      { title: 'Front End Developer / Engineer', badge: 'PKR 650k', avgSalary: 'Rs 650,256 / year', gender: 'M: 90.4% / F: 9.6%', growth: { entry: '▲46%', early: '▲3%', mid: '▲131%' }, field: 'Technology' },
-      { title: 'Electrical Engineer', badge: 'PKR 479k', avgSalary: 'Rs 479,200 / year', gender: 'M: 95.1% / F: 4.9%', growth: { entry: '▲22%', early: '▲15%', mid: '▲88%' }, field: 'Engineering' },
-      { title: 'Registered Nurse (RN)', badge: 'PKR 121k', avgSalary: 'Rs 121,356 / year', gender: 'M: 28.4% / F: 71.6%', growth: { entry: '▲12%', early: '▲18%', mid: '▲42%' }, field: 'Healthcare' },
-      { title: 'Design Architect', badge: 'PKR 614k', avgSalary: 'Rs 614,451 / year', gender: 'M: 72.1% / F: 27.9%', growth: { entry: '▼5%', early: '▲24%', mid: '▲96%' }, field: 'Design' },
-      { title: 'Software Engineer', badge: 'PKR 820k', avgSalary: 'Rs 820,000 / year', gender: 'M: 89.2% / F: 10.8%', growth: { entry: '▲32%', early: '▲28%', mid: '▲165%' }, field: 'Technology' },
-      { title: 'Data Scientist', badge: 'PKR 950k', avgSalary: 'Rs 950,000 / year', gender: 'M: 82.4% / F: 17.6%', growth: { entry: '▲55%', early: '▲40%', mid: '▲210%' }, field: 'Technology' },
-      { title: 'HR Manager', badge: 'PKR 380k', avgSalary: 'Rs 380,000 / year', gender: 'M: 44.6% / F: 55.4%', growth: { entry: '▲8%', early: '▲12%', mid: '▲65%' }, field: 'Business' },
-      { title: 'Mechanical Engineer', badge: 'PKR 510k', avgSalary: 'Rs 510,000 / year', gender: 'M: 94.7% / F: 5.3%', growth: { entry: '▲18%', early: '▲22%', mid: '▲74%' }, field: 'Engineering' },
-      { title: 'Business Analyst', badge: 'PKR 730k', avgSalary: 'Rs 730,000 / year', gender: 'M: 67.2% / F: 32.8%', growth: { entry: '▲29%', early: '▲35%', mid: '▲120%' }, field: 'Business' },
-      { title: 'Graphic Designer', badge: 'PKR 290k', avgSalary: 'Rs 290,000 / year', gender: 'M: 58.3% / F: 41.7%', growth: { entry: '▲10%', early: '▲15%', mid: '▲80%' }, field: 'Design' },
-    ],
-  },
-  International: {
-    totalCareers: 97,
-    avgSalary: '$95k',
-    minSalary: '$28k',
-    maxSalary: '$450k',
-    summary: [
-      { label: 'Avg Starting Salary', value: '$65k', sub: 'per year (USD)', color: '#CD2B40', growth: '+8%' },
-      { label: 'Mid-Level Avg', value: '$110k', sub: 'per year (USD)', color: '#7c3aed', growth: '+11%' },
-      { label: 'Senior Avg', value: '$160k', sub: 'per year (USD)', color: '#0d9488', growth: '+14%' },
-      { label: 'Top Percentile', value: '$250k+', sub: 'per year (USD)', color: '#d97706', growth: '+20%' },
-    ],
-    bars: [
-      { label: 'CS / SE', value: 150, max: 200, color: '#CD2B40' },
-      { label: 'Data Sci', value: 175, max: 200, color: '#7c3aed' },
-      { label: 'AI / ML', value: 195, max: 200, color: '#0d9488' },
-      { label: 'Cyber Sec', value: 165, max: 200, color: '#d97706' },
-      { label: 'Elect Eng', value: 130, max: 200, color: '#6366f1' },
-      { label: 'BBA', value: 100, max: 200, color: '#ec4899' },
-    ],
-    demand: [
-      { field: 'AI / Machine Learning', pct: 97, color: '#0d9488' },
-      { field: 'Cybersecurity', pct: 92, color: '#CD2B40' },
-      { field: 'Data Science', pct: 89, color: '#7c3aed' },
-      { field: 'Cloud Engineering', pct: 93, color: '#d97706' },
-      { field: 'Software Engineering', pct: 95, color: '#6366f1' },
-    ],
-    roles: [
-      { name: 'ML Research Scientist', sub: 'AI & Research (US)', salary: '$150k–$250k' },
-      { name: 'Senior SWE (FAANG)', sub: 'Software Engineering (US)', salary: '$180k–$300k' },
-      { name: 'Cloud Solutions Architect', sub: 'Cloud / Infrastructure (EU)', salary: '$120k–$200k' },
-      { name: 'Data Engineer', sub: 'Data & Analytics (UK)', salary: '£70k–£120k' },
-      { name: 'Cybersecurity Lead', sub: 'Info Security (AUS)', salary: 'AUD 140k–200k' },
-    ],
-    salaryDist: [
-      { range: '$0–50K', count: 12 },
-      { range: '$50k–100k', count: 28 },
-      { range: '$100k–150k', count: 34 },
-      { range: '$150k–250k', count: 18 },
-      { range: '$250k+', count: 5 },
-    ],
-    genderSplit: { male: 71, female: 29 },
-    benefits: [
-      { name: 'Medical', pct: 88 },
-      { name: 'Dental', pct: 72 },
-      { name: 'Vision', pct: 65 },
-      { name: 'None', pct: 5 },
-    ],
-    careers: [
-      { title: 'Software Engineer', badge: '$120k', avgSalary: '$120,000 / year', gender: 'M: 89.2% / F: 10.8%', growth: { entry: '▲32%', early: '▲28%', mid: '▲165%' }, field: 'Technology' },
-      { title: 'Data Scientist', badge: '$140k', avgSalary: '$140,000 / year', gender: 'M: 82.4% / F: 17.6%', growth: { entry: '▲55%', early: '▲40%', mid: '▲210%' }, field: 'Technology' },
-      { title: 'ML Engineer', badge: '$160k', avgSalary: '$160,000 / year', gender: 'M: 85.1% / F: 14.9%', growth: { entry: '▲60%', early: '▲50%', mid: '▲230%' }, field: 'Technology' },
-      { title: 'Finance Manager', badge: '$110k', avgSalary: '$110,000 / year', gender: 'M: 62.4% / F: 37.6%', growth: { entry: '▲15%', early: '▲22%', mid: '▲80%' }, field: 'Business' },
-      { title: 'Electrical Engineer', badge: '$95k', avgSalary: '$95,000 / year', gender: 'M: 91.2% / F: 8.8%', growth: { entry: '▲20%', early: '▲18%', mid: '▲75%' }, field: 'Engineering' },
-      { title: 'Registered Nurse (RN)', badge: '$75k', avgSalary: '$75,000 / year', gender: 'M: 14.1% / F: 85.9%', growth: { entry: '▲18%', early: '▲22%', mid: '▲55%' }, field: 'Healthcare' },
-      { title: 'UX Designer', badge: '$100k', avgSalary: '$100,000 / year', gender: 'M: 48.3% / F: 51.7%', growth: { entry: '▲25%', early: '▲30%', mid: '▲95%' }, field: 'Design' },
-      { title: 'Cloud Architect', badge: '$150k', avgSalary: '$150,000 / year', gender: 'M: 87.6% / F: 12.4%', growth: { entry: '▲40%', early: '▲48%', mid: '▲190%' }, field: 'Technology' },
-      { title: 'HR Director', badge: '$130k', avgSalary: '$130,000 / year', gender: 'M: 38.4% / F: 61.6%', growth: { entry: '▲10%', early: '▲18%', mid: '▲90%' }, field: 'Business' },
-      { title: 'Mechanical Engineer', badge: '$88k', avgSalary: '$88,000 / year', gender: 'M: 88.2% / F: 11.8%', growth: { entry: '▲14%', early: '▲19%', mid: '▲68%' }, field: 'Engineering' },
-      { title: 'Product Manager', badge: '$145k', avgSalary: '$145,000 / year', gender: 'M: 64.5% / F: 35.5%', growth: { entry: '▲38%', early: '▲45%', mid: '▲175%' }, field: 'Business' },
-      { title: 'Cybersecurity Analyst', badge: '$115k', avgSalary: '$115,000 / year', gender: 'M: 80.3% / F: 19.7%', growth: { entry: '▲28%', early: '▲32%', mid: '▲140%' }, field: 'Technology' },
-    ],
-  },
+/* ── Static chart data (Local market context) ─────────────────────────── */
+const STATIC_CHART_DATA = {
+  bars: [
+    { label: 'CS / SE',    value: 140, max: 200, color: '#CD2B40' },
+    { label: 'Data Sci',   value: 160, max: 200, color: '#7c3aed' },
+    { label: 'AI / ML',    value: 180, max: 200, color: '#0d9488' },
+    { label: 'Cyber Sec',  value: 155, max: 200, color: '#d97706' },
+    { label: 'Elect Eng',  value: 110, max: 200, color: '#6366f1' },
+    { label: 'BBA',        value:  85, max: 200, color: '#ec4899' },
+  ],
+  demand: [
+    { field: 'AI / Machine Learning', pct: 94, color: '#0d9488' },
+    { field: 'Cybersecurity',         pct: 88, color: '#CD2B40' },
+    { field: 'Data Science',          pct: 82, color: '#7c3aed' },
+    { field: 'Cloud Engineering',     pct: 79, color: '#d97706' },
+    { field: 'Software Engineering',  pct: 91, color: '#6366f1' },
+  ],
+  salaryDist: [
+    { range: '0–300K',    count: 19 },
+    { range: '300k–600k', count: 25 },
+    { range: '600k–1M',   count: 36 },
+    { range: '1M–2M',     count: 14 },
+    { range: '2M+',       count:  3 },
+  ],
+  genderSplit: { male: 78, female: 22 },
+  benefits: [
+    { name: 'Medical', pct: 62 },
+    { name: 'Dental',  pct: 18 },
+    { name: 'Vision',  pct: 14 },
+    { name: 'None',    pct: 35 },
+  ],
+  summaryCards: [
+    { label: 'Avg Starting Salary', sub: 'per month',  color: '#CD2B40', growth: '+12%' },
+    { label: 'Mid-Level Avg',       sub: 'per month',  color: '#7c3aed', growth: '+18%' },
+    { label: 'Senior Avg',          sub: 'per month',  color: '#0d9488', growth: '+22%' },
+    { label: 'Freelance Potential', sub: 'per month',  color: '#d97706', growth: '+35%' },
+  ],
 }
 
-const ALL_FIELDS = ['All Fields', 'Technology', 'Business', 'Engineering', 'Healthcare', 'Design']
+/* ── Field colour map ─────────────────────────────────────────────────── */
+const FIELD_COLOURS = {
+  Technology: '#CD2B40', Business: '#7c3aed', Engineering: '#0d9488',
+  Healthcare: '#d97706', Design: '#6366f1', Finance: '#ec4899',
+}
+function fieldOf(job) {
+  const t = (job.job_title || '').toLowerCase()
+  if (/software|engineer|developer|it|computer|data\s+sci|ai|ml|cloud|cyber|tech/.test(t)) return 'Technology'
+  if (/doctor|nurse|medical|health|pharma|dental/.test(t)) return 'Healthcare'
+  if (/architect|design|ux|ui|creative/.test(t))           return 'Design'
+  if (/account|financ|bank|audit|tax|invest/.test(t))       return 'Finance'
+  if (/electrical|mechanical|civil|chemical|struct/.test(t)) return 'Engineering'
+  return 'Business'
+}
+
+const ALL_FIELDS = ['All Fields', 'Technology', 'Business', 'Engineering', 'Healthcare', 'Design', 'Finance']
 const CAREERS_PER_PAGE = 6
 
-/* ── Icons ──────────────────────────────────────────────────────── */
+/* ── PKR formatter ─────────────────────────────────────────────────────── */
+function formatPKR(num) {
+  if (!num || isNaN(num)) return 'N/A'
+  if (num >= 1_000_000) return `PKR ${(num / 1_000_000).toFixed(1)}M`
+  if (num >= 1_000)     return `PKR ${Math.round(num / 1_000)}k`
+  return `PKR ${num}`
+}
+
+/* ── Icons ─────────────────────────────────────────────────────────────── */
 const TrendIcon = () => (
   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" /><polyline points="17 6 23 6 23 12" />
@@ -153,16 +88,9 @@ const SalaryIcon = () => (
     <rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
   </svg>
 )
-const GenderIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="12" cy="8" r="4" /><path d="M6 20v-2a6 6 0 0 1 12 0v2" />
-  </svg>
-)
 const ChevronIcon = ({ dir }) => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    {dir === 'left'
-      ? <polyline points="15 18 9 12 15 6" />
-      : <polyline points="9 18 15 12 9 6" />}
+    {dir === 'left' ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}
   </svg>
 )
 const ViewIcon = () => (
@@ -171,33 +99,20 @@ const ViewIcon = () => (
   </svg>
 )
 
-/* ── Pie Chart (SVG) ─────────────────────────────────────────────── */
+/* ── Pie Chart ──────────────────────────────────────────────────────────── */
 function PieChart({ male, female }) {
-  const r = 60
-  const cx = 80; const cy = 80
+  const r = 60; const cx = 80; const cy = 80
   const total = male + female
-  const malePct = male / total
-  const maleDeg = malePct * 360
-  const rad = (d) => (d * Math.PI) / 180
-  const x1 = cx + r * Math.sin(0)
-  const y1 = cy - r * Math.cos(0)
-  const x2 = cx + r * Math.sin(rad(maleDeg))
-  const y2 = cy - r * Math.cos(rad(maleDeg))
+  const maleDeg = (male / total) * 360
+  const rad = d => (d * Math.PI) / 180
+  const x1 = cx + r * Math.sin(0);  const y1 = cy - r * Math.cos(0)
+  const x2 = cx + r * Math.sin(rad(maleDeg)); const y2 = cy - r * Math.cos(rad(maleDeg))
   const large = maleDeg > 180 ? 1 : 0
-
   return (
     <div className="pie-chart-wrap">
       <svg viewBox="0 0 160 160" className="pie-svg">
-        {/* Male slice */}
-        <path
-          d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`}
-          fill="#3b82f6"
-        />
-        {/* Female slice (rest) */}
-        <path
-          d={`M ${cx} ${cy} L ${x2} ${y2} A ${r} ${r} 0 ${1 - large} 1 ${x1} ${y1} Z`}
-          fill="#f97316"
-        />
+        <path d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`} fill="#3b82f6" />
+        <path d={`M ${cx} ${cy} L ${x2} ${y2} A ${r} ${r} 0 ${1 - large} 1 ${x1} ${y1} Z`} fill="#f97316" />
       </svg>
       <div className="pie-legend">
         <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {male}%
@@ -207,46 +122,35 @@ function PieChart({ male, female }) {
   )
 }
 
-/* ── Growth badge ─────────────────────────────────────────────────── */
-function GrowthBadge({ label, value }) {
-  const isUp = value.includes('▲')
-  return (
-    <span className={`career-growth-badge ${isUp ? 'up' : 'down'}`}>
-      {label}: <strong>{value}</strong>
-    </span>
-  )
-}
-
-/* ── Career Card ─────────────────────────────────────────────────── */
+/* ── Career Card ───────────────────────────────────────────────────────── */
 function CareerCard({ career }) {
+  const field = fieldOf(career)
+  const colour = FIELD_COLOURS[field] || '#6366f1'
+  const salary = career.average_salary || career.avgSalary || '—'
+  const title  = career.job_title      || career.title || '—'
+
   return (
     <div className="career-card-item">
       <div className="career-card-item-header">
-        <div className="career-card-item-title">{career.title}</div>
-        <span className="career-salary-badge">{career.badge}</span>
+        <div className="career-card-item-title">{title}</div>
+        <span className="career-salary-badge" style={{ background: `${colour}18`, color: colour }}>
+          {salary}
+        </span>
       </div>
       <div className="career-card-stats">
         <div className="career-stat-row">
           <SalaryIcon />
           <div>
             <div className="career-stat-label">Average Salary</div>
-            <div className="career-stat-value">{career.avgSalary}</div>
+            <div className="career-stat-value">{salary} / year</div>
           </div>
         </div>
         <div className="career-stat-row">
-          <GenderIcon />
+          <span style={{ fontSize: '0.8rem' }}>🏷️</span>
           <div>
-            <div className="career-stat-label">Gender Split</div>
-            <div className="career-stat-value">{career.gender}</div>
+            <div className="career-stat-label">Field</div>
+            <div className="career-stat-value">{field}</div>
           </div>
-        </div>
-      </div>
-      <div className="career-growth-row">
-        <span className="career-growth-label">Experience Growth:</span>
-        <div className="career-growth-badges">
-          <GrowthBadge label="Entry" value={career.growth.entry} />
-          <GrowthBadge label="Early" value={career.growth.early} />
-          <GrowthBadge label="Mid" value={career.growth.mid} />
         </div>
       </div>
       <button className="career-view-btn" type="button">
@@ -256,64 +160,87 @@ function CareerCard({ career }) {
   )
 }
 
-/* ── Main Component ──────────────────────────────────────────────── */
+/* ── Careers skeleton ────────────────────────────────────────────────────── */
+function CareersSkeleton() {
+  return Array.from({ length: 6 }).map((_, i) => (
+    <div key={i} className="career-card-item" style={{ opacity: 0.7 }}>
+      <div className="skeleton-line" style={{ width: '70%', height: '18px', marginBottom: '0.75rem' }} />
+      <div className="skeleton-line" style={{ width: '40%', height: '14px', marginBottom: '0.5rem' }} />
+      <div className="skeleton-line" style={{ width: '55%', height: '14px' }} />
+    </div>
+  ))
+}
+
+/* ── Main Component ──────────────────────────────────────────────────────── */
 export default function Payscale() {
-  const [activeMarket, setActiveMarket] = useState('Local')
+  const [careers, setCareers] = useState([])
+  const [stats, setStats] = useState(null)
+  const [careersLoading, setCareersLoading] = useState(true)
+  const [statsLoading, setStatsLoading] = useState(true)
+  const [careersError, setCareersError] = useState(null)
+
   const [searchQuery, setSearchQuery] = useState('')
   const [activeField, setActiveField] = useState('All Fields')
   const [careerPage, setCareerPage] = useState(1)
 
-  const data = MARKET_DATA[activeMarket]
-  const maxBar = Math.max(...data.bars.map((b) => b.value))
-  const maxDist = Math.max(...data.salaryDist.map((d) => d.count))
+  /* Fetch on mount */
+  useEffect(() => {
+    fetchCareers()
+      .then(data => {
+        setCareers(data?.careers || [])
+        setCareersLoading(false)
+      })
+      .catch(err => {
+        setCareersError(err.message || 'Failed to load careers.')
+        setCareersLoading(false)
+      })
 
-  // Filter careers
-  const filteredCareers = data.careers.filter((c) => {
-    const matchesSearch = c.title.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesField = activeField === 'All Fields' || c.field === activeField
-    return matchesSearch && matchesField
+    fetchCareerStats()
+      .then(data => {
+        setStats(data?.stats || null)
+        setStatsLoading(false)
+      })
+      .catch(() => { setStatsLoading(false) })
+  }, [])
+
+  /* Derived stats */
+  const totalCareers = stats?.total_jobs ?? careers.length
+  const avgSalary    = stats?.avg_salary    ? formatPKR(stats.avg_salary)    : '—'
+  const minSalary    = stats?.min_salary    ? formatPKR(stats.min_salary)    : '—'
+  const maxSalary    = stats?.max_salary    ? formatPKR(stats.max_salary)    : '—'
+
+  /* Filter careers */
+  const filtered = careers.filter(c => {
+    const title = (c.job_title || c.title || '').toLowerCase()
+    const f = fieldOf(c)
+    return title.includes(searchQuery.toLowerCase()) &&
+      (activeField === 'All Fields' || f === activeField)
   })
 
-  const totalPages = Math.max(1, Math.ceil(filteredCareers.length / CAREERS_PER_PAGE))
-  const pagedCareers = filteredCareers.slice((careerPage - 1) * CAREERS_PER_PAGE, careerPage * CAREERS_PER_PAGE)
+  const totalPages  = Math.max(1, Math.ceil(filtered.length / CAREERS_PER_PAGE))
+  const pagedCareers = filtered.slice((careerPage - 1) * CAREERS_PER_PAGE, careerPage * CAREERS_PER_PAGE)
 
-  function handleMarketChange(m) {
-    setActiveMarket(m)
-    setCareerPage(1)
-    setSearchQuery('')
-    setActiveField('All Fields')
-  }
+  const maxBar  = Math.max(...STATIC_CHART_DATA.bars.map(b => b.value))
+  const maxDist = Math.max(...STATIC_CHART_DATA.salaryDist.map(d => d.count))
 
   return (
     <div className="payscale-page">
-      {/* ── Page Header ── */}
+      {/* ── Header ── */}
       <div className="pay-header">
         <div className="pay-title">Salary &amp; Market Insights</div>
-        <div className="pay-subtitle">Real salary data from {data.totalCareers} careers. Explore earning potential and industry demand.</div>
-      </div>
-
-      {/* ── Market Tabs ── */}
-      <div className="pay-tabs">
-        {['Local', 'International'].map((m) => (
-          <button
-            key={m}
-            className={`pay-tab${activeMarket === m ? ' active' : ''}`}
-            onClick={() => handleMarketChange(m)}
-            type="button"
-          >
-            {m === 'Local' ? '🇵🇰 Local Market' : '🌍 International Market'}
-          </button>
-        ))}
+        <div className="pay-subtitle">
+          Real salary data from {statsLoading ? '…' : totalCareers} careers. Explore earning potential and industry demand.
+        </div>
       </div>
 
       {/* ── Aggregate Stats Row ── */}
       <div className="pay-agg-row">
         {[
-          { label: 'Total Careers', value: data.totalCareers, highlight: '#3b82f6', icon: '📊' },
-          { label: 'Avg Salary', value: data.avgSalary, highlight: '#16a34a', icon: '💰' },
-          { label: 'Min Salary', value: data.minSalary, highlight: '#CD2B40', icon: '📉' },
-          { label: 'Max Salary', value: data.maxSalary, highlight: '#7c3aed', icon: '📈' },
-        ].map((s) => (
+          { label: 'Total Careers', value: statsLoading ? '…' : totalCareers, highlight: '#3b82f6', icon: '📊' },
+          { label: 'Avg Salary',    value: statsLoading ? '…' : avgSalary,    highlight: '#16a34a', icon: '💰' },
+          { label: 'Min Salary',    value: statsLoading ? '…' : minSalary,    highlight: '#CD2B40', icon: '📉' },
+          { label: 'Max Salary',    value: statsLoading ? '…' : maxSalary,    highlight: '#7c3aed', icon: '📈' },
+        ].map(s => (
           <div key={s.label} className="pay-agg-card">
             <div className="pay-agg-label">{s.label} <span className="pay-agg-icon">{s.icon}</span></div>
             <div className="pay-agg-value" style={{ color: s.highlight }}>{s.value}</div>
@@ -323,10 +250,10 @@ export default function Payscale() {
 
       {/* ── Summary Cards ── */}
       <div className="pay-summary-cards">
-        {data.summary.map((s) => (
+        {STATIC_CHART_DATA.summaryCards.map(s => (
           <div key={s.label} className="pay-summary-card" style={{ '--card-color': s.color }}>
             <div className="pay-summary-label">{s.label}</div>
-            <div className="pay-summary-value">{s.value}</div>
+            <div className="pay-summary-value">—</div>
             <div className="pay-summary-sub">{s.sub}</div>
             <div className="pay-growth-badge"><TrendIcon /> {s.growth} YoY</div>
           </div>
@@ -340,7 +267,7 @@ export default function Payscale() {
           <div className="pay-card-title">Salary Distribution</div>
           <div className="pay-card-sub">Number of jobs by salary range</div>
           <div className="pay-dist-chart">
-            {data.salaryDist.map((d) => (
+            {STATIC_CHART_DATA.salaryDist.map(d => (
               <div key={d.range} className="pay-dist-col">
                 <div className="pay-dist-count">{d.count}</div>
                 <div className="pay-dist-fill" style={{ height: `${(d.count / maxDist) * 140}px` }} />
@@ -348,11 +275,8 @@ export default function Payscale() {
               </div>
             ))}
           </div>
-          {/* Y-axis hint lines */}
           <div className="pay-dist-yaxis">
-            {[36, 27, 18, 9, 0].map((v) => (
-              <span key={v} className="pay-dist-ytick">{v}</span>
-            ))}
+            {[36, 27, 18, 9, 0].map(v => <span key={v} className="pay-dist-ytick">{v}</span>)}
           </div>
         </div>
 
@@ -360,7 +284,7 @@ export default function Payscale() {
         <div className="pay-card pay-card-gender">
           <div className="pay-card-title">Gender Distribution</div>
           <div className="pay-card-sub">Average across all careers</div>
-          <PieChart male={data.genderSplit.male} female={data.genderSplit.female} />
+          <PieChart male={STATIC_CHART_DATA.genderSplit.male} female={STATIC_CHART_DATA.genderSplit.female} />
         </div>
 
         {/* Benefits Coverage */}
@@ -368,7 +292,7 @@ export default function Payscale() {
           <div className="pay-card-title">Benefits Coverage</div>
           <div className="pay-card-sub">Average benefits offered</div>
           <div className="pay-benefits-list">
-            {data.benefits.map((b) => (
+            {STATIC_CHART_DATA.benefits.map(b => (
               <div key={b.name} className="pay-benefit-row">
                 <div className="pay-benefit-name">{b.name}</div>
                 <div className="pay-benefit-bar-wrap">
@@ -381,13 +305,13 @@ export default function Payscale() {
         </div>
       </div>
 
-      {/* ── Salary Comparison by Degree ── */}
+      {/* ── Salary Comparison by Degree + Demand ── */}
       <div className="pay-charts-grid">
         <div className="pay-card">
           <div className="pay-card-title">Salary Comparison by Degree</div>
-          <div className="pay-card-sub">Average mid-career salary ({activeMarket === 'Local' ? 'PKR 000s/mo' : 'USD 000s/yr'})</div>
+          <div className="pay-card-sub">Average mid-career (PKR 000s/mo)</div>
           <div className="pay-bar-chart">
-            {data.bars.map((bar) => (
+            {STATIC_CHART_DATA.bars.map(bar => (
               <div key={bar.label} className="pay-bar-col">
                 <div className="pay-bar-val">{bar.value}k</div>
                 <div className="pay-bar-fill" style={{ height: `${(bar.value / maxBar) * 100}%`, background: bar.color }} title={`${bar.label}: ${bar.value}k`} />
@@ -397,12 +321,11 @@ export default function Payscale() {
           </div>
         </div>
 
-        {/* Demand Trends */}
         <div className="pay-card">
           <div className="pay-card-title">Demand Trends</div>
           <div className="pay-card-sub">Job market demand index (0–100)</div>
           <div className="pay-demand-list">
-            {data.demand.map((item) => (
+            {STATIC_CHART_DATA.demand.map(item => (
               <div key={item.field} className="pay-demand-item">
                 <div className="pay-demand-row">
                   <span className="pay-demand-name">{item.field}</span>
@@ -417,44 +340,45 @@ export default function Payscale() {
         </div>
       </div>
 
-      {/* ── All Careers Section ── */}
+      {/* ── All Careers Section (Live from Backend) ── */}
       <div className="careers-section">
-        {/* Search & Filter */}
         <div className="careers-search-row">
           <div className="careers-search-wrap">
             <SearchIcon />
             <input
               className="careers-search-input"
-              placeholder="Search careers (e.g., Software Engineer, Manager, Doctor)..."
+              placeholder="Search careers (e.g., Software Engineer, Nurse, Accountant)…"
               value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); setCareerPage(1) }}
+              onChange={e => { setSearchQuery(e.target.value); setCareerPage(1) }}
             />
           </div>
           <div className="careers-filter-wrap">
             <FilterIcon />
-            <select
-              className="careers-filter-select"
-              value={activeField}
-              onChange={(e) => { setActiveField(e.target.value); setCareerPage(1) }}
-            >
-              {ALL_FIELDS.map((f) => (
-                <option key={f} value={f}>{f}</option>
-              ))}
+            <select className="careers-filter-select" value={activeField} onChange={e => { setActiveField(e.target.value); setCareerPage(1) }}>
+              {ALL_FIELDS.map(f => <option key={f} value={f}>{f}</option>)}
             </select>
           </div>
         </div>
 
-        {/* Header row */}
         <div className="careers-list-header">
-          <span className="careers-list-title">All {data.totalCareers} Careers</span>
-          <span className="careers-page-label">Page {careerPage} of {totalPages}</span>
+          <span className="careers-list-title">
+            {careersLoading ? 'Loading careers…' : `${filtered.length} Careers (${totalCareers} total)`}
+          </span>
+          {!careersLoading && <span className="careers-page-label">Page {careerPage} of {totalPages}</span>}
         </div>
 
-        {/* Cards grid */}
-        {pagedCareers.length > 0 ? (
+        {/* Error */}
+        {careersError && (
+          <div className="careers-error-banner">⚠️ {careersError}</div>
+        )}
+
+        {/* Grid */}
+        {careersLoading ? (
+          <div className="careers-grid"><CareersSkeleton /></div>
+        ) : pagedCareers.length > 0 ? (
           <div className="careers-grid">
-            {pagedCareers.map((career) => (
-              <CareerCard key={career.title} career={career} />
+            {pagedCareers.map((career, i) => (
+              <CareerCard key={career.job_title + i} career={career} />
             ))}
           </div>
         ) : (
@@ -466,55 +390,23 @@ export default function Payscale() {
         )}
 
         {/* Pagination */}
-        {totalPages > 1 && (
+        {!careersLoading && totalPages > 1 && (
           <div className="careers-pagination">
-            <button
-              className="pag-btn"
-              onClick={() => setCareerPage((p) => Math.max(1, p - 1))}
-              disabled={careerPage === 1}
-              type="button"
-            >
+            <button className="pag-btn" onClick={() => setCareerPage(p => Math.max(1, p - 1))} disabled={careerPage === 1} type="button">
               <ChevronIcon dir="left" /> Prev
             </button>
             <div className="pag-dots">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  className={`pag-dot${careerPage === i + 1 ? ' active' : ''}`}
-                  onClick={() => setCareerPage(i + 1)}
-                  type="button"
-                >
+              {Array.from({ length: Math.min(totalPages, 7) }).map((_, i) => (
+                <button key={i} className={`pag-dot${careerPage === i + 1 ? ' active' : ''}`} onClick={() => setCareerPage(i + 1)} type="button">
                   {i + 1}
                 </button>
               ))}
             </div>
-            <button
-              className="pag-btn"
-              onClick={() => setCareerPage((p) => Math.min(totalPages, p + 1))}
-              disabled={careerPage === totalPages}
-              type="button"
-            >
+            <button className="pag-btn" onClick={() => setCareerPage(p => Math.min(totalPages, p + 1))} disabled={careerPage === totalPages} type="button">
               Next <ChevronIcon dir="right" />
             </button>
           </div>
         )}
-      </div>
-
-      {/* ── Top Roles ── */}
-      <div className="pay-roles-section">
-        <p className="career-section-title">Top Job Roles</p>
-        <div className="pay-roles-list">
-          {data.roles.map((role, i) => (
-            <div key={role.name} className="pay-role-item">
-              <div className="pay-role-rank">{i + 1}</div>
-              <div className="pay-role-info">
-                <div className="pay-role-name">{role.name}</div>
-                <div className="pay-role-sub">{role.sub}</div>
-              </div>
-              <div className="pay-role-salary">{role.salary}</div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   )

@@ -1,12 +1,14 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchProfile } from '../../api/career'
 import './CareerDashboard.css'
 
-const COMPLETION_PCT = 62
+const circumference = 2 * Math.PI * 38
 
 const quickCards = [
   {
     title: 'Aptitude Questionnaire',
-    desc: 'Complete your assessment to unlock personalized career recommendations.',
+    desc: 'Complete your assessment to unlock personalised career recommendations.',
     icon: 'questionnaire',
     to: '/dashboard/career/questionnaire',
     accent: '#CD2B40',
@@ -42,12 +44,23 @@ const quickCards = [
   },
 ]
 
-const recentActivity = [
-  { title: 'Completed Section 2 of Questionnaire', time: '2 hours ago', color: '#CD2B40', badge: 'In Progress' },
-  { title: 'Profile updated — Skills added', time: 'Yesterday', color: '#0d9488', badge: 'Done' },
-  { title: 'Viewed CS Engineering recommendation', time: '2 days ago', color: '#7c3aed', badge: 'Viewed' },
+/* ── Required keys used to compute completion ────────────────────────────── */
+const REQUIRED_KEYS = [
+  'qualification_type', 'study_stream', 'academic_performance', 'favorite_subjects',
+  'enjoy_solving_logical_problems', 'like_working_with_computers', 'enjoy_creative_tasks',
+  'like_analyzing_data', 'enjoy_understanding_systems', 'prefer_planning_over_execution',
+  'enjoy_helping_people', 'curious_about_business', 'enjoy_research', 'like_learning_new_tools',
+  'mathematical_skills', 'learn_programming_quickly', 'communicate_ideas_clearly',
+  'problem_solving_under_pressure', 'comfortable_with_data', 'lead_team_effectively',
+  'logical_reasoning', 'adapt_to_challenges', 'attention_to_detail', 'creative_problem_solving',
+  'learning_preference', 'prefer_working_independently', 'enjoy_taking_responsibility',
+  'remain_calm_under_pressure', 'like_structured_environments', 'comfortable_taking_risks',
+  'prefer_routine', 'enjoy_interacting_with_people', 'motivated_by_long_term_goals',
+  'like_abstract_problems', 'enjoy_practical_work', 'preferred_work_environment',
+  'problem_solving_approach', 'career_motivation', 'exciting_work_type', 'continuous_learning_attitude',
 ]
 
+/* ── Icons ──────────────────────────────────────────────────────────────── */
 function CardIcon({ icon, color }) {
   const icons = {
     questionnaire: (
@@ -80,10 +93,32 @@ const ArrowIcon = () => (
   </svg>
 )
 
-const circumference = 2 * Math.PI * 38
-
+/* ── Main Component ─────────────────────────────────────────────────────── */
 export default function CareerDashboard() {
-  const dashOffset = circumference * (1 - COMPLETION_PCT / 100)
+  const [completionPct, setCompletionPct] = useState(0)
+  const [hasProfile, setHasProfile] = useState(false)
+  const [profileLoading, setProfileLoading] = useState(true)
+
+  useEffect(() => {
+    fetchProfile()
+      .then(data => {
+        const answers = data?.data?.answers
+        if (answers) {
+          const answered = REQUIRED_KEYS.filter(k => answers[k] !== undefined && answers[k] !== null).length
+          const pct = Math.round((answered / REQUIRED_KEYS.length) * 100)
+          setCompletionPct(pct)
+          setHasProfile(true)
+        }
+        setProfileLoading(false)
+      })
+      .catch(() => {
+        // No profile or error — show 0%
+        setCompletionPct(0)
+        setProfileLoading(false)
+      })
+  }, [])
+
+  const dashOffset = circumference * (1 - completionPct / 100)
 
   return (
     <div className="career-dashboard">
@@ -91,7 +126,11 @@ export default function CareerDashboard() {
       <div className="career-banner">
         <div className="career-banner-text">
           <h1>Welcome back, Student 👋</h1>
-          <p>Your personalised career path is taking shape. Keep going!</p>
+          <p>
+            {hasProfile
+              ? `Your profile is ${completionPct}% complete. Keep going to unlock better recommendations!`
+              : 'Start your career journey by completing the aptitude questionnaire.'}
+          </p>
         </div>
         <div className="career-banner-progress">
           <div className="progress-ring-wrap">
@@ -100,12 +139,14 @@ export default function CareerDashboard() {
               <circle
                 className="progress-ring-fill"
                 cx="45" cy="45" r="38" fill="none" strokeWidth="8"
-                strokeDasharray={`${circumference * (COMPLETION_PCT / 100)} ${circumference}`}
+                strokeDasharray={`${circumference * (completionPct / 100)} ${circumference}`}
                 strokeDashoffset="0"
               />
             </svg>
             <div className="progress-ring-label">
-              <span className="progress-ring-pct">{COMPLETION_PCT}%</span>
+              <span className="progress-ring-pct">
+                {profileLoading ? '…' : `${completionPct}%`}
+              </span>
               <span className="progress-ring-sub">Done</span>
             </div>
           </div>
@@ -113,10 +154,21 @@ export default function CareerDashboard() {
         </div>
       </div>
 
+      {/* No profile CTA */}
+      {!profileLoading && !hasProfile && (
+        <div className="career-no-profile-banner">
+          <span>📋</span>
+          <span>You haven't completed the assessment yet.</span>
+          <Link to="/dashboard/career/questionnaire" className="career-start-btn">
+            Start Assessment →
+          </Link>
+        </div>
+      )}
+
       {/* Quick Action Cards */}
       <p className="career-section-title">Quick Actions</p>
       <div className="career-cards-grid">
-        {quickCards.map((card) => (
+        {quickCards.map(card => (
           <Link
             key={card.title}
             to={card.to}
@@ -133,23 +185,6 @@ export default function CareerDashboard() {
             </div>
           </Link>
         ))}
-      </div>
-
-      {/* Recent Activity */}
-      <div className="activity-section">
-        <p className="career-section-title">Recent Activity</p>
-        <div className="activity-list">
-          {recentActivity.map((item) => (
-            <div key={item.title} className="activity-item">
-              <div className="activity-dot" style={{ background: item.color }} />
-              <div className="activity-content">
-                <div className="activity-title">{item.title}</div>
-                <div className="activity-time">{item.time}</div>
-              </div>
-              <span className="activity-badge">{item.badge}</span>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   )

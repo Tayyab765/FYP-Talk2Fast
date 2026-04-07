@@ -1,32 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { getActiveSession, sendChatMessage } from '../../api/career'
 import './CareerChat.css'
 
 const EXAMPLE_PROMPTS = [
-  'Why is CS recommended for me?',
+  'Why is this career recommended for me?',
   'What skills should I improve?',
   'Which universities suit my profile?',
-  'Is Data Science a good option?',
+  'What are the job prospects?',
 ]
 
-const INITIAL_MESSAGES = [
-  {
-    id: 1,
-    role: 'bot',
-    text: "Hi! I'm your Profile Insight AI! I've reviewed your career profile and assessment results. Ask me anything about your recommended paths, skill gaps, or university options!",
-  },
-]
-
-const BOT_REPLIES = {
-  'Why is CS recommended for me?':
-    "Based on your profile, CS is a top match (92%) because of your high mathematics score, strong logical reasoning results from the aptitude test, and your stated interest in Technology. Your problem-solving skill also aligns perfectly.",
-  'What skills should I improve?':
-    "To strengthen your profile for CS/Software Engineering, I'd recommend: (1) Learn a programming language like Python, (2) Practice Data Structures & Algorithms, (3) Build small projects to showcase on a portfolio.",
-  'Which universities suit my profile?':
-    "Given your Matric score of 87%, top picks include: FAST-NUCES (Entry test required), UET Lahore (aggregate-based), and GIKI (merit + test). I'd also suggest looking at ITU for strong industry links.",
-  'Is Data Science a good option?':
-    "Data Science is a great emerging field for you (84% match)! However, it's listed as Conditional because the degree programs often require strong programming background. I'd recommend building Python and statistics skills first.",
-}
-
+/* ── Icons ──────────────────────────────────────────────────────────────── */
 function SendIcon() {
   return (
     <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -34,7 +18,6 @@ function SendIcon() {
     </svg>
   )
 }
-
 function BotFaceIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,40 +26,97 @@ function BotFaceIcon() {
   )
 }
 
-let msgId = 10
+let msgId = 100
 
+/* ── Main Component ─────────────────────────────────────────────────────── */
 export default function CareerChat() {
-  const [messages, setMessages] = useState(INITIAL_MESSAGES)
+  const [sessionId, setSessionId] = useState(null)
+  const [sessionLoading, setSessionLoading] = useState(true)
+  const [sessionError, setSessionError] = useState(null) // 'no_session' | 'generic'
+  const [sessionErrorMsg, setSessionErrorMsg] = useState('')
+
+  const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [typing, setTyping] = useState(false)
+  const [sendError, setSendError] = useState(null)
+
   const bottomRef = useRef(null)
   const textareaRef = useRef(null)
 
+  /* ── Load active session on mount ───────────────────────────────────────── */
+  useEffect(() => {
+    getActiveSession()
+      .then(data => {
+        // Backend returns { success, data: session }
+        const session = data?.data
+        const sid = session?._id || session?.sessionId || session?.id
+        if (!sid) {
+          setSessionError('no_session')
+          setSessionLoading(false)
+          return
+        }
+        setSessionId(sid)
+        // Prepopulate with greeting
+        setMessages([
+          {
+            id: msgId++,
+            role: 'bot',
+            text: "Hi! I'm your Profile Insight AI! I've reviewed your career profile and assessment results. Ask me anything about your recommended paths, skill gaps, or university options!",
+          },
+        ])
+        setSessionLoading(false)
+      })
+      .catch(err => {
+        const msg = err.message || ''
+        if (msg.includes('404') || msg.toLowerCase().includes('no active session') || msg.toLowerCase().includes('not found')) {
+          setSessionError('no_session')
+        } else {
+          setSessionError('generic')
+          setSessionErrorMsg(msg || 'Failed to connect to career chat service.')
+        }
+        setSessionLoading(false)
+      })
+  }, [])
+
+  /* Auto-scroll */
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, typing])
 
-  function getReply(userText) {
-    const key = Object.keys(BOT_REPLIES).find((k) =>
-      userText.toLowerCase().includes(k.toLowerCase().split(' ')[2])
-    )
-    return key
-      ? BOT_REPLIES[key]
-      : "That's a great question! Based on your profile and assessment, I'd suggest exploring more options in the Recommendations page. Would you like a deeper analysis of any specific degree?"
-  }
-
-  function sendMessage(text) {
+  /* ── Send message ─────────────────────────────────────────────────────── */
+  async function sendMessage(text) {
     const trimmed = (text || input).trim()
-    if (!trimmed) return
+    if (!trimmed || !sessionId) return
+
     const userMsg = { id: msgId++, role: 'user', text: trimmed }
-    setMessages((prev) => [...prev, userMsg])
+    setMessages(prev => [...prev, userMsg])
     setInput('')
     setTyping(true)
-    setTimeout(() => {
-      const reply = getReply(trimmed)
-      setMessages((prev) => [...prev, { id: msgId++, role: 'bot', text: reply }])
+    setSendError(null)
+
+    try {
+      const data = await sendChatMessage(sessionId, trimmed)
+      // Backend: { success, data: { response } }
+      const reply = data?.data?.response || data?.response || 'No response received.'
+      setMessages(prev => [...prev, { id: msgId++, role: 'bot', text: reply }])
+    } catch (err) {
+      const errMsg = err.message || 'Failed to get a response.'
+      // Show error as a bot message bubble
+      setMessages(prev => [
+        ...prev,
+        {
+          id: msgId++,
+          role: 'bot',
+          text: `⚠️ ${errMsg.includes('ECONNREFUSED') || errMsg.includes('unavailable') || errMsg.includes('503')
+            ? 'AI service is temporarily offline. Please check that Ollama is running.'
+            : errMsg}`,
+          isError: true,
+        },
+      ])
+      setSendError(errMsg)
+    } finally {
       setTyping(false)
-    }, 1400)
+    }
   }
 
   function handleKeyDown(e) {
@@ -86,6 +126,71 @@ export default function CareerChat() {
     }
   }
 
+  /* ── Loading ────────────────────────────────────────────────────────────── */
+  if (sessionLoading) {
+    return (
+      <div className="career-chat-page">
+        <div className="cc-header">
+          <div className="cc-avatar"><BotFaceIcon /></div>
+          <div className="cc-info">
+            <div className="cc-bot-name">Profile Insight AI</div>
+            <div className="cc-bot-status"><span className="cc-status-dot" style={{ background: '#f59e0b' }} /> Connecting…</div>
+          </div>
+        </div>
+        <div className="cc-messages">
+          <div className="cc-session-loading">Loading your session…</div>
+        </div>
+      </div>
+    )
+  }
+
+  /* ── No active session ──────────────────────────────────────────────────── */
+  if (sessionError === 'no_session') {
+    return (
+      <div className="career-chat-page">
+        <div className="cc-header">
+          <div className="cc-avatar"><BotFaceIcon /></div>
+          <div className="cc-info">
+            <div className="cc-bot-name">Profile Insight AI</div>
+            <div className="cc-bot-status"><span className="cc-status-dot" style={{ background: '#ef4444' }} /> No session</div>
+          </div>
+        </div>
+        <div className="cc-empty-state">
+          <div className="cc-empty-icon">🤖</div>
+          <div className="cc-empty-title">No Active Session Found</div>
+          <div className="cc-empty-desc">
+            You need to generate career recommendations first. The chat is powered by your recommendation session.
+          </div>
+          <Link to="/dashboard/career/recommendations" className="cc-cta-btn">
+            Generate Recommendations →
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  /* ── Generic session error ──────────────────────────────────────────────── */
+  if (sessionError === 'generic') {
+    return (
+      <div className="career-chat-page">
+        <div className="cc-header">
+          <div className="cc-avatar"><BotFaceIcon /></div>
+          <div className="cc-info">
+            <div className="cc-bot-name">Profile Insight AI</div>
+            <div className="cc-bot-status"><span className="cc-status-dot" style={{ background: '#ef4444' }} /> Error</div>
+          </div>
+        </div>
+        <div className="cc-empty-state">
+          <div className="cc-empty-icon">⚠️</div>
+          <div className="cc-empty-title">Connection Error</div>
+          <div className="cc-empty-desc">{sessionErrorMsg || 'Failed to connect to career chat service.'}</div>
+          <button className="cc-cta-btn" onClick={() => window.location.reload()} type="button">Retry</button>
+        </div>
+      </div>
+    )
+  }
+
+  /* ── Chat UI ────────────────────────────────────────────────────────────── */
   return (
     <div className="career-chat-page">
       {/* Header */}
@@ -97,17 +202,19 @@ export default function CareerChat() {
             <span className="cc-status-dot" /> Online — Context loaded
           </div>
         </div>
-        <span className="cc-context-badge">Profile + Assessment</span>
+        <span className="cc-context-badge">Session Active</span>
       </div>
 
       {/* Messages */}
       <div className="cc-messages">
-        {messages.map((msg) => (
+        {messages.map(msg => (
           <div key={msg.id} className={`cc-msg ${msg.role}`}>
             <div className="cc-msg-avatar">
               {msg.role === 'bot' ? <BotFaceIcon /> : 'S'}
             </div>
-            <div className="cc-bubble">{msg.text}</div>
+            <div className={`cc-bubble${msg.isError ? ' cc-bubble-error' : ''}`}>
+              {msg.text}
+            </div>
           </div>
         ))}
         {typing && (
@@ -127,11 +234,12 @@ export default function CareerChat() {
 
       {/* Suggested Prompts */}
       <div className="cc-prompts">
-        {EXAMPLE_PROMPTS.map((p) => (
+        {EXAMPLE_PROMPTS.map(p => (
           <button
             key={p}
             className="cc-prompt-chip"
             onClick={() => sendMessage(p)}
+            disabled={typing}
             type="button"
           >
             {p}
@@ -144,9 +252,9 @@ export default function CareerChat() {
         <textarea
           ref={textareaRef}
           className="cc-textarea"
-          placeholder="Ask about your career recommendations..."
+          placeholder="Ask about your career recommendations…"
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           rows={1}
         />
