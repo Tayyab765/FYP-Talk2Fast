@@ -1,0 +1,33 @@
+{
+  "name": "mock-test-service",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "verify-indexes": "node src/utils/verifyIndexes.js",
+    "test:performance": "node src/utils/performanceTest.js",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "seed": "node src/utils/seedData.js",
+    "cleanup": "node src/utils/cleanupData.js",
+    "cleanup:all": "node src/utils/cleanupData.js --all"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^7.5.1",
+    "express-validator": "^7.3.2",
+    "mongoose": "^8.20.0",
+    "node-cache": "^5.1.2",
+    "winston": "^3.18.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.8"
+  }
+}
