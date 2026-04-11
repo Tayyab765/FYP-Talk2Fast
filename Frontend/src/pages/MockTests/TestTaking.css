@@ -1,0 +1,198 @@
+/* TestTaking Page Styles */
+
+.test-taking {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 1rem;
+}
+
+/* Loading State */
+.test-taking__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+}
+
+.spinner-large {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e0e0e0;
+  border-top-color: #2196f3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.test-taking__loading p {
+  font-size: 1.125rem;
+  color: #666;
+}
+
+/* Error State */
+.test-taking__error {
+  max-width: 600px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.test-taking__error h2 {
+  color: #d32f2f;
+  margin-bottom: 1rem;
+}
+
+.test-taking__error p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.test-taking__error-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.test-taking__error-btn:hover {
+  background-color: #1976d2;
+}
+
+/* Header Section */
+.test-taking__header {
+  margin-bottom: 1rem;
+}
+
+/* Main Content Layout - Desktop (Side by Side) */
+.test-taking__content {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Question Display Area */
+.test-taking__question {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Navigation Buttons Area */
+.test-taking__navigation {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Question Palette Area */
+.test-taking__palette {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  position: sticky;
+  top: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+
+/* Tablet Layout (Stacked) */
+@media (max-width: 1024px) {
+  .test-taking__content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .test-taking__palette {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* Mobile Layout (Full Screen Question, Collapsible Palette) */
+@media (max-width: 768px) {
+  .test-taking {
+    padding: 0.5rem;
+  }
+
+  .test-taking__header {
+    margin-bottom: 0.5rem;
+  }
+
+  .test-taking__content {
+    gap: 0.5rem;
+  }
+
+  .test-taking__question {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .test-taking__palette {
+    padding: 1rem;
+  }
+
+  /* Make palette collapsible on mobile */
+  .test-taking__palette {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+}
+
+/* Touch Targets - Ensure at least 44px for mobile */
+@media (max-width: 768px) {
+  .test-taking__error-btn,
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Accessibility - Focus Styles */
+.test-taking__error-btn:focus {
+  outline: 2px solid #2196f3;
+  outline-offset: 2px;
+}
+
+/* Print Styles - Hide during test taking */
+@media print {
+  .test-taking {
+    display: none;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .test-taking__question,
+  .test-taking__palette {
+    border: 2px solid #000;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .spinner-large {
+    animation: none;
+    border-top-color: transparent;
+  }
+}
