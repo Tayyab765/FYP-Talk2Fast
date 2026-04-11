@@ -4,6 +4,10 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
 import ChatAssistant from './pages/ChatAssistant'
 import Landing from './pages/Landing'
+import MockTestList from './pages/MockTests/MockTestList'
+import TestTaking from './pages/MockTests/TestTaking'
+import TestResults from './pages/MockTests/TestResults'
+import TestAnalytics from './pages/MockTests/TestAnalytics'
 import PublicLayout from './layouts/PublicLayout'
 import DashboardLayout from './layouts/DashboardLayout'
 import CareerDashboard from './pages/career/CareerDashboard'
@@ -26,7 +30,10 @@ function App() {
         <Route element={<ErrorBoundary><DashboardLayout /></ErrorBoundary>}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/chat" element={<ChatAssistant />} />
-          <Route path="/dashboard/mock-tests" element={<Dashboard />} />
+          <Route path="/dashboard/mock-tests" element={<MockTestList />} />
+          <Route path="/dashboard/mock-tests/:testId/take" element={<TestTaking />} />
+          <Route path="/dashboard/mock-tests/results/:attemptId" element={<TestResults />} />
+          <Route path="/dashboard/mock-tests/analytics" element={<TestAnalytics />} />
           <Route path="/dashboard/analytics" element={<Dashboard />} />
           <Route path="/dashboard/settings" element={<Dashboard />} />
           {/* Career Counseling Module */}
