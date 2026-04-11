@@ -21,6 +21,7 @@ const AUTH_SERVICE_URL = process.env.AUTH_SERVICE_URL || 'http://localhost:5001'
 const CHATBOT_SERVICE_URL = process.env.CHATBOT_SERVICE_URL || 'http://localhost:5002';
 const CAREER_SERVICE_URL = process.env.CAREER_SERVICE_URL || 'http://localhost:5003';
 const CAREER_STATS_URL = process.env.CAREER_STATS_URL || 'http://localhost:5004';
+const MOCK_TEST_SERVICE_URL = process.env.MOCK_TEST_SERVICE_URL || 'http://localhost:5005';
 
 // Proxy configuration
 const proxyOptions = {
@@ -79,6 +80,12 @@ app.use('/api/career', createProxyMiddleware({
   pathRewrite: rewriteServicePath('/api/career'),
 }));
 
+app.use('/api/mock-tests', createProxyMiddleware({
+  ...proxyOptions,
+  target: MOCK_TEST_SERVICE_URL,
+  pathRewrite: rewriteServicePath('/api/mock-tests'),
+}));
+
 // Body parsing only for non-proxied routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -94,7 +101,8 @@ app.get('/', (req, res) => res.json({
     auth: '/api/auth',
     chatbot: '/api/chatbot',
     career: '/api/career',
-    careers: '/api/careers'
+    careers: '/api/careers',
+    mockTests: '/api/mock-tests'
   }
 }));
 
@@ -105,7 +113,8 @@ app.get('/health', (req, res) => res.json({
     auth: AUTH_SERVICE_URL,
     chatbot: CHATBOT_SERVICE_URL,
     career: CAREER_SERVICE_URL,
-    careerStats: CAREER_STATS_URL
+    careerStats: CAREER_STATS_URL,
+    mockTest: MOCK_TEST_SERVICE_URL
   }
 }));
 
