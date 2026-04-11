@@ -1,0 +1,98 @@
+/* SectionHeader Component Styles */
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+/* Section info */
+.section-header__info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-header__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.section-header__progress {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.section-header__progress-count {
+  font-size: 18px;
+  font-weight: 700;
+  color: #007bff;
+}
+
+.section-header__progress-label {
+  font-size: 14px;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Timer container */
+.section-header__timer {
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section-header {
+    padding: 16px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .section-header__title {
+    font-size: 20px;
+  }
+
+  .section-header__progress-count {
+    font-size: 16px;
+  }
+
+  .section-header__progress-label {
+    font-size: 13px;
+  }
+
+  .section-header__timer {
+    width: 100%;
+  }
+
+  .section-header__timer .timer {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    padding: 14px 16px;
+    gap: 12px;
+  }
+
+  .section-header__title {
+    font-size: 18px;
+  }
+
+  .section-header__progress-count {
+    font-size: 15px;
+  }
+
+  .section-header__progress-label {
+    font-size: 12px;
+  }
+}
