@@ -90,6 +90,76 @@ export function transformAnswersToProfile(userId, answers) {
 }
 
 /**
+ * Transform stored normalized profile structure back to flat answers shape
+ * Used by profile retrieval endpoints so frontend can reuse questionnaire keys
+ *
+ * @param {Object} profile - Stored profile document/object
+ * @returns {Object} Flat answers object
+ */
+export function transformProfileToAnswers(profile) {
+  if (!profile) return {};
+
+  const academic = profile.academic_background || {};
+  const interests = profile.interests || {};
+  const skills = profile.skills || {};
+  const personality = profile.personality || {};
+  const workStyle = profile.work_style || {};
+  const inclination = profile.career_inclination || {};
+
+  return {
+    qualification_type: academic.qualification_type,
+    study_stream: academic.study_stream,
+    academic_performance: academic.academic_performance,
+    favorite_subjects: academic.favorite_subjects || [],
+    challenging_subjects: academic.challenging_subjects || [],
+
+    enjoy_solving_logical_problems: interests.enjoy_solving_logical_problems,
+    like_working_with_computers: interests.like_working_with_computers,
+    enjoy_creative_tasks: interests.enjoy_creative_tasks,
+    like_analyzing_data: interests.like_analyzing_data,
+    enjoy_understanding_systems: interests.enjoy_understanding_systems,
+    prefer_planning_over_execution: interests.prefer_planning_over_execution,
+    enjoy_helping_people: interests.enjoy_helping_people,
+    curious_about_business: interests.curious_about_business,
+    enjoy_research: interests.enjoy_research,
+    like_learning_new_tools: interests.like_learning_new_tools,
+    hobbies: interests.hobbies || [],
+
+    mathematical_skills: skills.mathematical_skills,
+    learn_programming_quickly: skills.learn_programming_quickly,
+    communicate_ideas_clearly: skills.communicate_ideas_clearly,
+    problem_solving_under_pressure: skills.problem_solving_under_pressure,
+    comfortable_with_data: skills.comfortable_with_data,
+    lead_team_effectively: skills.lead_team_effectively,
+    logical_reasoning: skills.logical_reasoning,
+    adapt_to_challenges: skills.adapt_to_challenges,
+    attention_to_detail: skills.attention_to_detail,
+    creative_problem_solving: skills.creative_problem_solving,
+    learning_preference: skills.learning_preference,
+
+    prefer_working_independently: personality.prefer_working_independently,
+    enjoy_taking_responsibility: personality.enjoy_taking_responsibility,
+    remain_calm_under_pressure: personality.remain_calm_under_pressure,
+    like_structured_environments: personality.like_structured_environments,
+    comfortable_taking_risks: personality.comfortable_taking_risks,
+    prefer_routine: personality.prefer_routine,
+    enjoy_interacting_with_people: personality.enjoy_interacting_with_people,
+    motivated_by_long_term_goals: personality.motivated_by_long_term_goals,
+    like_abstract_problems: personality.like_abstract_problems,
+    enjoy_practical_work: personality.enjoy_practical_work,
+
+    preferred_work_environment: workStyle.preferred_work_environment,
+    problem_solving_approach: workStyle.problem_solving_approach,
+    career_motivation: workStyle.career_motivation,
+    exciting_work_type: workStyle.exciting_work_type,
+    continuous_learning_attitude: workStyle.continuous_learning_attitude,
+    preferred_location: workStyle.preferred_location || 'no_preference',
+
+    appealing_role: inclination.appealing_role
+  };
+}
+
+/**
  * Transform normalized profile to AI-friendly descriptive format
  * Converts codes and numbers into human-readable descriptions
  */

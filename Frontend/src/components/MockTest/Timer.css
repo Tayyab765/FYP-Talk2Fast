@@ -1,0 +1,83 @@
+/* Timer Component Styles */
+
+.timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 2px solid #dee2e6;
+  transition: all 0.3s ease;
+}
+
+.timer__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+  margin-bottom: 4px;
+}
+
+.timer__display {
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: #212529;
+  line-height: 1;
+}
+
+/* Warning state - red styling when < 5 minutes */
+.timer--warning {
+  background-color: #fff5f5;
+  border-color: #dc3545;
+  animation: pulse-warning 1.5s ease-in-out infinite;
+}
+
+.timer--warning .timer__label {
+  color: #dc3545;
+}
+
+.timer--warning .timer__display {
+  color: #dc3545;
+}
+
+/* Pulse animation for warning state */
+@keyframes pulse-warning {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(220, 53, 69, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .timer {
+    padding: 10px 16px;
+  }
+
+  .timer__label {
+    font-size: 11px;
+  }
+
+  .timer__display {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .timer {
+    padding: 8px 12px;
+  }
+
+  .timer__label {
+    font-size: 10px;
+  }
+
+  .timer__display {
+    font-size: 20px;
+  }
+}

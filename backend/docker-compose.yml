@@ -25,10 +25,14 @@ services:
       - AUTH_SERVICE_URL=http://auth-service:5001
       - CHATBOT_SERVICE_URL=http://chatbot-service:5002
       - CAREER_SERVICE_URL=http://career-counselling:5003
+      - CAREER_STATS_URL=http://career-stats-service:5004
+      - MOCK_TEST_SERVICE_URL=http://mock-test-service:5005
     depends_on:
       - auth-service
       - chatbot-service
       - career-counselling
+      - career-stats-service
+      - mock-test-service
 
   auth-service:
     build:
@@ -106,6 +110,40 @@ services:
       - SESSION_EXPIRY_DAYS=30
       - AUTH_SERVICE_URL=http://auth-service:5001
       - CORS_ORIGIN=*
+    depends_on:
+      - mongodb
+      - auth-service
+
+  career-stats-service:
+    build:
+      context: ./services/career-stats-service
+      dockerfile: Dockerfile
+    container_name: talk2fast-career-stats
+    restart: unless-stopped
+    ports:
+      - "5004:5004"
+    environment:
+      - PORT=5004
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+
+  mock-test-service:
+    build:
+      context: ./services/mock-test-service
+      dockerfile: Dockerfile
+    container_name: talk2fast-mock-test
+    restart: unless-stopped
+    ports:
+      - "5005:5005"
+    environment:
+      - PORT=5005
+      - NODE_ENV=production
+      - MOCKTEST_MONGODB_URI=mongodb://mongodb:27017/hamza_mocktest
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      - LOG_LEVEL=info
     depends_on:
       - mongodb
       - auth-service
