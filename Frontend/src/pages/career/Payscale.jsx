@@ -62,6 +62,8 @@ const ViewIcon = () => (
 
 /* ── Pie Chart ──────────────────────────────────────────────────────────── */
 function PieChart({ male, female }) {
+  const [hoverData, setHoverData] = useState(null)
+
   const r = 60; const cx = 80; const cy = 80
   const total = male + female || 1
   const maleDeg = (male / total) * 360
@@ -70,14 +72,30 @@ function PieChart({ male, female }) {
   const x2 = cx + r * Math.sin(rad(maleDeg)); const y2 = cy - r * Math.cos(rad(maleDeg))
   const large = maleDeg > 180 ? 1 : 0
 
+  const handleHover = (label, pct, color) => setHoverData({ label, pct, color })
+  const clearHover = () => setHoverData(null)
+
   // Handle 100% case edge logic
   if (maleDeg === 360 || maleDeg === 0) {
     const isMale = maleDeg === 360
+    const label = isMale ? "Male" : "Female"
+    const pct = isMale ? male : female
+    const color = isMale ? "#3b82f6" : "#f97316"
+
     return (
-      <div className="pie-chart-wrap">
+      <div className="pie-chart-wrap" style={{ position: 'relative' }}>
         <svg viewBox="0 0 160 160" className="pie-svg">
-          <circle cx={cx} cy={cy} r={r} fill={isMale ? "#3b82f6" : "#f97316"} />
+          <circle cx={cx} cy={cy} r={r} fill={color} style={{ outline: 'none', cursor: 'pointer' }}
+            onMouseEnter={() => handleHover(label, pct, color)}
+            onMouseLeave={clearHover}
+          />
         </svg>
+        {hoverData && (
+          <div className="chart-tooltip" style={{ borderColor: hoverData.color, opacity: 1, visibility: 'visible', top: '45%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+            <div style={{ fontWeight: 600 }}>{hoverData.label}</div>
+            <div style={{ color: hoverData.color, marginTop: '0.2rem' }}>percentage : {Math.round(hoverData.pct)}%</div>
+          </div>
+        )}
         <div className="pie-legend">
           <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {Math.round(male)}%
           <span className="pie-legend-dot" style={{ background: '#f97316', marginLeft: '0.75rem' }} /> Female {Math.round(female)}%
@@ -87,11 +105,23 @@ function PieChart({ male, female }) {
   }
 
   return (
-    <div className="pie-chart-wrap">
+    <div className="pie-chart-wrap" style={{ position: 'relative' }}>
       <svg viewBox="0 0 160 160" className="pie-svg">
-        <path d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`} fill="#3b82f6" />
-        <path d={`M ${cx} ${cy} L ${x2} ${y2} A ${r} ${r} 0 ${1 - large} 1 ${x1} ${y1} Z`} fill="#f97316" />
+        <path d={`M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`} fill="#3b82f6" style={{ outline: 'none', cursor: 'pointer' }}
+          onMouseEnter={() => handleHover("Male", male, "#3b82f6")}
+          onMouseLeave={clearHover}
+        />
+        <path d={`M ${cx} ${cy} L ${x2} ${y2} A ${r} ${r} 0 ${1 - large} 1 ${x1} ${y1} Z`} fill="#f97316" style={{ outline: 'none', cursor: 'pointer' }}
+          onMouseEnter={() => handleHover("Female", female, "#f97316")}
+          onMouseLeave={clearHover}
+        />
       </svg>
+      {hoverData && (
+        <div className="chart-tooltip" style={{ borderColor: hoverData.color, opacity: 1, visibility: 'visible', top: '45%', left: '50%', transform: 'translate(-50%, -50%)', pointerEvents: 'none' }}>
+          <div style={{ fontWeight: 600 }}>{hoverData.label}</div>
+          <div style={{ color: hoverData.color, marginTop: '0.2rem' }}>percentage : {Math.round(hoverData.pct)}%</div>
+        </div>
+      )}
       <div className="pie-legend">
         <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {Math.round(male)}%
         <span className="pie-legend-dot" style={{ background: '#f97316', marginLeft: '0.75rem' }} /> Female {Math.round(female)}%
@@ -442,6 +472,7 @@ export default function Payscale() {
           <div className="pay-summary-label">Total Careers</div>
           <div className="pay-summary-value">{careersLoading ? '…' : currentTotalJobs}</div>
           <div className="pay-summary-sub">Across selected filters</div>
+          <div className="pay-growth-badge"><TrendIcon /> Live</div>
         </div>
         {chartData.summaryCards.map(s => (
           <div key={s.label} className="pay-summary-card" style={{ '--card-color': s.color }}>
@@ -463,7 +494,12 @@ export default function Payscale() {
             {chartData.salaryDist.map(d => (
               <div key={d.range} className="pay-dist-col">
                 <div className="pay-dist-count">{d.count}</div>
-                <div className="pay-dist-fill" style={{ height: `${(d.count / maxDist) * 140}px` }} />
+                <div className="pay-dist-fill has-tooltip" style={{ height: `${(d.count / maxDist) * 140}px` }}>
+                  <div className="chart-tooltip" style={{ borderColor: '#3b82f6' }}>
+                    <div style={{ fontWeight: 600 }}>{d.range}</div>
+                    <div style={{ color: '#3b82f6', marginTop: '0.2rem' }}>count : {d.count}</div>
+                  </div>
+                </div>
                 <div className="pay-dist-label">{d.range}</div>
               </div>
             ))}
@@ -489,7 +525,12 @@ export default function Payscale() {
               <div key={b.name} className="pay-benefit-row">
                 <div className="pay-benefit-name">{b.name}</div>
                 <div className="pay-benefit-bar-wrap">
-                  <div className="pay-benefit-fill" style={{ width: `${b.pct}%` }} />
+                  <div className="pay-benefit-fill has-tooltip" style={{ width: `${b.pct}%` }}>
+                    <div className="chart-tooltip" style={{ borderColor: '#f97316' }}>
+                      <div style={{ fontWeight: 600 }}>{b.name}</div>
+                      <div style={{ color: '#f97316', marginTop: '0.2rem' }}>percentage : {b.pct}</div>
+                    </div>
+                  </div>
                 </div>
                 <span className="pay-benefit-pct">{b.pct}%</span>
               </div>
@@ -507,7 +548,12 @@ export default function Payscale() {
             {chartData.bars.map(bar => (
               <div key={bar.label} className="pay-bar-col">
                 <div className="pay-bar-val">{bar.value}k</div>
-                <div className="pay-bar-fill" style={{ height: `${(bar.value / maxBar) * 100}%`, background: bar.color }} title={`${bar.label}: ${bar.value}k`} />
+                <div className="pay-bar-fill has-tooltip" style={{ height: `${(bar.value / maxBar) * 100}%`, background: bar.color }}>
+                  <div className="chart-tooltip" style={{ borderColor: bar.color }}>
+                    <div style={{ fontWeight: 600 }}>{bar.label}</div>
+                    <div style={{ color: bar.color, marginTop: '0.2rem' }}>value : {bar.value}k</div>
+                  </div>
+                </div>
                 <div className="pay-bar-label">{bar.label}</div>
               </div>
             ))}
@@ -528,7 +574,12 @@ export default function Payscale() {
                   <span className="pay-demand-pct">{item.pct}%</span>
                 </div>
                 <div className="pay-demand-track">
-                  <div className="pay-demand-fill" style={{ width: `${item.pct}%`, background: item.color }} />
+                  <div className="pay-demand-fill has-tooltip" style={{ width: `${item.pct}%`, background: item.color }}>
+                    <div className="chart-tooltip" style={{ borderColor: item.color }}>
+                      <div style={{ fontWeight: 600 }}>{item.field}</div>
+                      <div style={{ color: item.color, marginTop: '0.2rem' }}>demand : {item.pct}%</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

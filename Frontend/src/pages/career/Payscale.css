@@ -263,7 +263,6 @@
   height: 14px;
   background: #f3f4f6;
   border-radius: 4px;
-  overflow: hidden;
 }
 
 .pay-benefit-fill {
@@ -368,7 +367,6 @@
   height: 6px;
   background: var(--border);
   border-radius: 999px;
-  overflow: hidden;
 }
 
 .pay-demand-fill {
@@ -899,4 +897,35 @@
 
 .career-modal-link-btn:hover {
   background: #111827;
+}
+
+/* ── Tooltip ────────────────────────────────────────────────────────────── */
+.has-tooltip {
+  position: relative;
+  cursor: pointer;
+}
+
+.chart-tooltip {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  border: 2px solid;
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--text-dark);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+  z-index: 50;
+  pointer-events: none;
+  width: max-content;
+}
+
+.has-tooltip:hover .chart-tooltip {
+  opacity: 1;
+  visibility: visible;
 }
