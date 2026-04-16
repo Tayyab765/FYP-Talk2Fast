@@ -1,45 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { fetchCareers, fetchCareerStats } from '../../api/career'
 import './Payscale.css'
-
-/* ── Static chart data (Local market context) ─────────────────────────── */
-const STATIC_CHART_DATA = {
-  bars: [
-    { label: 'CS / SE',    value: 140, max: 200, color: '#CD2B40' },
-    { label: 'Data Sci',   value: 160, max: 200, color: '#7c3aed' },
-    { label: 'AI / ML',    value: 180, max: 200, color: '#0d9488' },
-    { label: 'Cyber Sec',  value: 155, max: 200, color: '#d97706' },
-    { label: 'Elect Eng',  value: 110, max: 200, color: '#6366f1' },
-    { label: 'BBA',        value:  85, max: 200, color: '#ec4899' },
-  ],
-  demand: [
-    { field: 'AI / Machine Learning', pct: 94, color: '#0d9488' },
-    { field: 'Cybersecurity',         pct: 88, color: '#CD2B40' },
-    { field: 'Data Science',          pct: 82, color: '#7c3aed' },
-    { field: 'Cloud Engineering',     pct: 79, color: '#d97706' },
-    { field: 'Software Engineering',  pct: 91, color: '#6366f1' },
-  ],
-  salaryDist: [
-    { range: '0–300K',    count: 19 },
-    { range: '300k–600k', count: 25 },
-    { range: '600k–1M',   count: 36 },
-    { range: '1M–2M',     count: 14 },
-    { range: '2M+',       count:  3 },
-  ],
-  genderSplit: { male: 78, female: 22 },
-  benefits: [
-    { name: 'Medical', pct: 62 },
-    { name: 'Dental',  pct: 18 },
-    { name: 'Vision',  pct: 14 },
-    { name: 'None',    pct: 35 },
-  ],
-  summaryCards: [
-    { label: 'Avg Starting Salary', sub: 'per month',  color: '#CD2B40', growth: '+12%' },
-    { label: 'Mid-Level Avg',       sub: 'per month',  color: '#7c3aed', growth: '+18%' },
-    { label: 'Senior Avg',          sub: 'per month',  color: '#0d9488', growth: '+22%' },
-    { label: 'Freelance Potential', sub: 'per month',  color: '#d97706', growth: '+35%' },
-  ],
-}
 
 /* ── Field colour map ─────────────────────────────────────────────────── */
 const FIELD_COLOURS = {
@@ -49,8 +10,8 @@ const FIELD_COLOURS = {
 function fieldOf(job) {
   const t = (job.job_title || '').toLowerCase()
   if (/software|engineer|developer|it|computer|data\s+sci|ai|ml|cloud|cyber|tech/.test(t)) return 'Technology'
-  if (/doctor|nurse|medical|health|pharma|dental/.test(t)) return 'Healthcare'
-  if (/architect|design|ux|ui|creative/.test(t))           return 'Design'
+  if (/doctor|nurse|medical|health|pharma|dental|physi|psycho/.test(t)) return 'Healthcare'
+  if (/architect|design|ux|ui|creative|graphic/.test(t))           return 'Design'
   if (/account|financ|bank|audit|tax|invest/.test(t))       return 'Finance'
   if (/electrical|mechanical|civil|chemical|struct/.test(t)) return 'Engineering'
   return 'Business'
@@ -64,7 +25,7 @@ function formatPKR(num) {
   if (!num || isNaN(num)) return 'N/A'
   if (num >= 1_000_000) return `PKR ${(num / 1_000_000).toFixed(1)}M`
   if (num >= 1_000)     return `PKR ${Math.round(num / 1_000)}k`
-  return `PKR ${num}`
+  return `PKR ${Math.round(num)}`
 }
 
 /* ── Icons ─────────────────────────────────────────────────────────────── */
@@ -102,12 +63,29 @@ const ViewIcon = () => (
 /* ── Pie Chart ──────────────────────────────────────────────────────────── */
 function PieChart({ male, female }) {
   const r = 60; const cx = 80; const cy = 80
-  const total = male + female
+  const total = male + female || 1
   const maleDeg = (male / total) * 360
   const rad = d => (d * Math.PI) / 180
   const x1 = cx + r * Math.sin(0);  const y1 = cy - r * Math.cos(0)
   const x2 = cx + r * Math.sin(rad(maleDeg)); const y2 = cy - r * Math.cos(rad(maleDeg))
   const large = maleDeg > 180 ? 1 : 0
+  
+  // Handle 100% case edge logic
+  if (maleDeg === 360 || maleDeg === 0) {
+    const isMale = maleDeg === 360
+    return (
+      <div className="pie-chart-wrap">
+        <svg viewBox="0 0 160 160" className="pie-svg">
+          <circle cx={cx} cy={cy} r={r} fill={isMale ? "#3b82f6" : "#f97316"} />
+        </svg>
+        <div className="pie-legend">
+          <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {Math.round(male)}%
+          <span className="pie-legend-dot" style={{ background: '#f97316', marginLeft: '0.75rem' }} /> Female {Math.round(female)}%
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="pie-chart-wrap">
       <svg viewBox="0 0 160 160" className="pie-svg">
@@ -115,15 +93,15 @@ function PieChart({ male, female }) {
         <path d={`M ${cx} ${cy} L ${x2} ${y2} A ${r} ${r} 0 ${1 - large} 1 ${x1} ${y1} Z`} fill="#f97316" />
       </svg>
       <div className="pie-legend">
-        <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {male}%
-        <span className="pie-legend-dot" style={{ background: '#f97316', marginLeft: '0.75rem' }} /> Female {female}%
+        <span className="pie-legend-dot" style={{ background: '#3b82f6' }} /> Male {Math.round(male)}%
+        <span className="pie-legend-dot" style={{ background: '#f97316', marginLeft: '0.75rem' }} /> Female {Math.round(female)}%
       </div>
     </div>
   )
 }
 
 /* ── Career Card ───────────────────────────────────────────────────────── */
-function CareerCard({ career }) {
+function CareerCard({ career, onSelect }) {
   const field = fieldOf(career)
   const colour = FIELD_COLOURS[field] || '#6366f1'
   const salary = career.average_salary || career.avgSalary || '—'
@@ -142,7 +120,7 @@ function CareerCard({ career }) {
           <SalaryIcon />
           <div>
             <div className="career-stat-label">Average Salary</div>
-            <div className="career-stat-value">{salary} / year</div>
+            <div className="career-stat-value">{salary} {salary !== '—' && '/ ' + (career.salary_period?.replace('/ ', '') || 'year')}</div>
           </div>
         </div>
         <div className="career-stat-row">
@@ -153,9 +131,97 @@ function CareerCard({ career }) {
           </div>
         </div>
       </div>
-      <button className="career-view-btn" type="button">
+      <button className="career-view-btn" type="button" onClick={() => onSelect(career)}>
         <ViewIcon /> View Details
       </button>
+    </div>
+  )
+}
+
+/* ── Career Modal ──────────────────────────────────────────────────────── */
+function CareerModal({ career, onClose }) {
+  if (!career) return null;
+
+  const field = fieldOf(career);
+  const colour = FIELD_COLOURS[field] || '#6366f1';
+
+  return (
+    <div className="career-modal-backdrop" onClick={onClose}>
+      <div className="career-modal-cnt" onClick={e => e.stopPropagation()}>
+        <button className="career-modal-close" onClick={onClose}>×</button>
+        
+        <div className="career-modal-header" style={{ borderBottomColor: `${colour}33` }}>
+          <div className="career-modal-field" style={{ color: colour, background: `${colour}18` }}>{field}</div>
+          <h2 className="career-modal-title">{career.job_title || 'Career Details'}</h2>
+          <p className="career-modal-summary">{career.summary}</p>
+        </div>
+        
+        <div className="career-modal-grid">
+          <div className="cm-box">
+             <h4>💰 Salary Information</h4>
+             <div className="cm-row">
+               <span className="cm-label">Average Salary:</span> 
+               <span className="cm-val">{career.average_salary || 'N/A'} {career.salary_period || ''}</span>
+             </div>
+             <div className="cm-row">
+               <span className="cm-label">Median Salary:</span> 
+               <span className="cm-val">{career.median_salary || 'N/A'}</span>
+             </div>
+          </div>
+          
+          <div className="cm-box">
+             <h4>👥 Gender Distribution</h4>
+             {career.gender ? (
+                 <div className="cm-list">
+                    {Object.entries(career.gender).map(([k,v]) => (
+                      <div className="cm-row" key={k}>
+                        <span className="cm-label">{k}:</span> 
+                        <span className="cm-val">{v}</span>
+                      </div>
+                    ))}
+                 </div>
+             ) : <p className="cm-empty">No gender data</p>}
+          </div>
+
+          <div className="cm-box">
+             <h4>📈 Growth by Experience</h4>
+             {career.experience_levels && Object.keys(career.experience_levels).length > 0 ? (
+                 <div className="cm-list">
+                    {Object.entries(career.experience_levels).map(([k,v]) => (
+                        <div className="cm-row" key={k}>
+                           <span className="cm-label">{k}:</span> 
+                           <span className={`cm-val ${String(v).includes('▲') ? 'cm-pos' : String(v).includes('▼') ? 'cm-neg' : ''}`}>
+                             {v}
+                           </span>
+                        </div>
+                    ))}
+                 </div>
+             ) : <p className="cm-empty">No experience data</p>}
+          </div>
+
+          <div className="cm-box">
+             <h4>🏥 Benefits Coverage</h4>
+             {career.benefits && Object.keys(career.benefits).length > 0 ? (
+                 <div className="cm-list">
+                    {Object.entries(career.benefits).map(([k,v]) => (
+                      <div className="cm-row" key={k}>
+                        <span className="cm-label">{k}:</span> 
+                        <span className="cm-val">{v}</span>
+                      </div>
+                    ))}
+                 </div>
+             ) : <p className="cm-empty">No benefits data</p>}
+          </div>
+        </div>
+
+        {career.url && (
+          <div className="career-modal-footer">
+            <button className="career-modal-link-btn" onClick={() => window.open(career.url, '_blank')}>
+              View Full Index on Payscale <ViewIcon />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -182,6 +248,7 @@ export default function Payscale() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeField, setActiveField] = useState('All Fields')
   const [careerPage, setCareerPage] = useState(1)
+  const [selectedCareer, setSelectedCareer] = useState(null)
 
   /* Fetch on mount */
   useEffect(() => {
@@ -203,25 +270,179 @@ export default function Payscale() {
       .catch(() => { setStatsLoading(false) })
   }, [])
 
-  /* Derived stats */
-  const totalCareers = stats?.total_jobs ?? careers.length
-  const avgSalary    = stats?.avg_salary    ? formatPKR(stats.avg_salary)    : '—'
-  const minSalary    = stats?.min_salary    ? formatPKR(stats.min_salary)    : '—'
-  const maxSalary    = stats?.max_salary    ? formatPKR(stats.max_salary)    : '—'
-
   /* Filter careers */
-  const filtered = careers.filter(c => {
-    const title = (c.job_title || c.title || '').toLowerCase()
-    const f = fieldOf(c)
-    return title.includes(searchQuery.toLowerCase()) &&
-      (activeField === 'All Fields' || f === activeField)
-  })
+  const filtered = useMemo(() => {
+    return careers.filter(c => {
+      const title = (c.job_title || c.title || '').toLowerCase()
+      const f = fieldOf(c)
+      return title.includes(searchQuery.toLowerCase()) &&
+        (activeField === 'All Fields' || f === activeField)
+    })
+  }, [careers, searchQuery, activeField]);
+
+  /* Dynamic chart data derived from *filtered* 'careers' */
+  const chartData = useMemo(() => {
+    const defaultData = {
+      bars: [], demand: [], salaryDist: [
+        { range: '0–300K', count: 0 }, { range: '300k–600k', count: 0 },
+        { range: '600k–1M', count: 0 }, { range: '1M–2M', count: 0 }, { range: '2M+', count: 0 }
+      ],
+      genderSplit: { male: 50, female: 50 },
+      benefits: [
+        { name: 'Medical', pct: 0 }, { name: 'Dental', pct: 0 },
+        { name: 'Vision', pct: 0 }, { name: 'None', pct: 0 }
+      ],
+      summaryCards: [
+        { label: 'Avg Starting Salary', sub: 'per year', color: '#CD2B40', val: '—', growth: '+10% YoY' },
+        { label: 'Mid-Level Avg',       sub: 'per year', color: '#7c3aed', val: '—', growth: '+15% YoY' },
+        { label: 'Senior Avg',          sub: 'per year', color: '#0d9488', val: '—', growth: '+18% YoY' },
+        { label: 'Freelance Potential', sub: 'per year', color: '#d97706', val: '—', growth: '+25% YoY' }
+      ]
+    }
+    if (!filtered || filtered.length === 0) return defaultData;
+
+    let totalMale = 0, totalFemale = 0, genderCount = 0;
+    let bMedical = 0, bDental = 0, bVision = 0, bNone = 0, bCount = 0;
+    
+    let dist = { '0–300K': 0, '300k–600k': 0, '600k–1M': 0, '1M–2M': 0, '2M+': 0 };
+
+    let fieldSalaries = {};
+    let demandScore = {};
+    let totalSalaries = [];
+
+    filtered.forEach(c => {
+      // Parse gender
+      if (c.gender) {
+        if (c.gender.Male) totalMale += parseFloat(c.gender.Male.replace('%',''));
+        if (c.gender.Female) totalFemale += parseFloat(c.gender.Female.replace('%',''));
+        genderCount++;
+      }
+
+      // Parse benefits
+      if (c.benefits) {
+        if (c.benefits.Medical) bMedical += parseFloat(c.benefits.Medical.replace('%',''));
+        if (c.benefits.Dental) bDental += parseFloat(c.benefits.Dental.replace('%',''));
+        if (c.benefits.Vision) bVision += parseFloat(c.benefits.Vision.replace('%',''));
+        if (c.benefits.None) bNone += parseFloat(c.benefits.None.replace('%',''));
+        bCount++;
+      }
+
+      // Parse salary
+      let rawSalaryStr = c.average_salary || '';
+      let num = parseInt(rawSalaryStr.replace(/[^0-9]/g, ''), 10);
+      if (!isNaN(num)) {
+        let yearly = num;
+        
+        if (yearly < 300000) dist['0–300K']++;
+        else if (yearly < 600000) dist['300k–600k']++;
+        else if (yearly < 1000000) dist['600k–1M']++;
+        else if (yearly < 2000000) dist['1M–2M']++;
+        else dist['2M+']++;
+
+        totalSalaries.push(yearly);
+
+        // Field average
+        let f = fieldOf(c);
+        if (!fieldSalaries[f]) fieldSalaries[f] = [];
+        fieldSalaries[f].push(yearly);
+        
+        // Demand tracking
+        if (!demandScore[f]) demandScore[f] = 0;
+        demandScore[f] += 1;
+      }
+    });
+
+    // Compute averages
+    let m = genderCount ? (totalMale / genderCount) : 50;
+    let f = genderCount ? (totalFemale / genderCount) : 50;
+    if (m === 0 && f === 0) { m = 50; f = 50; }
+
+    const bc = Math.max(1, bCount);
+    let benefits = [
+      { name: 'Medical', pct: Math.round(bMedical / bc) },
+      { name: 'Dental', pct: Math.round(bDental / bc) },
+      { name: 'Vision', pct: Math.round(bVision / bc) },
+      { name: 'None', pct: Math.round(bNone / bc) }
+    ];
+
+    let bars = [];
+    Object.keys(FIELD_COLOURS).forEach(field => {
+      let salaries = fieldSalaries[field] || [];
+      if (salaries.length > 0) {
+        let avg = salaries.reduce((a, b) => a+b, 0) / salaries.length;
+        // The graph max scale should be dynamically matched. Keep relative monthly.
+        let mo = Math.round(avg / 12 / 1000); // Thousands/mo
+        bars.push({ label: field, value: mo, color: FIELD_COLOURS[field] });
+      } else if (activeField === 'All Fields') {
+        bars.push({ label: field, value: 0, color: FIELD_COLOURS[field] });
+      }
+    });
+    
+    // Sort bars to assign max correctly for display later
+    bars.sort((a,b) => b.value - a.value);
+
+    // Demand computation
+    let demandTotal = Math.max(1, filtered.length);
+    let demandArr = Object.entries(demandScore).map(([field, score]) => {
+      let pct = 40 + Math.floor((score / demandTotal) * 150);
+      return { field, pct: Math.min(100, pct), color: FIELD_COLOURS[field] || '#6366f1' };
+    }).sort((a,b)=>b.pct-a.pct).slice(0, 5);
+
+    if(demandArr.length === 0 && activeField !== 'All Fields'){
+      demandArr = [{ field: activeField, pct: 100, color: FIELD_COLOURS[activeField] || '#6366f1' }];
+    }
+
+    // Summary Cards (synthesize based on overall average)
+    let overallAvg = totalSalaries.length ? totalSalaries.reduce((a,b)=>a+b, 0) / totalSalaries.length : 800000;
+    
+    defaultData.summaryCards[0].val = formatPKR(overallAvg * 0.65);
+    defaultData.summaryCards[1].val = formatPKR(overallAvg);
+    defaultData.summaryCards[2].val = formatPKR(overallAvg * 1.55);
+    defaultData.summaryCards[3].val = formatPKR(overallAvg * 1.25);
+
+    return {
+      bars,
+      demand: demandArr,
+      salaryDist: [
+        { range: '0–300K', count: dist['0–300K'] },
+        { range: '300k–600k', count: dist['300k–600k'] },
+        { range: '600k–1M', count: dist['600k–1M'] },
+        { range: '1M–2M', count: dist['1M–2M'] },
+        { range: '2M+', count: dist['2M+'] }
+      ],
+      genderSplit: { male: m, female: f },
+      benefits,
+      summaryCards: defaultData.summaryCards
+    }
+  }, [filtered, activeField]);
+
+  /* Derived aggregate stats over FILTERED subset */
+  const currentTotalJobs = filtered.length;
+  // Compute true filtered min/max
+  let fMin = null;
+  let fMax = null;
+  let fTotal = 0;
+  let fCount = 0;
+  filtered.forEach(c => {
+    let r = c.average_salary || '';
+    let num = parseInt(r.replace(/[^0-9]/g, ''), 10);
+    if (!isNaN(num)) {
+      if (fMin === null || num < fMin) fMin = num;
+      if (fMax === null || num > fMax) fMax = num;
+      fTotal += num;
+      fCount++;
+    }
+  });
+
+  const avgSalary = fCount > 0 ? formatPKR(Math.round(fTotal / fCount)) : (statsLoading ? '…' : '—');
+  const minSalary = fMin !== null ? formatPKR(fMin) : (statsLoading ? '…' : '—');
+  const maxSalary = fMax !== null ? formatPKR(fMax) : (statsLoading ? '…' : '—');
 
   const totalPages  = Math.max(1, Math.ceil(filtered.length / CAREERS_PER_PAGE))
   const pagedCareers = filtered.slice((careerPage - 1) * CAREERS_PER_PAGE, careerPage * CAREERS_PER_PAGE)
 
-  const maxBar  = Math.max(...STATIC_CHART_DATA.bars.map(b => b.value))
-  const maxDist = Math.max(...STATIC_CHART_DATA.salaryDist.map(d => d.count))
+  const maxBar  = chartData.bars.length ? Math.max(...chartData.bars.map(b => b.value)) : 200
+  const maxDist = Math.max(...chartData.salaryDist.map(d => d.count), 1)
 
   return (
     <div className="payscale-page">
@@ -229,17 +450,17 @@ export default function Payscale() {
       <div className="pay-header">
         <div className="pay-title">Salary &amp; Market Insights</div>
         <div className="pay-subtitle">
-          Real salary data from {statsLoading ? '…' : totalCareers} careers. Explore earning potential and industry demand.
+          Real salary data across multiple industries. Explore earning potential and market demand.
         </div>
       </div>
 
       {/* ── Aggregate Stats Row ── */}
       <div className="pay-agg-row">
         {[
-          { label: 'Total Careers', value: statsLoading ? '…' : totalCareers, highlight: '#3b82f6', icon: '📊' },
-          { label: 'Avg Salary',    value: statsLoading ? '…' : avgSalary,    highlight: '#16a34a', icon: '💰' },
-          { label: 'Min Salary',    value: statsLoading ? '…' : minSalary,    highlight: '#CD2B40', icon: '📉' },
-          { label: 'Max Salary',    value: statsLoading ? '…' : maxSalary,    highlight: '#7c3aed', icon: '📈' },
+          { label: 'Total Matches', value: careersLoading ? '…' : currentTotalJobs, highlight: '#3b82f6', icon: '📊' },
+          { label: 'Avg Salary',    value: avgSalary,    highlight: '#16a34a', icon: '💰' },
+          { label: 'Min Salary',    value: minSalary,    highlight: '#CD2B40', icon: '📉' },
+          { label: 'Max Salary',    value: maxSalary,    highlight: '#7c3aed', icon: '📈' },
         ].map(s => (
           <div key={s.label} className="pay-agg-card">
             <div className="pay-agg-label">{s.label} <span className="pay-agg-icon">{s.icon}</span></div>
@@ -250,12 +471,12 @@ export default function Payscale() {
 
       {/* ── Summary Cards ── */}
       <div className="pay-summary-cards">
-        {STATIC_CHART_DATA.summaryCards.map(s => (
+        {chartData.summaryCards.map(s => (
           <div key={s.label} className="pay-summary-card" style={{ '--card-color': s.color }}>
             <div className="pay-summary-label">{s.label}</div>
-            <div className="pay-summary-value">—</div>
+            <div className="pay-summary-value">{s.val}</div>
             <div className="pay-summary-sub">{s.sub}</div>
-            <div className="pay-growth-badge"><TrendIcon /> {s.growth} YoY</div>
+            <div className="pay-growth-badge"><TrendIcon /> {s.growth}</div>
           </div>
         ))}
       </div>
@@ -267,7 +488,7 @@ export default function Payscale() {
           <div className="pay-card-title">Salary Distribution</div>
           <div className="pay-card-sub">Number of jobs by salary range</div>
           <div className="pay-dist-chart">
-            {STATIC_CHART_DATA.salaryDist.map(d => (
+            {chartData.salaryDist.map(d => (
               <div key={d.range} className="pay-dist-col">
                 <div className="pay-dist-count">{d.count}</div>
                 <div className="pay-dist-fill" style={{ height: `${(d.count / maxDist) * 140}px` }} />
@@ -276,15 +497,15 @@ export default function Payscale() {
             ))}
           </div>
           <div className="pay-dist-yaxis">
-            {[36, 27, 18, 9, 0].map(v => <span key={v} className="pay-dist-ytick">{v}</span>)}
+            {[Math.ceil(maxDist), Math.ceil(maxDist*0.75), Math.ceil(maxDist*0.5), Math.ceil(maxDist*0.25), 0].map((v, i) => <span key={i} className="pay-dist-ytick">{v}</span>)}
           </div>
         </div>
 
         {/* Gender Distribution */}
         <div className="pay-card pay-card-gender">
           <div className="pay-card-title">Gender Distribution</div>
-          <div className="pay-card-sub">Average across all careers</div>
-          <PieChart male={STATIC_CHART_DATA.genderSplit.male} female={STATIC_CHART_DATA.genderSplit.female} />
+          <div className="pay-card-sub">Average across filtered careers</div>
+          <PieChart male={chartData.genderSplit.male} female={chartData.genderSplit.female} />
         </div>
 
         {/* Benefits Coverage */}
@@ -292,13 +513,13 @@ export default function Payscale() {
           <div className="pay-card-title">Benefits Coverage</div>
           <div className="pay-card-sub">Average benefits offered</div>
           <div className="pay-benefits-list">
-            {STATIC_CHART_DATA.benefits.map(b => (
+            {chartData.benefits.map(b => (
               <div key={b.name} className="pay-benefit-row">
                 <div className="pay-benefit-name">{b.name}</div>
                 <div className="pay-benefit-bar-wrap">
                   <div className="pay-benefit-fill" style={{ width: `${b.pct}%` }} />
                 </div>
-                <span className="pay-benefit-pct">{b.pct}</span>
+                <span className="pay-benefit-pct">{b.pct}%</span>
               </div>
             ))}
           </div>
@@ -308,16 +529,19 @@ export default function Payscale() {
       {/* ── Salary Comparison by Degree + Demand ── */}
       <div className="pay-charts-grid">
         <div className="pay-card">
-          <div className="pay-card-title">Salary Comparison by Degree</div>
-          <div className="pay-card-sub">Average mid-career (PKR 000s/mo)</div>
+          <div className="pay-card-title">Salary Comparison by Field</div>
+          <div className="pay-card-sub">Average estimated (PKR 000s/mo)</div>
           <div className="pay-bar-chart">
-            {STATIC_CHART_DATA.bars.map(bar => (
+            {chartData.bars.map(bar => (
               <div key={bar.label} className="pay-bar-col">
                 <div className="pay-bar-val">{bar.value}k</div>
                 <div className="pay-bar-fill" style={{ height: `${(bar.value / maxBar) * 100}%`, background: bar.color }} title={`${bar.label}: ${bar.value}k`} />
                 <div className="pay-bar-label">{bar.label}</div>
               </div>
             ))}
+            {chartData.bars.length === 0 && (
+               <div style={{color: 'var(--text-muted)', fontSize: '0.8rem', padding: '2rem'}}>Not enough data</div>
+            )}
           </div>
         </div>
 
@@ -325,7 +549,7 @@ export default function Payscale() {
           <div className="pay-card-title">Demand Trends</div>
           <div className="pay-card-sub">Job market demand index (0–100)</div>
           <div className="pay-demand-list">
-            {STATIC_CHART_DATA.demand.map(item => (
+            {chartData.demand.map(item => (
               <div key={item.field} className="pay-demand-item">
                 <div className="pay-demand-row">
                   <span className="pay-demand-name">{item.field}</span>
@@ -362,7 +586,7 @@ export default function Payscale() {
 
         <div className="careers-list-header">
           <span className="careers-list-title">
-            {careersLoading ? 'Loading careers…' : `${filtered.length} Careers (${totalCareers} total)`}
+            {careersLoading ? 'Loading careers…' : `${filtered.length} Careers Found`}
           </span>
           {!careersLoading && <span className="careers-page-label">Page {careerPage} of {totalPages}</span>}
         </div>
@@ -378,7 +602,7 @@ export default function Payscale() {
         ) : pagedCareers.length > 0 ? (
           <div className="careers-grid">
             {pagedCareers.map((career, i) => (
-              <CareerCard key={career.job_title + i} career={career} />
+              <CareerCard key={career.job_title + i} career={career} onSelect={setSelectedCareer} />
             ))}
           </div>
         ) : (
@@ -396,11 +620,19 @@ export default function Payscale() {
               <ChevronIcon dir="left" /> Prev
             </button>
             <div className="pag-dots">
-              {Array.from({ length: Math.min(totalPages, 7) }).map((_, i) => (
-                <button key={i} className={`pag-dot${careerPage === i + 1 ? ' active' : ''}`} onClick={() => setCareerPage(i + 1)} type="button">
-                  {i + 1}
-                </button>
-              ))}
+              {Array.from({ length: Math.min(totalPages, 7) }).map((_, i) => {
+                // Adjust index for dots when page is past 7
+                let pageNum = i + 1;
+                if (totalPages > 7) {
+                  if (careerPage > 4) pageNum = careerPage - 3 + i;
+                  if (careerPage > totalPages - 3) pageNum = totalPages - 6 + i;
+                }
+                return (
+                  <button key={i} className={`pag-dot${careerPage === pageNum ? ' active' : ''}`} onClick={() => setCareerPage(pageNum)} type="button">
+                    {pageNum}
+                  </button>
+                )
+              })}
             </div>
             <button className="pag-btn" onClick={() => setCareerPage(p => Math.min(totalPages, p + 1))} disabled={careerPage === totalPages} type="button">
               Next <ChevronIcon dir="right" />
@@ -408,6 +640,9 @@ export default function Payscale() {
           </div>
         )}
       </div>
+      
+      {/* ── Popup Modal ── */}
+      <CareerModal career={selectedCareer} onClose={() => setSelectedCareer(null)} />
     </div>
   )
 }
