@@ -11,8 +11,8 @@ function fieldOf(job) {
   const t = (job.job_title || '').toLowerCase()
   if (/software|engineer|developer|it|computer|data\s+sci|ai|ml|cloud|cyber|tech/.test(t)) return 'Technology'
   if (/doctor|nurse|medical|health|pharma|dental|physi|psycho/.test(t)) return 'Healthcare'
-  if (/architect|design|ux|ui|creative|graphic/.test(t))           return 'Design'
-  if (/account|financ|bank|audit|tax|invest/.test(t))       return 'Finance'
+  if (/architect|design|ux|ui|creative|graphic/.test(t)) return 'Design'
+  if (/account|financ|bank|audit|tax|invest/.test(t)) return 'Finance'
   if (/electrical|mechanical|civil|chemical|struct/.test(t)) return 'Engineering'
   return 'Business'
 }
@@ -24,7 +24,7 @@ const CAREERS_PER_PAGE = 6
 function formatPKR(num) {
   if (!num || isNaN(num)) return 'N/A'
   if (num >= 1_000_000) return `PKR ${(num / 1_000_000).toFixed(1)}M`
-  if (num >= 1_000)     return `PKR ${Math.round(num / 1_000)}k`
+  if (num >= 1_000) return `PKR ${Math.round(num / 1_000)}k`
   return `PKR ${Math.round(num)}`
 }
 
@@ -66,10 +66,10 @@ function PieChart({ male, female }) {
   const total = male + female || 1
   const maleDeg = (male / total) * 360
   const rad = d => (d * Math.PI) / 180
-  const x1 = cx + r * Math.sin(0);  const y1 = cy - r * Math.cos(0)
+  const x1 = cx + r * Math.sin(0); const y1 = cy - r * Math.cos(0)
   const x2 = cx + r * Math.sin(rad(maleDeg)); const y2 = cy - r * Math.cos(rad(maleDeg))
   const large = maleDeg > 180 ? 1 : 0
-  
+
   // Handle 100% case edge logic
   if (maleDeg === 360 || maleDeg === 0) {
     const isMale = maleDeg === 360
@@ -105,7 +105,7 @@ function CareerCard({ career, onSelect }) {
   const field = fieldOf(career)
   const colour = FIELD_COLOURS[field] || '#6366f1'
   const salary = career.average_salary || career.avgSalary || '—'
-  const title  = career.job_title      || career.title || '—'
+  const title = career.job_title || career.title || '—'
 
   return (
     <div className="career-card-item">
@@ -149,68 +149,68 @@ function CareerModal({ career, onClose }) {
     <div className="career-modal-backdrop" onClick={onClose}>
       <div className="career-modal-cnt" onClick={e => e.stopPropagation()}>
         <button className="career-modal-close" onClick={onClose}>×</button>
-        
+
         <div className="career-modal-header" style={{ borderBottomColor: `${colour}33` }}>
           <div className="career-modal-field" style={{ color: colour, background: `${colour}18` }}>{field}</div>
           <h2 className="career-modal-title">{career.job_title || 'Career Details'}</h2>
           <p className="career-modal-summary">{career.summary}</p>
         </div>
-        
+
         <div className="career-modal-grid">
           <div className="cm-box">
-             <h4>💰 Salary Information</h4>
-             <div className="cm-row">
-               <span className="cm-label">Average Salary:</span> 
-               <span className="cm-val">{career.average_salary || 'N/A'} {career.salary_period || ''}</span>
-             </div>
-             <div className="cm-row">
-               <span className="cm-label">Median Salary:</span> 
-               <span className="cm-val">{career.median_salary || 'N/A'}</span>
-             </div>
-          </div>
-          
-          <div className="cm-box">
-             <h4>👥 Gender Distribution</h4>
-             {career.gender ? (
-                 <div className="cm-list">
-                    {Object.entries(career.gender).map(([k,v]) => (
-                      <div className="cm-row" key={k}>
-                        <span className="cm-label">{k}:</span> 
-                        <span className="cm-val">{v}</span>
-                      </div>
-                    ))}
-                 </div>
-             ) : <p className="cm-empty">No gender data</p>}
+            <h4>💰 Salary Information</h4>
+            <div className="cm-row">
+              <span className="cm-label">Average Salary:</span>
+              <span className="cm-val">{career.average_salary || 'N/A'} {career.salary_period || ''}</span>
+            </div>
+            <div className="cm-row">
+              <span className="cm-label">Median Salary:</span>
+              <span className="cm-val">{career.median_salary || 'N/A'}</span>
+            </div>
           </div>
 
           <div className="cm-box">
-             <h4>📈 Growth by Experience</h4>
-             {career.experience_levels && Object.keys(career.experience_levels).length > 0 ? (
-                 <div className="cm-list">
-                    {Object.entries(career.experience_levels).map(([k,v]) => (
-                        <div className="cm-row" key={k}>
-                           <span className="cm-label">{k}:</span> 
-                           <span className={`cm-val ${String(v).includes('▲') ? 'cm-pos' : String(v).includes('▼') ? 'cm-neg' : ''}`}>
-                             {v}
-                           </span>
-                        </div>
-                    ))}
-                 </div>
-             ) : <p className="cm-empty">No experience data</p>}
+            <h4>👥 Gender Distribution</h4>
+            {career.gender ? (
+              <div className="cm-list">
+                {Object.entries(career.gender).map(([k, v]) => (
+                  <div className="cm-row" key={k}>
+                    <span className="cm-label">{k}:</span>
+                    <span className="cm-val">{v}</span>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="cm-empty">No gender data</p>}
           </div>
 
           <div className="cm-box">
-             <h4>🏥 Benefits Coverage</h4>
-             {career.benefits && Object.keys(career.benefits).length > 0 ? (
-                 <div className="cm-list">
-                    {Object.entries(career.benefits).map(([k,v]) => (
-                      <div className="cm-row" key={k}>
-                        <span className="cm-label">{k}:</span> 
-                        <span className="cm-val">{v}</span>
-                      </div>
-                    ))}
-                 </div>
-             ) : <p className="cm-empty">No benefits data</p>}
+            <h4>📈 Growth by Experience</h4>
+            {career.experience_levels && Object.keys(career.experience_levels).length > 0 ? (
+              <div className="cm-list">
+                {Object.entries(career.experience_levels).map(([k, v]) => (
+                  <div className="cm-row" key={k}>
+                    <span className="cm-label">{k}:</span>
+                    <span className={`cm-val ${String(v).includes('▲') ? 'cm-pos' : String(v).includes('▼') ? 'cm-neg' : ''}`}>
+                      {v}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="cm-empty">No experience data</p>}
+          </div>
+
+          <div className="cm-box">
+            <h4>🏥 Benefits Coverage</h4>
+            {career.benefits && Object.keys(career.benefits).length > 0 ? (
+              <div className="cm-list">
+                {Object.entries(career.benefits).map(([k, v]) => (
+                  <div className="cm-row" key={k}>
+                    <span className="cm-label">{k}:</span>
+                    <span className="cm-val">{v}</span>
+                  </div>
+                ))}
+              </div>
+            ) : <p className="cm-empty">No benefits data</p>}
           </div>
         </div>
 
@@ -294,8 +294,8 @@ export default function Payscale() {
       ],
       summaryCards: [
         { label: 'Avg Starting Salary', sub: 'per year', color: '#CD2B40', val: '—', growth: '+10% YoY' },
-        { label: 'Mid-Level Avg',       sub: 'per year', color: '#7c3aed', val: '—', growth: '+15% YoY' },
-        { label: 'Senior Avg',          sub: 'per year', color: '#0d9488', val: '—', growth: '+18% YoY' },
+        { label: 'Mid-Level Avg', sub: 'per year', color: '#7c3aed', val: '—', growth: '+15% YoY' },
+        { label: 'Senior Avg', sub: 'per year', color: '#0d9488', val: '—', growth: '+18% YoY' },
         { label: 'Freelance Potential', sub: 'per year', color: '#d97706', val: '—', growth: '+25% YoY' }
       ]
     }
@@ -303,7 +303,7 @@ export default function Payscale() {
 
     let totalMale = 0, totalFemale = 0, genderCount = 0;
     let bMedical = 0, bDental = 0, bVision = 0, bNone = 0, bCount = 0;
-    
+
     let dist = { '0–300K': 0, '300k–600k': 0, '600k–1M': 0, '1M–2M': 0, '2M+': 0 };
 
     let fieldSalaries = {};
@@ -313,17 +313,17 @@ export default function Payscale() {
     filtered.forEach(c => {
       // Parse gender
       if (c.gender) {
-        if (c.gender.Male) totalMale += parseFloat(c.gender.Male.replace('%',''));
-        if (c.gender.Female) totalFemale += parseFloat(c.gender.Female.replace('%',''));
+        if (c.gender.Male) totalMale += parseFloat(c.gender.Male.replace('%', ''));
+        if (c.gender.Female) totalFemale += parseFloat(c.gender.Female.replace('%', ''));
         genderCount++;
       }
 
       // Parse benefits
       if (c.benefits) {
-        if (c.benefits.Medical) bMedical += parseFloat(c.benefits.Medical.replace('%',''));
-        if (c.benefits.Dental) bDental += parseFloat(c.benefits.Dental.replace('%',''));
-        if (c.benefits.Vision) bVision += parseFloat(c.benefits.Vision.replace('%',''));
-        if (c.benefits.None) bNone += parseFloat(c.benefits.None.replace('%',''));
+        if (c.benefits.Medical) bMedical += parseFloat(c.benefits.Medical.replace('%', ''));
+        if (c.benefits.Dental) bDental += parseFloat(c.benefits.Dental.replace('%', ''));
+        if (c.benefits.Vision) bVision += parseFloat(c.benefits.Vision.replace('%', ''));
+        if (c.benefits.None) bNone += parseFloat(c.benefits.None.replace('%', ''));
         bCount++;
       }
 
@@ -332,7 +332,7 @@ export default function Payscale() {
       let num = parseInt(rawSalaryStr.replace(/[^0-9]/g, ''), 10);
       if (!isNaN(num)) {
         let yearly = num;
-        
+
         if (yearly < 300000) dist['0–300K']++;
         else if (yearly < 600000) dist['300k–600k']++;
         else if (yearly < 1000000) dist['600k–1M']++;
@@ -345,7 +345,7 @@ export default function Payscale() {
         let f = fieldOf(c);
         if (!fieldSalaries[f]) fieldSalaries[f] = [];
         fieldSalaries[f].push(yearly);
-        
+
         // Demand tracking
         if (!demandScore[f]) demandScore[f] = 0;
         demandScore[f] += 1;
@@ -369,7 +369,7 @@ export default function Payscale() {
     Object.keys(FIELD_COLOURS).forEach(field => {
       let salaries = fieldSalaries[field] || [];
       if (salaries.length > 0) {
-        let avg = salaries.reduce((a, b) => a+b, 0) / salaries.length;
+        let avg = salaries.reduce((a, b) => a + b, 0) / salaries.length;
         // The graph max scale should be dynamically matched. Keep relative monthly.
         let mo = Math.round(avg / 12 / 1000); // Thousands/mo
         bars.push({ label: field, value: mo, color: FIELD_COLOURS[field] });
@@ -377,24 +377,24 @@ export default function Payscale() {
         bars.push({ label: field, value: 0, color: FIELD_COLOURS[field] });
       }
     });
-    
+
     // Sort bars to assign max correctly for display later
-    bars.sort((a,b) => b.value - a.value);
+    bars.sort((a, b) => b.value - a.value);
 
     // Demand computation
     let demandTotal = Math.max(1, filtered.length);
     let demandArr = Object.entries(demandScore).map(([field, score]) => {
       let pct = 40 + Math.floor((score / demandTotal) * 150);
       return { field, pct: Math.min(100, pct), color: FIELD_COLOURS[field] || '#6366f1' };
-    }).sort((a,b)=>b.pct-a.pct).slice(0, 5);
+    }).sort((a, b) => b.pct - a.pct).slice(0, 5);
 
-    if(demandArr.length === 0 && activeField !== 'All Fields'){
+    if (demandArr.length === 0 && activeField !== 'All Fields') {
       demandArr = [{ field: activeField, pct: 100, color: FIELD_COLOURS[activeField] || '#6366f1' }];
     }
 
     // Summary Cards (synthesize based on overall average)
-    let overallAvg = totalSalaries.length ? totalSalaries.reduce((a,b)=>a+b, 0) / totalSalaries.length : 800000;
-    
+    let overallAvg = totalSalaries.length ? totalSalaries.reduce((a, b) => a + b, 0) / totalSalaries.length : 800000;
+
     defaultData.summaryCards[0].val = formatPKR(overallAvg * 0.65);
     defaultData.summaryCards[1].val = formatPKR(overallAvg);
     defaultData.summaryCards[2].val = formatPKR(overallAvg * 1.55);
@@ -418,30 +418,12 @@ export default function Payscale() {
 
   /* Derived aggregate stats over FILTERED subset */
   const currentTotalJobs = filtered.length;
-  // Compute true filtered min/max
-  let fMin = null;
-  let fMax = null;
-  let fTotal = 0;
-  let fCount = 0;
-  filtered.forEach(c => {
-    let r = c.average_salary || '';
-    let num = parseInt(r.replace(/[^0-9]/g, ''), 10);
-    if (!isNaN(num)) {
-      if (fMin === null || num < fMin) fMin = num;
-      if (fMax === null || num > fMax) fMax = num;
-      fTotal += num;
-      fCount++;
-    }
-  });
 
-  const avgSalary = fCount > 0 ? formatPKR(Math.round(fTotal / fCount)) : (statsLoading ? '…' : '—');
-  const minSalary = fMin !== null ? formatPKR(fMin) : (statsLoading ? '…' : '—');
-  const maxSalary = fMax !== null ? formatPKR(fMax) : (statsLoading ? '…' : '—');
 
-  const totalPages  = Math.max(1, Math.ceil(filtered.length / CAREERS_PER_PAGE))
+  const totalPages = Math.max(1, Math.ceil(filtered.length / CAREERS_PER_PAGE))
   const pagedCareers = filtered.slice((careerPage - 1) * CAREERS_PER_PAGE, careerPage * CAREERS_PER_PAGE)
 
-  const maxBar  = chartData.bars.length ? Math.max(...chartData.bars.map(b => b.value)) : 200
+  const maxBar = chartData.bars.length ? Math.max(...chartData.bars.map(b => b.value)) : 200
   const maxDist = Math.max(...chartData.salaryDist.map(d => d.count), 1)
 
   return (
@@ -454,23 +436,13 @@ export default function Payscale() {
         </div>
       </div>
 
-      {/* ── Aggregate Stats Row ── */}
-      <div className="pay-agg-row">
-        {[
-          { label: 'Total Matches', value: careersLoading ? '…' : currentTotalJobs, highlight: '#3b82f6', icon: '📊' },
-          { label: 'Avg Salary',    value: avgSalary,    highlight: '#16a34a', icon: '💰' },
-          { label: 'Min Salary',    value: minSalary,    highlight: '#CD2B40', icon: '📉' },
-          { label: 'Max Salary',    value: maxSalary,    highlight: '#7c3aed', icon: '📈' },
-        ].map(s => (
-          <div key={s.label} className="pay-agg-card">
-            <div className="pay-agg-label">{s.label} <span className="pay-agg-icon">{s.icon}</span></div>
-            <div className="pay-agg-value" style={{ color: s.highlight }}>{s.value}</div>
-          </div>
-        ))}
-      </div>
-
       {/* ── Summary Cards ── */}
       <div className="pay-summary-cards">
+        <div className="pay-summary-card" style={{ '--card-color': '#3b82f6' }}>
+          <div className="pay-summary-label">Total Careers</div>
+          <div className="pay-summary-value">{careersLoading ? '…' : currentTotalJobs}</div>
+          <div className="pay-summary-sub">Across selected filters</div>
+        </div>
         {chartData.summaryCards.map(s => (
           <div key={s.label} className="pay-summary-card" style={{ '--card-color': s.color }}>
             <div className="pay-summary-label">{s.label}</div>
@@ -497,7 +469,7 @@ export default function Payscale() {
             ))}
           </div>
           <div className="pay-dist-yaxis">
-            {[Math.ceil(maxDist), Math.ceil(maxDist*0.75), Math.ceil(maxDist*0.5), Math.ceil(maxDist*0.25), 0].map((v, i) => <span key={i} className="pay-dist-ytick">{v}</span>)}
+            {[Math.ceil(maxDist), Math.ceil(maxDist * 0.75), Math.ceil(maxDist * 0.5), Math.ceil(maxDist * 0.25), 0].map((v, i) => <span key={i} className="pay-dist-ytick">{v}</span>)}
           </div>
         </div>
 
@@ -540,7 +512,7 @@ export default function Payscale() {
               </div>
             ))}
             {chartData.bars.length === 0 && (
-               <div style={{color: 'var(--text-muted)', fontSize: '0.8rem', padding: '2rem'}}>Not enough data</div>
+              <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem', padding: '2rem' }}>Not enough data</div>
             )}
           </div>
         </div>
@@ -640,7 +612,7 @@ export default function Payscale() {
           </div>
         )}
       </div>
-      
+
       {/* ── Popup Modal ── */}
       <CareerModal career={selectedCareer} onClose={() => setSelectedCareer(null)} />
     </div>
