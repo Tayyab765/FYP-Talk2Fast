@@ -69,16 +69,16 @@ export function TestProvider({ children }) {
 
   /**
    * Start a new test attempt
-   * @param {string} testId - Test template ID
+   * @param {string} difficulty - Test difficulty level (easy, medium, hard)
    */
-  const startNewTest = useCallback(async (testId) => {
+  const startNewTest = useCallback(async (difficulty) => {
     setIsLoading(true)
     try {
-      const response = await startTest(testId)
+      const response = await startTest(difficulty)
       
       setCurrentAttempt({
         attemptId: response.attemptId,
-        testId: testId,
+        testDifficulty: difficulty,
       })
       
       // Ensure currentSection is always a valid number (0-3)

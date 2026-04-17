@@ -28,7 +28,7 @@ export default function DashboardHeader() {
 
   return (
     <header className="dashboard-header">
-      <span className="intake-tag">Fall 2024 Intake</span>
+      <span className="session-tag">Fall 2026</span>
       <div className="dashboard-header-right">
         <button type="button" className="icon-btn" aria-label="Notifications">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

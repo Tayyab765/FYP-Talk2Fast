@@ -9,15 +9,114 @@ import { calculateRemainingTime, validateSectionTiming, getSectionDuration } fro
 // ─────────────────────────────────────────────────────────────────
 
 /**
- * Fetch questions for a specific section, sorted by order.
+ * Difficulty ratios for each test level and section
+ * Adjusted based on available questions in database
+ * 
+ * Available questions:
+ * - Advance Math: 332 easy, 383 medium, 270 hard
+ * - Basic Math: 100 easy, 121 medium, 66 hard
+ * - IQ & Logical: 38 easy, 38 medium, 24 hard
+ * - English: 43 easy, 83 medium, 1 hard (LIMITED!)
+ */
+const DIFFICULTY_RATIOS = {
+  easy: {
+    'Advance Math': { easy: 30, medium: 15, hard: 5 },
+    'Basic Math': { easy: 12, medium: 6, hard: 2 },
+    'IQ & Logical': { easy: 12, medium: 6, hard: 2 },
+    'English': { easy: 16, medium: 13, hard: 1 }  // Only 1 hard available
+  },
+  medium: {
+    'Advance Math': { easy: 12, medium: 25, hard: 13 },
+    'Basic Math': { easy: 5, medium: 10, hard: 5 },
+    'IQ & Logical': { easy: 5, medium: 10, hard: 5 },
+    'English': { easy: 8, medium: 21, hard: 1 }  // Adjusted: 21 medium, 1 hard (only 1 available)
+  },
+  hard: {
+    'Advance Math': { easy: 5, medium: 15, hard: 30 },
+    'Basic Math': { easy: 2, medium: 6, hard: 12 },
+    'IQ & Logical': { easy: 2, medium: 6, hard: 12 },
+    'English': { easy: 1, medium: 28, hard: 1 }  // Adjusted: 28 medium, 1 hard (only 1 available)
+  }
+};
+
+/**
+ * Fisher-Yates shuffle algorithm
+ */
+function shuffleArray(array) {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+}
+
+/**
+ * Select random questions from question bank based on difficulty ratios
+ * 
+ * @param {string} sectionName - Section name
+ * @param {string} testDifficulty - Test difficulty level (easy/medium/hard)
+ * @returns {Array} Selected question IDs
+ */
+async function selectQuestionsForSection(sectionName, testDifficulty) {
+  const ratios = DIFFICULTY_RATIOS[testDifficulty][sectionName];
+  const selectedQuestions = [];
+
+  // Select questions for each difficulty level
+  for (const [difficulty, count] of Object.entries(ratios)) {
+    // Fetch available questions from question bank (testId is null)
+    const availableQuestions = await Question.find({
+      section: sectionName,
+      difficulty: difficulty,
+      testId: null
+    })
+    .select('_id')
+    .lean();
+
+    if (availableQuestions.length < count) {
+      logger.warn(
+        `Not enough ${difficulty} questions for ${sectionName}. ` +
+        `Need ${count}, have ${availableQuestions.length}`
+      );
+    }
+
+    // Shuffle and select required count
+    const shuffled = shuffleArray(availableQuestions);
+    const selected = shuffled.slice(0, count);
+    selectedQuestions.push(...selected.map(q => q._id.toString()));
+  }
+
+  return selectedQuestions;
+}
+
+/**
+ * Fetch questions for a specific section.
+ * If attempt has stored question order for this section, use it.
+ * Otherwise, randomize and store the order.
  * Excludes correctAnswer so it is never sent to the client during a live test.
  * Requirements: 3.3, 21.1, 25.6
+ * 
+ * @param {string} sectionName - Section name
+ * @param {Object} attempt - TestAttempt document (required for storing/retrieving order)
  */
-export async function getQuestionsForSection(testId, sectionName) {
-  return Question.find({ testId, section: sectionName })
+export async function getQuestionsForSection(sectionName, attempt) {
+  // Get stored question IDs for this section
+  const questionIds = attempt.questionOrder.get(sectionName);
+  
+  if (!questionIds || questionIds.length === 0) {
+    throw new Error(`No questions found for section: ${sectionName}`);
+  }
+
+  // Fetch questions in the stored order
+  const questions = await Question.find({ _id: { $in: questionIds } })
     .select('-correctAnswer')
-    .sort({ order: 1 })
     .lean();
+
+  // Reorder based on stored order
+  const questionMap = new Map(questions.map(q => [q._id.toString(), q]));
+  const orderedQuestions = questionIds.map(id => questionMap.get(id)).filter(Boolean);
+
+  return orderedQuestions;
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -25,45 +124,48 @@ export async function getQuestionsForSection(testId, sectionName) {
 // ─────────────────────────────────────────────────────────────────
 
 /**
- * Create a new TestAttempt for the given test and user.
+ * Create a new TestAttempt with dynamically generated questions.
+ * Questions are selected from the question bank based on difficulty ratios.
  * Sets currentSection=0, status="in_progress", records startedAt,
  * and initialises the first section timestamp.
  *
  * Requirements: 3.1, 3.2, 3.4, 3.5, 3.6
- * @param {string} testId
+ * @param {string} testDifficulty - Test difficulty level (easy/medium/hard)
  * @param {string} userId
  * @param {string} userType  - "authenticated" | "guest"
  * @returns {Object} { attempt, questions, sectionName, sectionDuration }
  */
-export async function startTest(testId, userId, userType) {
-  const test = await MockTest.findById(testId).lean();
-  if (!test) {
-    const err = new Error('Test not found');
-    err.code = 'TEST_NOT_FOUND';
-    err.status = 404;
-    throw err;
-  }
-
-  if (!test.isActive) {
-    const err = new Error('Test is not available');
-    err.code = 'TEST_INACTIVE';
+export async function startTest(testDifficulty, userId, userType) {
+  // Validate difficulty
+  if (!['easy', 'medium', 'hard'].includes(testDifficulty)) {
+    const err = new Error('Invalid test difficulty. Must be easy, medium, or hard');
+    err.code = 'INVALID_DIFFICULTY';
     err.status = 400;
     throw err;
   }
 
-  // Sort sections by order to get the first one
-  const sortedSections = [...test.sections].sort((a, b) => a.order - b.order);
-  const firstSection = sortedSections[0];
-  const now = new Date();
+  // Define section structure (FAST exam format)
+  const sections = [
+    { name: 'Advance Math', duration: 50, order: 0 },
+    { name: 'Basic Math', duration: 20, order: 1 },
+    { name: 'IQ & Logical', duration: 20, order: 2 },
+    { name: 'English', duration: 30, order: 3 }
+  ];
 
+  const now = new Date();
+  const firstSection = sections[0];
+
+  // Create attempt with empty questionOrder (will be populated below)
   const attempt = new TestAttempt({
     userId,
     userType,
-    testId,
+    testId: null, // No template, dynamically generated
+    testDifficulty, // Store difficulty level
     currentSection: 0,
     status: 'in_progress',
     answers: new Map(),
     markedForReview: [],
+    questionOrder: new Map(),
     sectionTimestamps: [
       {
         sectionIndex: 0,
@@ -76,16 +178,32 @@ export async function startTest(testId, userId, userType) {
     startedAt: now,
   });
 
-  await attempt.save();
-  logger.info(`Test started: attemptId=${attempt._id} testId=${testId} userId=${userId}`);
+  // Generate questions for all sections and store in questionOrder
+  logger.info(`Generating ${testDifficulty} test for userId=${userId}`);
+  
+  for (const section of sections) {
+    const questionIds = await selectQuestionsForSection(section.name, testDifficulty);
+    attempt.questionOrder.set(section.name, questionIds);
+    logger.info(
+      `Selected ${questionIds.length} questions for ${section.name} ` +
+      `(difficulty: ${testDifficulty})`
+    );
+  }
 
-  const questions = await getQuestionsForSection(testId, firstSection.name);
+  await attempt.save();
+  logger.info(
+    `Test started: attemptId=${attempt._id} difficulty=${testDifficulty} userId=${userId}`
+  );
+
+  // Get questions for first section
+  const questions = await getQuestionsForSection(firstSection.name, attempt);
 
   return {
     attempt: attempt.toObject(),
     questions,
     sectionName: firstSection.name,
     sectionDuration: firstSection.duration,
+    testDifficulty,
   };
 }
 
@@ -102,18 +220,17 @@ export async function startTest(testId, userId, userType) {
  * @returns {Object} Attempt state with questions and timeRemaining
  */
 export async function getAttemptState(attempt) {
-  const test = await MockTest.findById(attempt.testId).lean();
-  if (!test) {
-    const err = new Error('Test not found');
-    err.code = 'TEST_NOT_FOUND';
-    err.status = 404;
-    throw err;
-  }
+  // Define section structure (FAST exam format)
+  const sections = [
+    { name: 'Advance Math', duration: 50, order: 0 },
+    { name: 'Basic Math', duration: 20, order: 1 },
+    { name: 'IQ & Logical', duration: 20, order: 2 },
+    { name: 'English', duration: 30, order: 3 }
+  ];
 
-  const sortedSections = [...test.sections].sort((a, b) => a.order - b.order);
-  const currentSectionMeta = sortedSections[attempt.currentSection];
+  const currentSectionMeta = sections[attempt.currentSection];
 
-  const questions = await getQuestionsForSection(attempt.testId, currentSectionMeta.name);
+  const questions = await getQuestionsForSection(currentSectionMeta.name, attempt);
   const timeRemaining = calculateRemainingTime(attempt, attempt.currentSection);
 
   // Convert Map to plain object for JSON serialisation
@@ -123,7 +240,7 @@ export async function getAttemptState(attempt) {
 
   return {
     attemptId: attempt._id,
-    testId: attempt.testId,
+    testDifficulty: attempt.testDifficulty,
     currentSection: attempt.currentSection,
     sectionName: currentSectionMeta.name,
     sectionDuration: currentSectionMeta.duration,
@@ -142,7 +259,7 @@ export async function getAttemptState(attempt) {
 
 /**
  * Persist a single answer for the given question.
- * Validates that the questionId belongs to the current section.
+ * Validates that the questionId belongs to the current attempt.
  *
  * Requirements: 5.2, 5.4, 5.5, 5.6, 22.1
  * @param {Object} attempt - TestAttempt document
@@ -158,10 +275,17 @@ export async function saveAnswer(attempt, questionId, answer) {
     throw err;
   }
 
-  // Validate questionId belongs to the current test
-  const question = await Question.findOne({ _id: questionId, testId: attempt.testId }).lean();
-  if (!question) {
-    const err = new Error('Question not found in this test');
+  // Validate questionId belongs to this attempt's question set
+  let isValidQuestion = false;
+  for (const [sectionName, questionIds] of attempt.questionOrder.entries()) {
+    if (questionIds.includes(questionId)) {
+      isValidQuestion = true;
+      break;
+    }
+  }
+
+  if (!isValidQuestion) {
+    const err = new Error('Question not found in this test attempt');
     err.code = 'QUESTION_NOT_FOUND';
     err.status = 404;
     throw err;
@@ -243,9 +367,15 @@ export async function submitSection(attempt, sectionIndex) {
     throw err;
   }
 
-  const test = await MockTest.findById(attempt.testId).lean();
-  const sortedSections = [...test.sections].sort((a, b) => a.order - b.order);
-  const totalSections = sortedSections.length;
+  // Define section structure (FAST exam format)
+  const sections = [
+    { name: 'Advance Math', duration: 50, order: 0 },
+    { name: 'Basic Math', duration: 20, order: 1 },
+    { name: 'IQ & Logical', duration: 20, order: 2 },
+    { name: 'English', duration: 30, order: 3 }
+  ];
+
+  const totalSections = sections.length;
 
   // Validate timing and record timeSpent
   const timing = validateSectionTiming(attempt, sectionIndex);
@@ -263,7 +393,7 @@ export async function submitSection(attempt, sectionIndex) {
 
   // Advance to next section
   const nextSectionIndex = sectionIndex + 1;
-  const nextSectionMeta = sortedSections[nextSectionIndex];
+  const nextSectionMeta = sections[nextSectionIndex];
 
   attempt.currentSection = nextSectionIndex;
   attempt.sectionTimestamps.push({
@@ -277,7 +407,7 @@ export async function submitSection(attempt, sectionIndex) {
   await attempt.save();
   logger.info(`Section ${sectionIndex} submitted for attempt=${attempt._id}, advancing to section ${nextSectionIndex}`);
 
-  const questions = await getQuestionsForSection(attempt.testId, nextSectionMeta.name);
+  const questions = await getQuestionsForSection(nextSectionMeta.name, attempt);
 
   return {
     isLastSection: false,
@@ -304,7 +434,14 @@ export async function submitSection(attempt, sectionIndex) {
  * @returns {Object} Completed attempt with score
  */
 export async function completeTest(attempt, calculateScore) {
-  const questions = await Question.find({ testId: attempt.testId }).lean();
+  // Collect all question IDs from the attempt
+  const allQuestionIds = [];
+  for (const [sectionName, questionIds] of attempt.questionOrder.entries()) {
+    allQuestionIds.push(...questionIds);
+  }
+
+  // Fetch all questions for scoring
+  const questions = await Question.find({ _id: { $in: allQuestionIds } }).lean();
   const score = calculateScore(attempt, questions);
 
   attempt.score = score;

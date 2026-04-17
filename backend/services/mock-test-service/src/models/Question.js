@@ -27,7 +27,7 @@ const questionSchema = new mongoose.Schema({
   testId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'MockTest',
-    required: true,
+    required: false,  // Optional for question bank approach
     index: true
   },
   section: {

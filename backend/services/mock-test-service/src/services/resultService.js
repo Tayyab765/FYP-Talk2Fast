@@ -18,12 +18,16 @@ export async function getDetailedResults(attempt) {
     throw err;
   }
 
-  const test = await MockTest.findById(attempt.testId).lean();
-  if (!test) {
-    const err = new Error('Test not found');
-    err.code = 'TEST_NOT_FOUND';
-    err.status = 404;
-    throw err;
+  // For dynamic tests, generate title from difficulty
+  let testTitle = 'FAST Entry Test';
+  if (attempt.testDifficulty) {
+    testTitle = `FAST Entry Test - ${attempt.testDifficulty.charAt(0).toUpperCase() + attempt.testDifficulty.slice(1)}`;
+  } else if (attempt.testId) {
+    // Legacy: fetch from MockTest if testId exists
+    const test = await MockTest.findById(attempt.testId).lean();
+    if (test) {
+      testTitle = test.title;
+    }
   }
 
   // Build time analysis from sectionTimestamps
@@ -45,10 +49,15 @@ export async function getDetailedResults(attempt) {
 
   timeAnalysis.totalTime = Math.round(timeAnalysis.totalTime * 100) / 100;
 
+  // Calculate total questions from section scores
+  const totalQuestions = attempt.score.sectionScores.reduce((sum, section) => sum + section.total, 0);
+
   return {
     attemptId: attempt._id,
-    testTitle: test.title,
+    testTitle,
+    testDifficulty: attempt.testDifficulty,
     score: attempt.score,
+    totalQuestions,
     timeAnalysis,
     completedAt: attempt.completedAt,
   };
@@ -74,33 +83,49 @@ export async function getAnswerReview(attempt) {
     ? Object.fromEntries(attempt.answers)
     : attempt.answers ?? {};
 
+  // Collect all question IDs from the attempt's questionOrder
+  const allQuestionIds = [];
+  for (const [sectionName, questionIds] of attempt.questionOrder.entries()) {
+    allQuestionIds.push(...questionIds);
+  }
+
   // Fetch all questions WITH correctAnswer (review mode)
-  const questions = await Question.find({ testId: attempt.testId })
-    .sort({ section: 1, order: 1 })
+  const questions = await Question.find({ _id: { $in: allQuestionIds } })
     .lean();
 
   // Group by section in FAST order
   const sectionOrder = ['Advance Math', 'Basic Math', 'IQ & Logical', 'English'];
   const sectionMap = {};
 
-  for (const q of questions) {
-    if (!sectionMap[q.section]) sectionMap[q.section] = [];
-    const userAnswer = answers[q._id.toString()] ?? null;
-    sectionMap[q.section].push({
-      id: q._id,
-      questionText: q.questionText,
-      options: q.options,
-      topic: q.topic,
-      difficulty: q.difficulty,
-      order: q.order,
-      userAnswer,
-      correctAnswer: q.correctAnswer,
-      isCorrect: userAnswer === q.correctAnswer,
-    });
+  // Organize questions by section, maintaining the order from questionOrder
+  for (const sectionName of sectionOrder) {
+    const questionIds = attempt.questionOrder.get(sectionName);
+    if (!questionIds) continue;
+
+    sectionMap[sectionName] = [];
+    const questionMap = new Map(questions.map(q => [q._id.toString(), q]));
+
+    for (const qId of questionIds) {
+      const q = questionMap.get(qId);
+      if (!q) continue;
+
+      const userAnswer = answers[q._id.toString()] ?? null;
+      sectionMap[sectionName].push({
+        id: q._id,
+        questionText: q.questionText,
+        options: q.options,
+        topic: q.topic,
+        difficulty: q.difficulty,
+        order: q.order,
+        userAnswer,
+        correctAnswer: q.correctAnswer,
+        isCorrect: userAnswer === q.correctAnswer,
+      });
+    }
   }
 
   const sections = sectionOrder
-    .filter(name => sectionMap[name])
+    .filter(name => sectionMap[name] && sectionMap[name].length > 0)
     .map(name => ({ name, questions: sectionMap[name] }));
 
   return { sections };

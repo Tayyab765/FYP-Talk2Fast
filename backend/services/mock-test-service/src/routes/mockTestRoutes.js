@@ -73,13 +73,13 @@ router.delete('/:testId', authenticate, testController.deactivateTest);
 // ──────────────────────────────────────────────────────────────────
 
 /**
- * POST /api/mock-tests/:testId/start
- * Start a new test attempt
- * Task 5.6 — stub wired here, replace with attemptController.startTest when ready
+ * POST /api/mock-tests/start
+ * Start a new test attempt with specified difficulty
+ * Task 5.6 — Dynamic test generation
  * Rate limiting disabled for development
  */
 router.post(
-  '/:testId/start',
+  '/start',
   // testStartLimiter,
   authenticateOrGuest,
   validateTestStart,
