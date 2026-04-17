@@ -20,14 +20,23 @@ function isRateLimited(userId) {
 }
 
 /**
- * POST /api/mock-tests/:testId/start
- * Start a new test attempt.
+ * POST /api/mock-tests/start
+ * Start a new test attempt with specified difficulty.
  * Requirements: 3.1–3.6, 20.4, 25.7
  */
 export async function startTest(req, res) {
   try {
-    const { testId } = req.params;
+    const { difficulty } = req.body;
     const { userId, userType } = req.user;
+
+    // Validate difficulty
+    if (!difficulty || !['easy', 'medium', 'hard'].includes(difficulty)) {
+      logger.warn(`Invalid difficulty provided: ${difficulty}`);
+      return res.status(400).json({
+        error: 'Invalid difficulty. Must be easy, medium, or hard.',
+        code: 'INVALID_DIFFICULTY',
+      });
+    }
 
     // Rate limiting disabled for development
     // if (isRateLimited(userId)) {
@@ -38,13 +47,14 @@ export async function startTest(req, res) {
     //   });
     // }
 
-    const { attempt, questions, sectionName, sectionDuration } =
-      await attemptService.startTest(testId, userId, userType);
+    const { attempt, questions, sectionName, sectionDuration, testDifficulty } =
+      await attemptService.startTest(difficulty, userId, userType);
 
-    logger.info(`POST start: attemptId=${attempt._id} userId=${userId} testId=${testId}`);
+    logger.info(`POST start: attemptId=${attempt._id} userId=${userId} difficulty=${testDifficulty}`);
 
     return res.status(201).json({
       attemptId: attempt._id,
+      testDifficulty,
       currentSection: attempt.currentSection,
       sectionName,
       sectionDuration,
@@ -54,7 +64,7 @@ export async function startTest(req, res) {
   } catch (err) {
     const status = err.status ?? 500;
     const code = err.code ?? 'SERVER_ERROR';
-    logger.error(`startTest error: ${err.message}, status: ${status}, code: ${code}, userId: ${req.user?.userId}, testId: ${req.params.testId}`);
+    logger.error(`startTest error: ${err.message}, status: ${status}, code: ${code}, userId: ${req.user?.userId}, difficulty: ${req.body?.difficulty}`);
     return res.status(status).json({ 
       error: err.message || 'Failed to start test',
       code 

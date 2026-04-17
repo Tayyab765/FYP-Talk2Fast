@@ -1,0 +1,213 @@
+Department of Computer Science
+
+Dr. Muhammad Fayyaz
+Associate Professor & HOD (CS)
+PhD (CS), Comsats Univeristy Islamabad, Wah
+Campus (2021)
+PhD Approved Supervisor
+MS (CS), University of Sargodha (2014)
+MCS, University of Sargodha (2007)
+BCS, AIOU, Islamabad (2003)
+
+Dr. Shahzad Sarfraz
+Professor and Director
+PhD (CS), Asian Institute of Technology, Bangkok
+Thailand (2012)
+PhD Approved Supervisor
+MSc (CS), University of Agriculture, Faisalabad (2006)
+BCS, University of the Punjab (2004)
+
+Dr. Muhammad Umar Aftab
+Associate Professor
+PhD (SE), UES&T, China (2020)
+PhD Approved Supervisor
+MS (CS), NTU, Faisalabad (2014)
+BS (IT), GCU, Faisalabad (2011)
+
+Dr. Muhammad Usama
+Associate Professor
+PhD (EE), ITU, Lahore (2020)
+PhD Approved Supervisor
+MS (EE), NUCES, Lahore (2013)
+BS (TE), GCU, Faisalabad (2010)
+
+Dr. Ammar Rafiq
+Associate Professor
+PhD (CS), UET, Lahore (2021)
+MS (IT), NUST, Islamabad (2007)
+BS (CS), University of Agriculture, Faisalabad (2004)
+
+Dr. Hashim Yasin
+Assistant Professor
+PhD (CS), Rhenish Friedrich- Wilhelm University Bonn, Germany (2016)
+PhD Approved Supervisor
+MS (CS), Rhenish Friedrich- Wilhelm University Bonn, Germany (2012)
+MS (CSE), NUST, Islamabad (2008)
+MSc (CS), University of Agriculture, Faisalabad (2004)
+BSc (Hons) (AE), University of Agriculture, Faisalabad (2001)
+
+Dr. Rabia Maqsood
+Assistant Professor
+PhD (CS), University of Milan, Italy (2020)
+PhD Approved Supervisor
+MS (CS), NUCES, Lahore (2010)
+BS (CS), University of Agriculture, Faisalabad (2007)
+
+Dr. Iqra Muhammad
+Assistant Professor
+PhD (CS), University of Liverpool, UK (2022)
+MS (SE), NUST, Islamabad (2018)
+BS (CSE), GIKI, Topi (2014)
+
+Dr. Hafiz Tayyeb Javed
+Assistant Professor
+PhD (CS), NUCES, Islamabad (2024)
+MS (CS), NUCES, Islamabad (2016)
+BS (CS), FUUAST, Islamabad (2012)
+
+Dr. Chaudhry Usman Ghous
+Assistant Professor
+PhD (CS), NUCES, Chiniot-Faisalabad (2024)
+MS (CS), NUCES, Chiniot-Faisalabad (2019)
+BS (CS), NUCES, Chiniot-Faisalabad (2016)
+
+Mr. Rizwan Ul Haq
+Assistant Professor
+MS (CS), LUMS, Lahore (2005)
+BCS, NUCES, Lahore (2002)
+
+Mr. Ali Hamza
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2020)
+BS (IT), GCU, Faisalabad (2017)
+
+Mr. Ali Raza
+Lecturer
+MS (DS), NUCES, Islamabad (2022)
+BS (CS), NUCES, Islamabad (2019)
+
+Ms. Aliza Saeed
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2021)
+BS (CS), NUCES, Chiniot-Faisalabad (2018)
+
+Ms. Aqsa Younas
+Lecturer
+MS (CS), University of Agriculture, Faisalabad (2021)
+BSc (CS), UET, Lahore (2017)
+
+Ms. Ayesha Liaqat
+Lecturer
+MS (CS), NTU, Faisalabad (2021)
+BS (SE), University of Agriculture, Faisalabad (2018)
+
+Ms. Faryal Saud
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2017)
+BS (CS), NUCES, Islamabad (2013)
+
+Ms. Juhinah Batool Asif
+Lecturer
+MS (CS), GCU, Faisalabad (2020)
+BS (CS), GCU, Faisalabad (2016)
+
+--- Page 17 ---
+Ms. Mahzaib Younas
+Lecturer
+MS (CS), University of Agriculture, Faisalabad (2022)
+BS (CS), University of Agriculture, Faisalabad (2020)
+
+Ms. Momna Javaid
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2022)
+BS (CS), NUCES, Chiniot-Faisalabad (2020)
+
+Mr. Mughees Ismail
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2023)
+BS (CS), NUCES, Chiniot-Faisalabad (2016)
+
+Mr. Muhammad Adeel
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2022)
+BS (CS), USA, Lahore (2017)
+
+Mr. Muhammad Hannan Farooq
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2023)
+BS (CS), NUCES, Chiniot-Faisalabad (2019)
+
+Mr. Muhammad Haseeb Arshad
+Lecturer
+MS (CS), GCU, Faisalabad (2020)
+BS (CS), Islamia University, Bahawalpur (2017)
+
+Mr. Muhammad Shahbaz Ayyaz
+Lecturer
+MS (CS), University of Gujrat (2020)
+BS (SE), University of Sargodha (2017)
+
+Mr. Muiz Qadir
+Lecturer
+MS (CS), University of Sargodha (2021)
+BS (CS), University of Sargodha (2016)
+
+Ms. Nasreen Akhtar
+Lecturer
+MS (CS), University of Agriculture, Peshawar (2015)
+MSc (CS), University of Peshawar (2010)
+BSc, Kohat University (2007)
+
+Ms. Saba Naseem
+Lecturer
+MS (CS), NTU, Faisalabad (2021)
+BS (CS), UCP, Lahore (2018)
+
+Ms. Samia Mujahid
+Lecturer
+MS (CS), GCU, Faisalabad (2023)
+BS (CS), GCU, Faisalabad (2021)
+
+Ms. Wania Fatima
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2024)
+BS (CS), Comsats, Sahiwal (2022)
+
+Ms. Areeba Waseem
+Lecturer
+MS (CS), NUCES, Chiniot-Faisalabad (2023)
+BS (CS), NUCES, Chiniot-Faisalabad (2021)
+
+Ms. Rabia Anwar
+Lecturer
+MS (CS), University of Agriculture, Faisalabad (2019)
+BS (CS), University of Sargodha (2017)
+
+Ms. Amna Waheed
+Instructor
+MS (CS), NUCES, Lahore (2022)
+BS (CS), USA, Lahore (2018)
+
+Ms. Gul E Zahra
+Instructor
+BS (EE), NUCES, Chiniot-Faisalabad (2023)
+
+Mr. Hassan Ahmed
+Instructor
+MS (CS), University of Wah (2024)
+BS (SE), Comsats Universtiy, Islamabad (2022)
+
+Ms. Maham Saleem
+Instructor
+MS (CS), NTU, Faisalabad (2022)
+BS (SE), NTU, Faisalabad (2020)
+
+--- Page 18 ---
+Mr. Muhammad Talha Arif
+Instructor
+MS (CS), NUCES, Chiniot-Faisalabad (2024)
+BS (CS), NUCES, Chiniot-Faisalabad (2022)
+
+
+
+--- Page 19 ---

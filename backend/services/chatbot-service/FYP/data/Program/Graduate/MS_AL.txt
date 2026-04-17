@@ -1,0 +1,56 @@
+[Program Mission]
+Program Code: MS_AL | Program Title: Master of Science (Applied Linguistics) | Level: Graduate | Domain: Sciences and Humanities
+There is an ever‑growing demand for trained English teachers. Colleges, universities, and language schools all
+need qualified English teachers. English has now become more than a mere language; it is a bridge across borders
+and cultures, and a source of unity in a rapidly evolving world.
+This program enables students to learn how linguistic analysis can be used in practice in the vast arena of
+language with specializations in:
+- Computer Assisted Language Learning (CALL)
+- Computational Linguistics (CL)
+- English Language Teaching (ELT)
+- English for Specific Purposes (ESP)
+The program inculcates specialized skills to effectively teach the English language and integrates language and
+computing skills.
+
+[Career Opportunities]
+Program Code: MS_AL | Program Title: Master of Science (Applied Linguistics) | Level: Graduate | Domain: Sciences and Humanities
+- To produce qualified teaching resources for English language teaching at colleges, universities, and language schools.
+- To integrate ICT (Information and Communication Technologies) in the teaching of English language.
+- To develop collaborative learning resources for teaching English.
+- To encourage teachers to be critically engaged in advanced research in English language teaching and learning.
+
+[Award of Degree]
+Program Code: MS_AL | Program Title: Master of Science (Applied Linguistics) | Level: Graduate | Domain: Sciences and Humanities
+For the award of Master of Science (Applied Linguistics) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all those courses which have been specified as
+  core courses.
+- Obtained a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_AL | Program Title: Master of Science (Applied Linguistics) | Level: Graduate | Domain: Sciences and Humanities
+Master of Science (Applied Linguistics)
+Semester I
+- Code: SS5001 | Title: Computing Assisted Language Learning | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS5002 | Title: Fundamentals of Language and Linguistics | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS5003 | Title: Computational Linguistics | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 9-0
+Semester II
+- Code: SS5005 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: SSxxxx | Title: Specialist Module‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: SSxxxx | Title: Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0
+Semester III
+- Code: SS5091 | Title: Thesis‑I | Cr.Hrs: 0-3 | Prereq: Registration rules above
+- Code: SSxxxx | Title: Specialist Module‑II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 3-3
+Semester IV
+- Code: SS5092 | Title: Thesis‑II | Cr.Hrs: 0-3 | Prereq: SS5091
+- Code: SSxxxx | Title: Elective‑II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis]
+Program Code: MS_AL | Program Title: Master of Science (Applied Linguistics) | Level: Graduate | Domain: Sciences and Humanities
+Registration in 'MS Thesis‑I' shall be allowed provided the student has:
+- Earned at least 18 credit hours (CH); and
+- Passed the 'Research Methodology' course; and
+- CGPA is equal to or more than 2.50.

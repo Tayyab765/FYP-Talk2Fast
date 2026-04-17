@@ -96,7 +96,7 @@ class CareerService {
       
       await session.save();
       
-      logger.info('Recommendations generated successfully', { 
+      logger.info('Recommendation session saved successfully', { 
         userId, 
         sessionId: session._id
       });
@@ -229,6 +229,37 @@ class CareerService {
       logger.error('Failed to retrieve active session', { 
         userId, 
         error: error.message 
+      });
+      throw error;
+    }
+  }
+
+  /**
+   * Get latest recommendations for user
+   */
+  async getRecommendations(userId) {
+    try {
+      let session = await CareerSession.getActiveByUserId(userId);
+
+      if (!session) {
+        session = await CareerSession.findOne({ userId }).sort({ createdAt: -1 });
+      }
+
+      if (!session || !session.recommendationJSON) {
+        throw new Error('No recommendations found for user. Generate recommendations first.');
+      }
+
+      return {
+        sessionId: session._id,
+        recommendations: session.recommendationJSON,
+        createdAt: session.createdAt,
+        updatedAt: session.updatedAt,
+        status: session.status
+      };
+    } catch (error) {
+      logger.error('Failed to retrieve recommendations', {
+        userId,
+        error: error.message
       });
       throw error;
     }

@@ -1,0 +1,96 @@
+[Program Mission]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+The mission is to produce future software designers and innovators who will shape the future of the nation through
+high‑quality education, research, and technopreneurship. The program provides students with state‑of‑the‑art knowledge
+of the field and develops their practical skills to meet current industrial requirements, while enhancing their ability
+to adapt to new developments in tomorrow’s technology.
+
+[Career Opportunities]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+The program prepares students to:
+1. Critically apply concepts, theories, and practices to provide creative solutions to complex computing problems.
+2. Effectively communicate their ideas in written and electronic form and work collaboratively in a team environment.
+3. Build a strong theoretical background in software engineering concepts and train on applied research of the field,
+   needed to secure a doctorate position in the future.
+4. Join dynamic and diverse career positions in computing‑related fields and maintain a growing career in a rapidly
+   evolving field.
+5. Apply theories and practices to provide creative solutions to complex computing problems.
+6. Respond to current and emerging industrial needs by utilizing modern trends for building complex software systems.
+
+[Program Learning Outcomes]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+1. Have the ability to design systems, components, or processes to meet desired needs within realistic constraints
+   such as economic, environmental, social, political, ethical, health and safety, manufacturability, and sustainability.
+2. Understand the impact of engineering solutions in a global, economic, environmental, and societal context.
+3. Use the techniques, skills, and modern software engineering tools necessary for developing reliable software.
+4. Demonstrate an understanding of the applied current theories, models, and techniques that provide a basis
+   for the software lifecycle.
+5. Communicate effectively with different audiences.
+6. Contribute to improving the world through research and development in areas such as healthcare, transportation,
+   education, etc.
+
+[Deficiency / Prerequisite Courses]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+The following core undergraduate‑level courses (or equivalents) are recommended to be completed before entering
+the MS (Software Engineering) program:
+- Object Oriented Programming
+- Data Structures
+- Software Engineering
+- Software Design and Analysis
+- Software Quality Engineering
+Additional notes:
+- A student selected for admission having deficiencies in the above courses may be required to study a maximum
+  of four deficiency courses.
+- These deficiency courses must be passed in the first two semesters.
+- Deficiency courses are determined by the Graduate Studies Committee before admitting the student.
+- Fee is not charged for studying deficiency courses.
+
+[Award of Degree]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+For the award of Master of Science (Software Engineering) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all core courses.
+- Earned a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+Semester I
+- Code: CS4002 | Title: Applied Programming* | Cr.Hrs: NC | Prereq: None
+- Code: SE5001 | Title: Advanced Software Requirements Engineering | Cr.Hrs: 3-0 | Prereq: None
+- Code: SE5002 | Title: Advanced Quality Assurance | Cr.Hrs: 3-0 | Prereq: None
+- Code: CSE-EL-I | Title: Computing Elective-I | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0 (excluding NC course)
+
+[Study Plan]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+Semester II
+- Code: CS5001 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: SE5003 | Title: Advanced Software Architecture | Cr.Hrs: 3-0 | Prereq: None
+- Code: CSE-EL-II | Title: Computing Elective-II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0
+
+[Study Plan]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+Semester III
+- Code: CSE-EL-III | Title: Computing Elective-III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH1 | Title: MS Thesis-I / MS Project-I | Cr.Hrs: 0-3 | Prereq: See thesis registration rules
+Total Semester Credits: 3-3
+
+
+[Study Plan]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+Semester IV
+- Code: CSE-EL-IV | Title: Computing Elective-IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH2 | Title: MS Thesis-II / MS Project-II | Cr.Hrs: 0-3 | Prereq: MS_TH1
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis / Project]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+Registration in 'MS Thesis-I / Project-I' is allowed provided the student has:
+- Earned at least 15 credit hours.
+- Passed the 'Research Methodology' course (CS5001).
+- CGPA is equal to or more than 2.50.
+
+[Notes]
+Program Code: MS_SE | Program Title: Master of Science (Software Engineering) | Level: Graduate | Domain: Computing
+- * Applied Programming (CS4002) is a non‑credit (NC) course, which must be cleared during the first semester.
+  The course may be exempted based on good performance in the admission test.

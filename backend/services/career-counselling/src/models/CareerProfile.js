@@ -15,7 +15,7 @@ const careerProfileSchema = new mongoose.Schema({
   academic_background: {
     qualification_type: {
       type: String,
-      enum: ['local_board', 'alevels', 'other'],
+      enum: ['local_board', 'fsc', 'alevels', 'other'],
       required: true
     },
     study_stream: {
@@ -123,7 +123,13 @@ const careerProfileSchema = new mongoose.Schema({
     appealing_role: {
       type: String,
       enum: ['software_engineer', 'data_analyst', 'ai_engineer', 'electrical_engineer', 'business_manager', 'entrepreneur', 'researcher']
-    }
+    },
+    ideal_work_environment_desc: { type: String, maxlength: 1000 },
+    passionate_project_desc: { type: String, maxlength: 1000 },
+    problem_solving_desc: { type: String, maxlength: 1000 },
+    career_dream_desc: { type: String, maxlength: 1000 },
+    disliked_tasks_desc: { type: String, maxlength: 1000 },
+    impact_desc: { type: String, maxlength: 1000 }
   },
   
   // Metadata

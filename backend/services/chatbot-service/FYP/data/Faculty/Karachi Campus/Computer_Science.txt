@@ -1,0 +1,272 @@
+Department of Computer Science
+
+Dr. Abdul Aziz
+Associate Professor, HOD (CS) and Head of School
+(Computing)
+PhD (IT), Hamdard University, Karachi (2019)
+PhD Approved Supervisor
+MS (MC & IS), Hamdard University, Karachi (2007)
+MCS, Hamdard University, Karachi (2004)
+BCom, University of Karachi (2000)
+
+Dr. Zulfiqar Ali Memon
+Professor and Director
+PhD (CS), Vrije University, Amsterdam, Netherlands (2010)
+PhD Approved Supervisor
+MSc (CS), University of Sindh, Jamshoro (2000)
+BSc (CS), University of Sindh, Jamshoro (1999)
+
+Dr. Jawwad Ahmed Shamsi
+Professor and Dean (Computing)
+PhD (CS), Wayne State University, USA (2009)
+PhD Approved Supervisor
+MS (CS), University of Michigan-Dearborn, USA (2002)
+BE (EE), NED-UET, Karachi (1998)
+
+Dr. Ghufran Ahmed
+Professor
+PhD (WSN), MAJU, Islamabad (2013)
+PhD Approved Supervisor
+MS (P&DS), MAJU, Karachi (2004)
+MCS, University of Karachi (2000)
+BSc, University of Karachi (1998)
+
+Dr. Muhammad Nouman Durrani
+Associate Professor
+PhD (CS), NUCES, Karachi (2018)
+PhD Approved Supervisor
+MS (CS), Hamdard University, Karachi (2007)
+MCS, Agriculture University, Peshawar (2005)
+BSc, University of Peshawar (2002)
+
+Dr. Aqsa Aslam
+Assistant Professor
+PhD (EE), University of Porto, Portugal (2020)
+PhD Approved Supervisor
+MS (CS&N), MUET, Jamshoro (2014)
+BE (Tel.), MUET, Jamshoro (2011)
+
+Dr. Fahad Sherwani
+Assistant Professor and GSC (Coordinator)
+PhD (EE), Universiti Tun Hussein Onn, Malaysia (2019)
+PhD Approved Supervisor
+MS (EE), Universiti Tun Hussein Onn Malaysia, Malaysia
+(2013)
+BE (EE), Hamdard University, Karachi (2011)
+
+Dr. Farrukh Hasan Syed
+Assistant Professor
+PhD (CS), NUCES, Karachi (2021)
+PhD Approved Supervisor
+MS (CS), IBA, Karachi (2012)
+BS (CS), University of Karachi (2005)
+
+Dr. Farrukh Salim Shaikh
+Assistant Professor
+PhD (CE), University of Siegen, Germany (2021)
+PhD Approved Supervisor
+MS (CSE), Hanyang University, S. Korea (2010)
+BE (CSE), MUET, Jamshoro (2005)
+
+Dr. Nadeem Kafi Khan
+Assistant Professor
+PhD (EE), NUCES, Karachi (2020)
+PhD Approved Supervisor
+MS (CN&C), Hamdard University, Karachi (2007)
+BE (Comp. Sys.), NED-UET, Karachi (1989)
+
+Dr. Nasir Uddin
+Assistant Professor
+PhD (CS), IBA, Karachi (2023)
+PhD Approved Supervisor
+MS (CS), IBA, Karachi (2014)
+MSc (App. Phys.), University of Karachi (2010)
+
+Dr. Rabia Tabassum
+Assistant Professor
+PhD (Space and Planetary Astrophysics), University
+of Karachi (2025)
+MPhil (Hydr. & Sust. Water Res. Mgmt.), University of
+Karachi (2017)
+MSc (Phy.), University of Karachi (2000)
+BSc, University of Karachi (1999)
+
+Mr. Abdul Rahman
+Assistant Professor
+MS (CE), SS-UET, Karachi (2004)
+BS (CE), SS-UET, Karachi (1999)
+
+Mr. Muhammad Jamil
+Assistant Professor
+MS (CNC), Hamdard University, Karachi (2009)
+MSc (CS), University of Karachi (2003)
+MSc (Math), University of Karachi (1997)
+BSc (Math), University of Karachi (1996)
+
+Syed Kashan Hussain Naqvi
+Assistant Professor
+MS (CS), MAJU, Karachi (2021)
+ME (EE), NED-UET, Karachi (2011)
+BE (EE), SS-UET, Karachi (2004)
+
+Mr. Ubaid Aftab
+Assistant Professor (Adjunct)
+MS (IT), Monash University, A ustralia (2005)
+BE (IT), Hamdard University, Karachi (2002)
+
+Mr. Aashir Mahboob
+Lecturer
+MS (EE), NUCES, Karachi (2021)
+BE (Elect.), NED-UET, Karachi (2017)
+
+Ms. Abeeha Sattar
+Lecturer
+MS (CS), IBA, Karachi (2020)
+BS (CS), NUCES, Karachi (2016)
+
+--- Page 63 ---
+Ms. Anaum Hamid
+Lecturer
+MS (CS&IT), NED-UET, Karachi (2017)
+BS (CS), University of Karachi (2012)
+BCS, University of Karachi (2009)
+
+Ms. Atiya
+Lecturer
+ME (CSE), Quaid e Awam University, Nawabshah (2019)
+BE (CSE), Mehran University, Jamshoro (2016)
+
+Ms. Bakhtawer
+Lecturer
+MS (CS), NUCES, Karachi (2017)
+BS (CS), NUCES, Karachi (2014)
+
+Mr. Basit Ali
+Lecturer
+MS (CS), NUCES, Karachi (2018)
+BS (CS), NUCES, Karachi (2016)
+
+Ms. Fizza Aqeel
+Lecturer
+MS (DS), NUCES, Karachi (2022)
+BS (CE), SS-UET, Karachi (2019)
+
+Ms. Hajra Ahmed
+Lecturer
+ME (CS), NED-UET, Karachi (2021)
+BE (CIS), NED-UET, Karachi (2016)
+
+Ms. Javeria Farooq
+Lecturer
+MS (CS), Bahria University, Karachi (2015)
+BS (CS), Bahria University, Karachi (2012)
+
+Ms. Mubashra Fayyaz
+Lecturer
+MS (CS), NUCES, Karachi (2020)
+BS (CS), NUCES, Karachi (2017)
+
+Mr. Muhammad Kashif
+Lecturer
+MS (CS), Bahria University, Karachi (2024)
+BE (Electr.), PAF-KIET, Karachi (2012)
+
+Ms. Nida Munawar
+Lecturer
+MS (CS), NUCES, Karachi (2020)
+BE (SE), UET-Mehran, Karachi (2015)
+
+Ms. Shahar Bano Husnine
+Lecturer
+MS (CS), NUCES, Lahore (2006)
+BS (CS), University of the Punjab (2003)
+
+Mr. Shaheer Ahmad Khan
+Lecturer
+MS (CNS), NUCES, Karachi (2024)
+BS (IT), SS-UET, Karachi (2021)
+
+Mr. Shoaib Rauf
+Lecturer
+MS (SE), Hamdard University, Karachi (2017)
+BS (CE), NUCES, Karachi (2008)
+
+Ms. Sobia
+Lecturer
+ME (SE), UET-Mehran, Karachi (2020)
+BE (SE), UET-Mehran, Karachi (2017)
+
+Syed Faisal Ali
+Lecturer
+MS (AI), Iqra University, Karachi (2004)
+MCS (WE&N), Iqra University, Karachi (2000)
+
+Syed Zain Ul Hassan
+Lecturer
+MS (CS), NUCES, Karachi (2018)
+MCS (CS), University of Karachi (2014)
+BCS (CS), University of Karachi (2010)
+
+Mr. Ubaid Ullah
+Lecturer
+MS (CS), Bahria University, Karachi (2024)
+BS (CS), Bahria University, Karachi (2018)
+
+Mr. Usama Antuley
+Lecturer
+MS (Math), NED-UET, Karachi (2021)
+BE (Telecom.), NED-UET, Karachi (2017)
+
+--- Page 64 ---
+Ms. Yusra Kaleem
+Lecturer
+MS (EE), NUST, Karachi (2022)
+BS (TE), SS-UET, Karachi (2017)
+
+Mr. Zulfiqar Ali
+Lecturer
+MS (CS), MAJU, Karachi (2019)
+BS (CS), Virtual University (2016)
+
+Mr. Abdullah Shaikh
+Instructor
+BS (CS), IBA, Sukkur (2024)
+
+Mr. Abdullah Yaqoob
+Instructor
+BS (CS), NED-UET, Karachi (2024)
+
+Ms. Bushra Sattar
+Instructor
+BS (IT), MNSUOA, Multan (2019)
+
+Ms. Fareeha Jabeen
+Instructor
+MCS, University of Karachi (2022)
+BSc, University of Karachi (2019)
+
+Ms. Fatima
+Instructor
+BS (IT), University of Sindh, Jamshoro (2022)
+
+Ms. Ramsha Iqbal
+Instructor
+BS (CE), Bahria University, Karachi (2018)
+
+Ms. Sadaf Zehra
+Instructor
+BS (SE), University of Karachi (2022)
+
+Mr. Shafique Rahman
+Instructor
+BS (CS), IBA, Sukkur (2020)
+
+Syeda Tehreem Gillani
+Instructor
+BS (EE), NUCES, Karachi (2023)
+
+Ms. Zainab Asif Jawed
+Instructor
+BS (CS), Preston University, Karachi (2019)
+
+--- Page 65 ---

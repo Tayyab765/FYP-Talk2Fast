@@ -1,0 +1,154 @@
+[Program Vision]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+To achieve national and international recognition through innovation in Civil Engineering education, research,
+and community services.
+
+[Program Mission]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+To develop highly competent graduates with sound engineering knowledge, social responsibility, and lifelong
+learning skills, enabling them to have successful careers in Civil Engineering professions. This mission is
+achieved through:
+- Providing a vibrant teaching and learning environment to deliver high‑quality engineering education.
+- Maintaining a state‑of‑the‑art curriculum that emphasizes practical applications and provides opportunities
+  for hands‑on experience.
+- Developing an attitude for lifelong learning and instilling ethical and social values that help graduates acquire
+  professional leadership.
+- Identifying contemporary issues in the Civil Engineering profession and developing innovative solutions
+  through research.
+
+[Career Opportunities]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+A Civil Engineering degree prepares graduates for work in the construction industry as well as in relevant business,
+management, and finance sectors. With a solid grasp of science, mathematics, and engineering knowledge, graduates
+are able to design, create, and build sustainable civil infrastructure to serve society.
+
+[Program Educational Objectives (PEOs)]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+The objectives of the Civil Engineering program are to produce graduates who will:
+- Successfully engage in contemporary Civil Engineering practice to solve real‑world problems.
+- Pursue professional growth through continuous learning and experience.
+- Maintain high ethical standards in the conduct of professional practice.
+- Attain increasing levels of responsibility with strong interpersonal and communication skills.
+
+[Award of Degree]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+For the award of Bachelor of Science (Civil Engineering) degree, a student must have:
+- Earned at least 140 credits through respective core and elective courses offered in the study plan.
+- Obtained a CGPA of at least 2.00.
+
+[Credit Hour Distribution]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Eligibility for FYP-I: 100 CH
+Domain‑wise Credit Hours:
+- Application Engineering: 96 credit hours
+- Natural Science: 15 credit hours
+- Humanities and Management Sciences: 19 credit hours
+- Computer and Information Sciences: 10 credit hours
+- Total: 140 credit hours
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester I
+- Code: CV1001 | Title: Civil Engineering Materials | Cr.Hrs: 2-1 | Prereq: None
+- Code: CV1002 | Title: Engineering Drawing | Cr.Hrs: 1-2 | Prereq: None
+- Code: NS1004 | Title: Applied Physics and Electro‑Mechanical Fundamentals | Cr.Hrs: 2-1 | Prereq: None
+- Code: MT100x | Title: Quantitative Reasoning | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1012 | Title: Functional English | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1013 | Title: Ideology and Constitution of Pakistan | Cr.Hrs: 2-0 | Prereq: None
+- Code: CS1009 | Title: Application of ICT | Cr.Hrs: 0-1 | Prereq: None
+- Code: SS1021 | Title: Understanding of Holy Quran‑I | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 13-5
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester II
+- Code: CV1003 | Title: Engineering Surveying | Cr.Hrs: 2-1 | Prereq: None
+- Code: MT100x | Title: Advanced Calculus | Cr.Hrs: 3-0 | Prereq: None
+- Code: NS100x | Title: Engineering Mechanics | Cr.Hrs: 3-1 | Prereq: None
+- Code: NS100x | Title: Geology for Engineers | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1007 | Title: Islamic Studies/Ethics | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1014 | Title: Expository Writing | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1003 | Title: Pakistan Studies | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1022 | Title: Understanding of Holy Quran‑II | Cr.Hrs: 1-0 | Prereq: None
+- Code: SS1019 | Title: Understanding of Sirat‑un‑Nabi | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 17-2
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester III
+- Code: CV2001 | Title: Advanced Engineering Surveying | Cr.Hrs: 2-1 | Prereq: CV1003
+- Code: CV2002 | Title: Fluid Mechanics | Cr.Hrs: 2-1 | Prereq: None
+- Code: CV2005 | Title: Mechanics of Solids‑I | Cr.Hrs: 2-1 | Prereq: NS1004
+- Code: MG1008 | Title: Occupational Health and Safety | Cr.Hrs: 1-0 | Prereq: None
+- Code: MG201x | Title: Entrepreneurship | Cr.Hrs: 2-0 | Prereq: None
+- Code: CS1003 | Title: Computer Programming | Cr.Hrs: 1-2 | Prereq: None
+- Code: MT200x | Title: Applied Mathematics | Cr.Hrs: 3-0 | Prereq: Advanced Calculus
+Total Semester Credits: 13-5
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester IV
+- Code: CV2006 | Title: Structural Analysis‑I | Cr.Hrs: 3-0 | Prereq: NS1004
+- Code: CV2009 | Title: Civil Engineering Graphics and Construction | Cr.Hrs: 1-2 | Prereq: CV1002
+- Code: CV2010 | Title: Quantity and Cost Estimation | Cr.Hrs: 1-1 | Prereq: None
+- Code: MT2007 | Title: Numerical Analysis | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS2009 | Title: Technical Report Writing and Presentation | Cr.Hrs: 0-1 | Prereq: None
+- Code: SSxxxx | Title: Social Science Elective** | Cr.Hrs: 2-0 | Prereq: None
+- Code: CV2003 | Title: Soil Mechanics | Cr.Hrs: 3-1 | Prereq: NS1004
+Total Semester Credits: 13-5
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester V
+- Code: CV3001 | Title: Advanced Fluid Mechanics | Cr.Hrs: 3-1 | Prereq: CV2002
+- Code: CV4002 | Title: Architecture and Town Planning | Cr.Hrs: 2-0 | Prereq: None
+- Code: CV3002 | Title: Reinforced Concrete Design‑I | Cr.Hrs: 3-1 | Prereq: CV2005
+- Code: CS1009 | Title: Introduction to Machine Learning (Lab) | Cr.Hrs: 0-1 | Prereq: None
+- Code: CV30xx | Title: Geo‑Informatics Lab | Cr.Hrs: 0-1 | Prereq: None
+- Code: CV30xx | Title: Highway and Traffic Engineering | Cr.Hrs: 2-1 | Prereq: CV2001
+- Code: CV30xx | Title: Geotechnical Engineering | Cr.Hrs: 2-1 | Prereq: CV2003
+Total Semester Credits: 12-6
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VI
+- Code: CV4005 | Title: Steel Structures | Cr.Hrs: 3-0 | Prereq: CV2005
+- Code: CV3008 | Title: Structural Analysis‑II | Cr.Hrs: 3-0 | Prereq: CV2006
+- Code: CV3006 | Title: Environmental Engineering‑I | Cr.Hrs: 2-0 | Prereq: CV2002
+- Code: CV3007 | Title: Mechanics of Solids‑II | Cr.Hrs: 2-1 | Prereq: CV2001
+- Code: CV30xx | Title: Foundation Engineering | Cr.Hrs: 2-0 | Prereq: CV2003
+- Code: CV30xx | Title: Hydrology and Water Management | Cr.Hrs: 2-1 | Prereq: CV2002
+- Code: SS2043 | Title: Civics and Community Engagement | Cr.Hrs: 2-0 | Prereq: None
+- Code: SSxxxx | Title: Community Service | Cr.Hrs: 0-0 | Prereq: None
+- Code: INxxxx | Title: Internship (6–8 weeks, mandatory and qualifying) | Cr.Hrs: 0-0 | Prereq: None
+Total Semester Credits: 16-2
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VII
+- Code: CV4003 | Title: Reinforced Concrete Design‑II | Cr.Hrs: 3-1 | Prereq: CV3002
+- Code: CV4001 | Title: Environmental Engineering‑II | Cr.Hrs: 2-1 | Prereq: CV3006
+- Code: CV4008 | Title: Fundamentals of Dynamics and its Applications | Cr.Hrs: 2-0 | Prereq: CV2006
+- Code: SSxxxx | Title: Arts and Humanities Elective‑I* | Cr.Hrs: 1-0 | Prereq: None
+- Code: CV4009 | Title: Hydraulic Engineering | Cr.Hrs: 2-1 | Prereq: CV2002
+- Code: MG3007 | Title: Construction Engineering and Management | Cr.Hrs: 1-1 | Prereq: None
+- Code: CV4091 | Title: Final Year Design Project‑I | Cr.Hrs: 0-3 | Prereq: See FYP rules
+Total Semester Credits: 11-7
+
+
+[Study Plan]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VIII
+- Code: CV4010 | Title: Design of Structures | Cr.Hrs: 1-1 | Prereq: CV4005, CV3002
+- Code: CV4011 | Title: Irrigation and Drainage Engineering | Cr.Hrs: 2-1 | Prereq: CV3009
+- Code: Arts and Humanities Elective-II* | Title: Arts and Humanities Elective-II* | Cr.Hrs: 1-0 | Prereq: None
+- Code: Building Information Modeling Lab | Title: Building Information Modeling Lab | Cr.Hrs: 0-1 | Prereq: None
+- Code: CV4004 | Title: Transportation Planning and Engineering | Cr.Hrs: 3-0 | Prereq: CV2001
+- Code: CV4092 | Title: Final Year Design Project-II | Cr.Hrs: 0-3 | Prereq: CV4091
+Total Semester Credits: 7-6
+
+[Notes]
+Program Code: BS_Civil | Program Title: Bachelor of Science (Civil Engineering) | Level: Undergraduate | Domain: Engineering
+- * Arts and Humanities Electives may include: German Language, Elementary Chinese Language, Engineering Ethics,
+  Philosophy, etc.
+- ** Social Science Electives may include: Sociology, Engineering Economics, Engineering Law, Geology for Engineers, etc.

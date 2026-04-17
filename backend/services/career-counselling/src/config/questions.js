@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Career Assessment Questions Configuration
  * Dynamic question system for collecting student profile data
  * 
@@ -745,6 +745,53 @@ const careerInclinationQuestions = [
 ];
 
 // ========================================================================
+// SECTION 7: OPEN ENDED (FOR LLM RECOMMENDATIONS)
+// ========================================================================
+const openEndedQuestions = [
+  {
+    id: 'ideal_work_environment_desc',
+    category: 'career_inclination',
+    question: 'Describe your ideal work environment (e.g., office, remote, field work, teamwork, independent work). Why does this environment suit you?',
+    type: 'text',
+    required: true
+  },
+  {
+    id: 'passionate_project_desc',
+    category: 'career_inclination',
+    question: 'Describe a project, subject, or activity you were deeply passionate about. What exactly did you enjoy doing in it?',
+    type: 'text',
+    required: true
+  },
+  {
+    id: 'problem_solving_desc',
+    category: 'career_inclination',
+    question: 'What type of problems do you enjoy solving (e.g., logical, mathematical, creative, business-related)? Give an example.',
+    type: 'text',
+    required: true
+  },
+  {
+    id: 'career_dream_desc',
+    category: 'career_inclination',
+    question: 'If there were no constraints, what career would you choose? What daily tasks in that career attract you the most?',
+    type: 'text',
+    required: true
+  },
+  {
+    id: 'disliked_tasks_desc',
+    category: 'career_inclination',
+    question: 'What subjects, tasks, or work environments do you strongly dislike or want to avoid? Explain why.',
+    type: 'text',
+    required: true
+  },
+  {
+    id: 'impact_desc',
+    category: 'career_inclination',
+    question: 'What matters most to you in a career: high salary, creativity, stability, or impact? Explain your priority.',
+    type: 'text',
+    required: true
+  }
+];
+// ========================================================================
 // DYNAMIC QUESTION SYSTEM
 // ========================================================================
 
@@ -758,7 +805,8 @@ const assessmentQuestions = [
   ...skillsQuestions,
   ...personalityQuestions,
   ...workStyleQuestions,
-  ...careerInclinationQuestions
+  ...careerInclinationQuestions,
+  ...openEndedQuestions
 ];
 
 
@@ -769,11 +817,11 @@ const assessmentQuestions = [
 function validateQuestionUniqueness() {
   const ids = assessmentQuestions.map(q => q.id);
   const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
-  
+
   if (duplicates.length > 0) {
     throw new Error(`Duplicate question IDs found: ${[...new Set(duplicates)].join(', ')}`);
   }
-  
+
   return true;
 }
 
@@ -806,40 +854,40 @@ function getQuestionById(questionId) {
  */
 function getCategories() {
   const categoryMap = {
-    'academic_background': { 
-      name: 'Academic Background', 
+    'academic_background': {
+      name: 'Academic Background',
       description: 'Educational history and performance',
       order: 1
     },
-    'interests': { 
-      name: 'Interest Assessment', 
+    'interests': {
+      name: 'Interest Assessment',
       description: 'What you enjoy doing',
       order: 2
     },
-    'skills': { 
-      name: 'Skills & Strengths', 
+    'skills': {
+      name: 'Skills & Strengths',
       description: 'Your abilities and competencies',
       order: 3
     },
-    'personality': { 
-      name: 'Personality Traits', 
+    'personality': {
+      name: 'Personality Traits',
       description: 'Your work personality and preferences',
       order: 4
     },
-    'work_style': { 
-      name: 'Work Style & Preferences', 
+    'work_style': {
+      name: 'Work Style & Preferences',
       description: 'How you like to work',
       order: 5
     },
-    'career_inclination': { 
-      name: 'Career Inclination', 
+    'career_inclination': {
+      name: 'Career Inclination',
       description: 'Direct career preferences',
       order: 6
     }
   };
-  
+
   const uniqueCategories = [...new Set(assessmentQuestions.map(q => q.category))];
-  
+
   return uniqueCategories
     .map(cat => ({
       id: cat,
@@ -874,22 +922,22 @@ function getQuestionStats() {
  */
 function validateAnswer(questionId, answer) {
   const question = getQuestionById(questionId);
-  
+
   if (!question) {
     return { valid: false, error: 'Invalid question ID' };
   }
-  
+
   if (question.required && (answer === null || answer === undefined || answer === '')) {
     return { valid: false, error: 'This question is required' };
   }
-  
+
   if (question.type === 'single_select') {
     const validValues = question.options.map(opt => opt.value);
     if (!validValues.includes(answer)) {
       return { valid: false, error: 'Invalid option selected' };
     }
   }
-  
+
   if (question.type === 'multi_select') {
     if (!Array.isArray(answer)) {
       return { valid: false, error: 'Answer must be an array' };
@@ -903,7 +951,7 @@ function validateAnswer(questionId, answer) {
       return { valid: false, error: 'Invalid option(s) selected' };
     }
   }
-  
+
   if (question.type === 'scale') {
     if (typeof answer !== 'number') {
       return { valid: false, error: 'Answer must be a number' };
@@ -912,7 +960,7 @@ function validateAnswer(questionId, answer) {
       return { valid: false, error: `Value must be between ${question.scaleMin} and ${question.scaleMax}` };
     }
   }
-  
+
   return { valid: true };
 }
 

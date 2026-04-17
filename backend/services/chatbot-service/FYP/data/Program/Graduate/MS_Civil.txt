@@ -1,0 +1,81 @@
+[Program Mission]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+To develop highly competent graduates with advanced engineering knowledge and research skills required for
+professional excellence and socio‑economic development.
+
+[Program Educational Objectives (PEOs)]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+The MS (Civil Engineering) program aims to:
+- Enable graduates to successfully engage in multidisciplinary civil engineering practice to contribute to
+  socio‑economic development.
+- Develop the ability to lead a team as well as to be a successful team member for lifelong learning and
+  career development.
+- Enable graduates to contribute to civil engineering through research and innovation.
+
+[Award of Degree]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+For the award of Master of Science (Civil Engineering) degree, a student must have:
+- Completed 30 credit hours as per the approved study plan; and
+- Obtained a CGPA of at least 2.50.
+
+[Credit Structure]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+The program may be completed as either a research‑based or a project‑based option (subject to approval of the
+Departmental Graduate Studies Committee – DGSC):
+Research‑Based Option:
+- Core Courses: 3 courses, 9 credit hours
+- Elective (Specialization) Courses: 4 courses, 12 credit hours
+- Elective Course: 1 course, 3 credit hours
+- CV5091 MS Thesis‑I*: 1 course, 3 credit hours
+- CV5092 MS Thesis‑II: 1 course, 3 credit hours
+- Total: 30 credit hours
+
+[Credit Structure]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+Project‑Based Option**:
+- Core Courses: 4 courses, 12 credit hours
+- Elective (Specialization) Courses: 5 courses, 15 credit hours
+- Elective Course: 1 course, 3 credit hours
+- Total: 30 credit hours
+
+[Credit Structure]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+* MS Thesis‑I registration requires completion of 15 credit hours (including Research Methodology) and a minimum CGPA of 2.50.  
+** Subject to approval of the Departmental Graduate Studies Committee (DGSC).
+
+[Core Courses]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+- CV5000 Advanced Structural Analysis
+- CV5001 Probability and Statistical Methods
+- CV5003 Foundation Engineering
+- CV5011 Finite Element Analysis
+- CV5014 Transportation Planning
+- CV5015 Hydraulic Structures
+- CV5017 Pavement Analysis and Design
+- CV5021 Advanced Open Channel Hydraulics
+- CV5022 Trans‑Boundary Water Issues and Water Diplomacy Framework
+- CV5032 Research Methodology* (Research Methodology is mandatory for MS with thesis.)
+- CV5094 Advanced Soil Mechanics
+- CV5099 Optimization Techniques
+- CV5012 Forensic Engineering
+- CV5014 Principles and Techniques of Ground Improvement
+- CV5016 Geotechnical Engineering of Embankment Dams
+- CV5105 Innovative Civil Engineering Materials
+- CV5109 Earthquake Engineering
+- CV6008 Advanced Engineering Mathematics
+- CVxxxx Repair and Rehabilitation of Structures
+
+[Registration Rules for Thesis]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+- Registration in 'MS Thesis‑I' (CV5091) is allowed provided the student has:
+  - Completed at least 15 credit hours (including Research Methodology); and
+  - CGPA is equal to or more than 2.50.
+
+[Areas of Specialization]
+Program Code: MS_Civil | Program Title: Master of Science (Civil Engineering) | Level: Graduate | Domain: Engineering
+The MS (Civil Engineering) program offers courses and research work in the following areas of specialization:
+- Structural Engineering
+- Hydraulics and Water Resources Engineering
+- Geotechnical Engineering
+- Transportation Engineering
+- Construction Management

@@ -1,0 +1,142 @@
+[Program Vision]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+To be a premier undergraduate program that develops graduates ready to excel in the dynamic local and global
+financial landscape.
+
+[Program Mission]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+The BS (Accounting and Finance) program has a mission to deliver education that integrates rigorous accounting
+and financial knowledge with ethical decision‑making, technological aptitude, and critical thinking, empowering
+graduates to meet the challenges of a complex and ever‑changing field of finance, with a focus on prudent,
+ethical, and astute financial management practice.
+
+[Career Opportunities]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Graduates of the BS (Accounting and Finance) program can opt for careers across accounting and finance, including:
+- Audit
+- Taxation
+- Budget analysis
+- Financial accounting
+- Management accounting
+The program also develops competencies for roles in:
+- Financial analytics
+- Corporate finance
+- Professional accounting
+- Investment banking
+Additionally, graduates can pursue opportunities in financial institutions and consultancy firms, where their
+specialized accounting and finance knowledge is in high demand. By combining a comprehensive curriculum with
+hands‑on learning, the program prepares students with the knowledge and skills essential for success in the
+dynamic accounting and finance sectors.
+
+[Award of Degree]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+For the award of Bachelor of Science (Accounting and Finance) degree, a student must have:
+- Passed courses totaling at least 138 credit hours, including all those courses which have been specified
+  as core courses.
+- Obtained a CGPA of at least 2.00.
+
+[Credit Hour Distribution]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Eligibility for FYP‑I: 105 credit hours (CH) completed.
+Domain‑wise Credit Hours:
+- General Education: 34 credit hours
+- Disciplinary Major: 83 credit hours
+- Interdisciplinary: 12 credit hours
+- Field Experience (Internship): 3 credit hours
+- Capstone Project (FYP): 6 credit hours
+- Total: 138 credit hours
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester I
+- Code: CS1001 | Title: IT in Business | Cr.Hrs: 2-1 | Prereq: None
+- Code: AF1001 | Title: Fundamentals of Accounting | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT1002 | Title: Business Math‑I | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG1002 | Title: Marketing Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1016 | Title: English‑I | Cr.Hrs: 2-1 | Prereq: None
+- Code: SS1015 | Title: Pakistan Studies | Cr.Hrs: 2-0 | Prereq: None
+Total Semester Credits: 15-2
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester II
+- Code: AF1002 | Title: Financial Accounting | Cr.Hrs: 3-1 | Prereq: AF1001
+- Code: MG2008 | Title: Data Analysis for Business‑I | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG1001 | Title: Fundamentals of Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS2019 / SS2018 | Title: Psychology / Sociology | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1006 | Title: English‑II | Cr.Hrs: 3-1 | Prereq: SS1016
+- Code: SS1007 | Title: Islamic Studies/Ethics | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1019 | Title: Understanding Sirat‑un‑Nabi | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 16-2
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester III
+- Code: MG2012 | Title: Business Economics | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS2041 | Title: Critical Thinking | Cr.Hrs: 2-0 | Prereq: None
+- Code: AF2001 | Title: Corporate Accounting‑I | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: MG2009 | Title: Data Analysis for Business‑II | Cr.Hrs: 3-1 | Prereq: MG2008
+- Code: MG2010 | Title: Business Communication | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG2011 | Title: Environmental Science and Sustainability for Business | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1021 | Title: Understanding of Holy Quran‑I | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 18-1
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester IV
+- Code: AF2004 | Title: Business Finance | Cr.Hrs: 3-0 | Prereq: AF1002, MT1002
+- Code: SS2043 | Title: Civics and Community Engagement | Cr.Hrs: 2-0 | Prereq: None
+- Code: MT2004 | Title: Business Math‑II | Cr.Hrs: 3-0 | Prereq: MT1002
+- Code: AF2005 | Title: Cost and Management Accounting | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: AF2002 | Title: Corporate Accounting‑II | Cr.Hrs: 3-0 | Prereq: AF2001
+- Code: SS1013 | Title: Ideology and Constitution of Pakistan | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1022 | Title: Understanding of Holy Quran‑II | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 17-0
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester V
+- Code: MG3002 | Title: Business Law | Cr.Hrs: 3-0 | Prereq: None
+- Code: AF3001 | Title: Financial Management | Cr.Hrs: 3-1 | Prereq: AF2004
+- Code: MG3003 | Title: Basic Econometrics | Cr.Hrs: 3-1 | Prereq: MG2009
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CS3003 | Title: Management Information Systems | Cr.Hrs: 3-1 | Prereq: CS1001
+Total Semester Credits: 15-3
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester VI
+- Code: AF3002 | Title: Financial Statement Analysis | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: AF4006 | Title: Investment Analysis and Management | Cr.Hrs: 3-0 | Prereq: AF3001
+- Code: AF3004 | Title: Accounting for Decision Making | Cr.Hrs: 3-0 | Prereq: AF2005
+- Code: MG3010 | Title: Methods in Business Research | Cr.Hrs: 3-1 | Prereq: None
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 15-1
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester VII
+- Code: MG4527 | Title: Portfolio Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4011 | Title: Entrepreneurship | Cr.Hrs: 3-0 | Prereq: None
+- Code: AF4005 | Title: Audit and Assurance | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: AF4091 | Title: Final Year Project‑I | Cr.Hrs: 0-3 | Prereq: Eligibility for FYP‑I (105 CH)
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 12-3
+
+
+
+[Study Plan]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+Semester VIII
+- Code: MG4013 | Title: Business Strategy | Cr.Hrs: 3-0 | Prereq: MG1001
+- Code: AF4008 | Title: Taxation | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: AF4007 | Title: Financial Risk Management | Cr.Hrs: 3-0 | Prereq: AF3001
+- Code: MGxxxx | Title: MG/AF/BA/CS Elective-IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: AF4092 | Title: Final Year Project-II | Cr.Hrs: 0-3 | Prereq: AF4091
+Total Semester Credits: 12-3
+
+[Notes]
+Program Code: BS_AF | Program Title: Bachelor of Science (Accounting and Finance) | Level: Undergraduate | Domain: Management Sciences
+- * Internship can be registered in any semester after the fourth and before the eighth semester.
+- The Internship credit hours and grade shall be used in the calculation of the CGPA of the completed degree.
+- It will not be used in the determination of semester CGPA and merit position.

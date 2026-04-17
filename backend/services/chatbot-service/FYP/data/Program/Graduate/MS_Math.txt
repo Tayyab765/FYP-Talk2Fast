@@ -1,0 +1,64 @@
+[Program Mission]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+The Master of Science (Mathematics) program at FAST‑NUCES is committed to providing an excellent major for
+students whose career goals are teaching, immediate entry into allied arenas, or pursuit of a higher research
+degree in mathematics. This program enables students to develop quantitative and abstract reasoning by using
+mathematics as an analytical tool. In fulfilling this mission, the department has created an environment for
+quality instruction to all students in mathematics courses and for nurturing a pleasant and constructive
+faculty‑student interface.
+
+[Career Opportunities]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+- To integrate relevant knowledge and pose new questions across a range of pure and applied mathematics.
+- To provide a background of mathematics for research and development.
+- To learn novel mathematical concepts, methods, and tools for application in applied fields.
+- To construct, analyze, and interpret mathematical models for real‑life problems, drawing from a wide range of
+  areas of mathematics.
+- To bridge the gap for mathematicians between financial and academic institutions.
+
+[Award of Degree]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+For the award of Master of Science (Mathematics) degree, a student must have:
+- Passed courses totaling at least 31 credit hours, including four core courses.
+- Obtained a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+Semester I
+- Code: MT Core Course‑I | Title: MT Core Course‑I | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT Core Course‑II | Title: MT Core Course‑II | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT Elective‑I | Title: MT Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MT Elective‑II | Title: MT Elective‑II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+Semester II
+- Code: MT Core Course‑III | Title: MT Core Course‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MT Core Course‑IV | Title: MT Core Course‑IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MT Elective‑III | Title: MT Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MT Elective‑IV | Title: MT Elective‑IV | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+Semester III
+- Code: SS5011 | Title: Research Methodology | Cr.Hrs: 1-0 | Prereq: None
+- Code: MT MS Thesis‑I | Title: MS Thesis‑I | Cr.Hrs: 0-3 | Prereq: Registration rules above
+Total Semester Credits: 1-3
+
+[Study Plan]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+Semester IV
+- Code: MT MS Thesis‑II | Title: MS Thesis‑II | Cr.Hrs: 0-3 | Prereq: MT MS Thesis‑I
+Total Semester Credits: 0-3
+Grand Total Credits: 31
+
+[Registration Rules for Thesis]
+Program Code: MS_Math | Program Title: Master of Science (Mathematics) | Level: Graduate | Domain: Sciences and Humanities
+Registration in 'MS Thesis‑I' shall be allowed provided the student has:
+- Earned at least 15 CH; and
+- Passed the 'Research Methodology course'; and
+- CGPA is equal to or more than 2.50.
+A student has the option to pursue MS either by undertaking a 6 credit hour MS Thesis, or by taking a
+3 credit-hour research Survey Plus one taught course.

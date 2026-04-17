@@ -1,0 +1,108 @@
+[Program Mission]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+The Master of Science (Computer Science) coursework is tailored according to international standards to nurture
+capacity building and original thinking in postgraduates for lifelong learning. The goal is to produce graduates
+who are highly sought after by national and international IT organizations and who can pursue further studies
+in national and international universities.
+
+[Career Opportunities]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Graduates of the MS (Computer Science) program are prepared to:
+1. Become computer scientists who fulfil the requirements of the industry's software needs.
+2. Help fill the vacuum created by a lack of computer science and technology education in the local region and beyond.
+3. Develop a broad understanding of the computer science field by mastering innovative concepts, theories, and techniques.
+4. Sharpen their communication skills and produce well‑organized technical reports.
+5. Build strong formal foundations for further higher education (e.g., PhD).
+6. Develop as highly skilled researchers and scholars who may pursue careers in the field of computer sciences.
+
+[Program Learning Outcomes]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+1. Students will possess advanced knowledge of the computer science field.
+2. Students will be able to think creatively and critically to solve non‑trivial problems.
+3. Students will be able to use computing knowledge to develop efficient solutions for real‑life problems.
+4. Students will be able to design tailored solutions and conduct research‑related activities.
+5. Students shall have the ability to make effective oral and written presentations on technical topics.
+
+[Deficiency / Prerequisite Courses]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+The following core undergraduate‑level courses (or equivalents) are recommended to be completed before entering
+the MS (Computer Science) program:
+- Computer Programming
+- Data Structures
+- Operating Systems
+- Database Systems
+- Design and Analysis of Algorithms
+- Computer Networks
+- Theory of Automata
+- Software Engineering
+
+[Deficiency / Prerequisite Courses]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Additional notes:
+- A student selected for admission having deficiencies in the above courses may be required to study a maximum of
+  four deficiency courses.
+- These deficiency courses must be passed in the first two semesters.
+- Deficiency courses are determined by the Graduate Studies Committee before admitting the student.
+- Fee is not charged for studying deficiency courses.
+- A student may be allowed to take Research Methods and Applied Programming along with deficiency courses.
+- If a student has a deficiency in Theory of Automata, they cannot take Theory of Programming Languages and
+  Advanced Theory of Computation until the deficiency is cleared.
+- If a student has deficiencies in Programming Fundamentals, Object Oriented Programming, and Algorithms, these
+  may be covered through the Applied Programming course.
+
+[Award of Degree]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+For the award of Master of Science (Computer Science) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all core courses.
+- Earned a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Semester I
+- Code: CS4002 | Title: Applied Programming* | Cr.Hrs: NC | Prereq: None
+- Code: CORE-I | Title: Core Course-I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CORE-II | Title: Core Course-II | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CORE-III | Title: Core Course-III | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0 (excluding NC course)
+
+[Study Plan]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Semester II
+- Code: CS5001 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: CSE-EL-I | Title: Computing Elective-I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CSE-EL-II | Title: Computing Elective-II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0
+
+[Study Plan]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Semester III
+- Code: CSE-EL-III | Title: Computing Elective-III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH1 | Title: MS Thesis-I / MS Project-I | Cr.Hrs: 0-3 | Prereq: See thesis registration rules
+Total Semester Credits: 3-3
+
+
+[Study Plan]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Semester IV
+- Code: CSE-EL-IV | Title: Computing Elective-IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH2 | Title: MS Thesis-II / MS Project-II | Cr.Hrs: 0-3 | Prereq: MS_TH1
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis / Project]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+Registration in 'MS Thesis-I / MS Project-I' is allowed provided the student has:
+- Earned at least 15 credit hours.
+- Passed the 'Research Methodology' course (CS5001).
+- CGPA is equal to or greater than 2.50.
+
+[Notes]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+- * Applied Programming (CS4002) is a non‑credit (NC) course, which must be cleared during the first semester.
+  The course may be exempted based on good performance in the admission test.
+
+[Core Courses for MS (Computer Science)]
+Program Code: MS_CS | Program Title: Master of Science (Computer Science) | Level: Graduate | Domain: Computing
+- CS5001 Advanced Analysis of Algorithms
+- CS5005 Advanced Operating System
+- CS5007 Advanced Theory of Computation
+- CS5006 Theory of Programming Languages

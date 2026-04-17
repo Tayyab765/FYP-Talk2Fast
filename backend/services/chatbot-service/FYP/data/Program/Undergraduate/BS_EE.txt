@@ -1,0 +1,136 @@
+[Program Mission]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+The mission of the School of Electrical Engineering is to:
+- Develop a nurturing environment for delivering quality engineering education through discovery and innovation.
+- Show commitment and dedication to teaching by developing state‑of‑the‑art curriculum grounded in scientific,
+  mathematical, and technical knowledge that emphasizes practical application and provides opportunities for
+  hands‑on experience.
+- Inculcate lifelong learning and instill ethical and social values in graduates to help them acquire professional
+  leadership.
+- Act as a centre of excellence to identify problems of national industry and develop innovative solutions.
+
+[Career Opportunities]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+This versatile degree opens careers in different areas of Electrical Engineering. Graduates can pursue careers in
+the telecom industry, electronics, power sector, embedded system design, and software programming, as well as in
+other industries that require strong electrical and computing skills.
+
+[Program Educational Objectives (PEOs)]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+- PEO‑1 – Creativity: Apply cutting‑edge engineering practices to develop sustainable solutions for complex
+  engineering problems under limited resources.
+- PEO‑2 – Conduct: Uphold responsible, professional, and ethical conduct with strong interpersonal skills.
+- PEO‑3 – Leadership: Emerge as team leaders in their domain of expertise and in activities that support service
+  and economic development, nationally and throughout the world.
+- PEO‑4 – Versatility: Practice electrical engineering in a broad range of industries in a multicultural environment
+  and adapt to embrace new technologies.
+
+[Award of Degree]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+For the award of Bachelor of Science (Electrical Engineering) degree, a student must have:
+- Passed courses totaling at least 140 credit hours, including all specified core courses.
+- Obtained a CGPA of at least 2.00.
+
+[Credit Hour Distribution]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Domain‑wise Credit Hours:
+- Computing: 11 credit hours
+- Electrical Engineering: 82 credit hours
+- Other Engineering: 5 credit hours
+- Management Sciences: 6 credit hours
+- Natural Sciences: 18 credit hours
+- Humanities: 18 credit hours
+- Total: 140 credit hours
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester I
+- Code: CS1009 | Title: Applications of ICT | Cr.Hrs: 2-1 | Prereq: None
+- Code: MT1001 | Title: Applied Calculus | Cr.Hrs: 3-0 | Prereq: None
+- Code: NS1007 | Title: Applied Physics | Cr.Hrs: 2-1 | Prereq: None
+- Code: ME1001 | Title: Engineering Drawing | Cr.Hrs: 0-1 | Prereq: None
+- Code: SS1005 | Title: English Language Skills | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1007 | Title: Islamic Studies/Ethics | Cr.Hrs: 2-0 | Prereq: None
+- Code: MG1008 | Title: Occupational Health and Safety | Cr.Hrs: 1-0 | Prereq: None
+- Code: SS1003 | Title: Pakistan Studies | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1019 | Title: Understanding of Sirat‑un‑Nabi | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 15-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester II
+- Code: SS2043 | Title: Civics and Community Engagement | Cr.Hrs: 2-0 | Prereq: None
+- Code: MT1006 | Title: Differential Equations | Cr.Hrs: 3-0 | Prereq: MT1001
+- Code: EL1006 | Title: Engineering Workshop | Cr.Hrs: 0-1 | Prereq: None
+- Code: SS1013 | Title: Ideology and Constitution of Pakistan | Cr.Hrs: 2-0 | Prereq: None
+- Code: MT1004 | Title: Linear Algebra | Cr.Hrs: 3-0 | Prereq: MT1001
+- Code: EE1001 | Title: Linear Circuit Analysis | Cr.Hrs: 3-1 | Prereq: None
+- Code: CS1011 | Title: Programming for Engineers | Cr.Hrs: 3-1 | Prereq: CS1009
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester III
+- Code: MT2003 | Title: Complex Variables and Transforms | Cr.Hrs: 3-0 | Prereq: MT1006
+- Code: EE2004 | Title: Electrical Network Analysis | Cr.Hrs: 3-1 | Prereq: EE1001
+- Code: EE1004 | Title: Electronic Devices and Circuits | Cr.Hrs: 3-1 | Prereq: EE1001
+- Code: MT2008 | Title: Multivariable Calculus | Cr.Hrs: 3-0 | Prereq: MT1006
+- Code: CS2021 | Title: Object Oriented Data Structures | Cr.Hrs: 3-1 | Prereq: CS1011
+- Code: SS1021 | Title: Understanding of Holy Quran‑I | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester IV
+- Code: EE2008 | Title: Signals and Systems | Cr.Hrs: 3-1 | Prereq: MT2003
+- Code: EE1005 | Title: Digital Logic Design | Cr.Hrs: 3-1 | Prereq: None
+- Code: MT2005 | Title: Probability and Statistics | Cr.Hrs: 3-0 | Prereq: None
+- Code: EE2010 | Title: Electro‑Mechanical Systems | Cr.Hrs: 3-1 | Prereq: NS1002, EE2004
+- Code: SS1022 | Title: Understanding of Quran‑II | Cr.Hrs: 1-0 | Prereq: None
+- Code: EExxxx | Title: Multi‑Disciplinary Engineering Elective | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester V
+- Code: EE3003 | Title: Analogue and Digital Communication | Cr.Hrs: 3-1 | Prereq: EE2011, EE2008
+- Code: EE3005 | Title: Electromagnetic Theory | Cr.Hrs: 3-0 | Prereq: MT2008
+- Code: EE3002 | Title: Microprocessor Interfacing and Programming | Cr.Hrs: 3-1 | Prereq: CS1004, EE1005
+- Code: SS2001 | Title: Technical Communication Skills | Cr.Hrs: 2-0 | Prereq: SS1005
+- Code: EExxxx | Title: Depth Core‑I | Cr.Hrs: 3-1 | Prereq: See catalog
+Total Semester Credits: 14-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VI
+- Code: MG2002 | Title: Engineering Economics | Cr.Hrs: 2-0 | Prereq: None
+- Code: EE3004 | Title: Feedback Control Systems | Cr.Hrs: 3-1 | Prereq: EE2008
+- Code: EE2038 | Title: Power Distribution and Utilization | Cr.Hrs: 3-1 | Prereq: See catalog
+- Code: EExxxx | Title: Depth Core‑II | Cr.Hrs: 3-1 | Prereq: See catalog
+- Code: EExxxx | Title: Depth Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 14-3
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VII
+- Code: EE4091 | Title: Final Year Project‑I | Cr.Hrs: 3-0 | Prereq: See FYP rules
+- Code: SS2007 | Title: Technical and Business Writing | Cr.Hrs: 3-0 | Prereq: SS1005
+- Code: MG3036 | Title: Engineering Management | Cr.Hrs: 2-0 | Prereq: None
+- Code: EExxxx | Title: Depth Elective‑IV | Cr.Hrs: 3-1 | Prereq: See catalog
+- Code: EExxxx | Title: Flexible Elective‑I | Cr.Hrs: 3-1 | Prereq: See catalog
+Total Semester Credits: 14-2
+
+
+[Study Plan]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+Semester VIII
+- Code: EE4092 | Title: Final Year Project-II | Cr.Hrs: 3-0 | Prereq: EE4091
+- Code: SS2013 | Title: Entrepreneurship | Cr.Hrs: 2-0 | Prereq: None
+- Code: EExxxx | Title: Depth Elective-V | Cr.Hrs: 3-1 | Prereq: See catalog
+- Code: EExxxx | Title: Flexible Elective-II | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: EExxxx | Title: Flexible Elective-III | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 14-1
+
+[Notes]
+Program Code: BS_EE | Program Title: Bachelor of Science (Electrical Engineering) | Level: Undergraduate | Domain: Engineering
+- Eligibility for FYP‑I: 101 credit hours completed.

@@ -1,0 +1,68 @@
+[Program Mission]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+To develop students' skills necessary to manage Software Project Management, coupling both theoretical and practical
+aspects, so that they can acquire leadership positions in the software industry and become agents of change and
+improvement.
+
+[Career Opportunities]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+The program prepares students to:
+1. Assess and manage risks by developing strategies to handle them.
+2. Gather and manage requirements and provide effective coordination between relevant stakeholders.
+3. Identify, document, and analyze change management to agree on changes to scope.
+4. Perform configuration management of large‑scale software.
+5. Identify, prioritize, and agree on software releases by preparing release schedules and estimating software costs
+   and resource requirements.
+6. Identify and resolve conflicts that may arise during the management of software projects.
+7. Inculcate a sense of ethics, responsibilities, and leadership in managing software projects.
+
+[Program Learning Outcomes]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+1. Students will be able to exhibit expertise in managing large‑scale projects as their final year project or conduct
+   research related to Software Project Management.
+2. Students will demonstrate analytical and communication skills while excelling in project resource forecasting
+   and quality implementation for successful completion of projects.
+
+[Award of Degree]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+For the award of Master of Science (Software Project Management) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all core courses.
+- Earned a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+Semester I
+- Code: CS5001 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS5015 | Title: Software Project Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4006 | Title: Management and Organizational Behavior | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 9-0
+
+[Study Plan]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+Semester II
+- Code: CS5002 | Title: Software Quality Assurance | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS5003 | Title: Software Process Management and Metrics | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS5004 | Title: Requirements Engineering | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 9-0
+
+[Study Plan]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+Semester III
+- Code: CSE-EL | Title: Computing Elective | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH1 | Title: MS Thesis-I / MS Project-I / Practicum-I | Cr.Hrs: 0-3 | Prereq: See thesis registration rules
+Total Semester Credits: 3-3
+
+
+[Study Plan]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+Semester IV
+- Code: General Elective-I | Title: General Elective-I (Computing/Management Sciences) | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH2 | Title: MS Thesis-II / MS Project-II / Practicum-II | Cr.Hrs: 0-3 | Prereq: MS_TH1
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis / Project / Practicum]
+Program Code: MS_SPM | Program Title: Master of Science (Software Project Management) | Level: Graduate | Domain: Computing
+Registration in 'MS Thesis-I / Project-I / Practicum-I' is allowed provided the student has:
+- Earned at least 15 credit hours.
+- Passed the 'Research Methodology' course (CS5001).
+- CGPA is equal to or more than 2.50.

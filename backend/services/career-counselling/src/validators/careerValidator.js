@@ -10,27 +10,27 @@ const profileSubmissionSchema = Joi.object({
   answers: Joi.object({
     // ===== ACADEMIC BACKGROUND (5 questions) =====
     qualification_type: Joi.string()
-      .valid('local_board', 'alevels', 'other')
+      .valid('local_board', 'fsc', 'alevels', 'other')
       .required(),
-    
+
     study_stream: Joi.string()
       .valid('pre_engineering', 'pre_medical', 'ics', 'icom', 'fa', 'alevel_science', 'alevel_business', 'other')
       .required(),
-    
+
     academic_performance: Joi.string()
       .valid('excellent', 'good', 'average', 'below_average')
       .required(),
-    
+
     favorite_subjects: Joi.array()
       .items(Joi.string())
       .min(1)
       .max(3)
       .required(),
-    
+
     challenging_subjects: Joi.array()
       .items(Joi.string())
       .optional(),
-    
+
     // ===== INTEREST ASSESSMENT (11 questions) =====
     // Likert scale questions (1-5)
     enjoy_solving_logical_problems: Joi.number().min(1).max(5).required(),
@@ -44,7 +44,7 @@ const profileSubmissionSchema = Joi.object({
     enjoy_research: Joi.number().min(1).max(5).required(),
     like_learning_new_tools: Joi.number().min(1).max(5).required(),
     hobbies: Joi.array().items(Joi.string()).optional(),
-    
+
     // ===== SKILLS & STRENGTHS (11 questions) =====
     // Skill strength scale (1-5: Very Weak to Very Strong)
     mathematical_skills: Joi.number().min(1).max(5).required(),
@@ -60,7 +60,7 @@ const profileSubmissionSchema = Joi.object({
     learning_preference: Joi.string()
       .valid('hands_on', 'theoretical', 'visual', 'mixed')
       .required(),
-    
+
     // ===== PERSONALITY TRAITS (10 questions) =====
     // Likert scale (1-5)
     prefer_working_independently: Joi.number().min(1).max(5).required(),
@@ -73,36 +73,44 @@ const profileSubmissionSchema = Joi.object({
     motivated_by_long_term_goals: Joi.number().min(1).max(5).required(),
     like_abstract_problems: Joi.number().min(1).max(5).required(),
     enjoy_practical_work: Joi.number().min(1).max(5).required(),
-    
+
     // ===== WORK STYLE & PREFERENCES (6 questions) =====
     preferred_work_environment: Joi.string()
       .valid('office', 'lab', 'remote', 'field')
       .required(),
-    
+
     problem_solving_approach: Joi.string()
       .valid('logic_data', 'creativity', 'communication', 'proven_methods')
       .required(),
-    
+
     career_motivation: Joi.string()
       .valid('high_salary', 'job_stability', 'learning_growth', 'leadership')
       .required(),
-    
+
     exciting_work_type: Joi.string()
       .valid('designing_systems', 'analyzing_data', 'managing', 'creating_products')
       .required(),
-    
+
     continuous_learning_attitude: Joi.string()
       .valid('enjoy_pursue', 'accept_if_required', 'prefer_stable')
       .required(),
-    
+
     preferred_location: Joi.string()
       .valid('local', 'national', 'international', 'no_preference')
       .default('no_preference'),
-    
+
     // ===== CAREER INCLINATION (1 question) =====
     appealing_role: Joi.string()
       .valid('software_engineer', 'data_analyst', 'ai_engineer', 'electrical_engineer', 'business_manager', 'entrepreneur', 'researcher')
-      .optional()
+      .optional(),
+
+    // ===== OPEN ENDED QUESTIONS FOR LLM (6 questions) =====
+    ideal_work_environment_desc: Joi.string().max(1000).optional().allow(''),
+    passionate_project_desc: Joi.string().max(1000).optional().allow(''),
+    problem_solving_desc: Joi.string().max(1000).optional().allow(''),
+    career_dream_desc: Joi.string().max(1000).optional().allow(''),
+    disliked_tasks_desc: Joi.string().max(1000).optional().allow(''),
+    impact_desc: Joi.string().max(1000).optional().allow('')
   }).required()
 });
 
@@ -146,20 +154,20 @@ export function validateRequest(schema, property = 'body') {
       abortEarly: false,
       stripUnknown: true
     });
-    
+
     if (error) {
       const errors = error.details.map(detail => ({
         field: detail.path.join('.'),
         message: detail.message
       }));
-      
+
       return res.status(400).json({
         success: false,
         message: 'Validation failed',
         errors
       });
     }
-    
+
     // Replace request data with validated and sanitized data
     req[property] = value;
     next();

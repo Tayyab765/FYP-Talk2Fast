@@ -1,0 +1,122 @@
+[Program Mission]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+To provide theoretical knowledge and practical skills required for a professional career in Artificial Intelligence.
+The degree program follows Artificial Intelligence in breadth, covering core computing concepts with a specialization
+in Artificial Intelligence and its application within the code of ethics.
+
+[Career Opportunities]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+You may become a risk manager, reporting analyst, project manager, enterprise analyst, data engineer,
+machine learning engineer, or Artificial Intelligence developer, etc.
+
+[Award of Degree]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+For the award of Bachelor of Science (Artificial Intelligence) degree, a student must have:
+- Passed courses totaling at least 137 credit hours, including all core courses.
+- Earned a CGPA of at least 2.00.
+
+[Credit Hour Distribution]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Computing Core: 52 credit hours
+General Education: 34 credit hours
+Maths and Supporting Courses: 12 credit hours
+Domain Core: 21 credit hours
+Domain Elective: 15 credit hours
+Elective Supportive Courses: 3 credit hours
+Total: 137 credit hours
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester I
+- Code: NS1001 | Title: Applied Physics | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT1003 | Title: Calculus and Analytical Geometry | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1012 | Title: Functional English | Cr.Hrs: 2-1 | Prereq: None
+- Code: SS1013 | Title: Ideology and Constitution of Pakistan | Cr.Hrs: 2-0 | Prereq: None
+- Code: CL1000 | Title: Introduction to Information and Communication Technology | Cr.Hrs: 0-1 | Prereq: None
+- Code: SS1015 | Title: Pakistan Studies | Cr.Hrs: 2-0 | Prereq: None
+- Code: CS1002 | Title: Programming Fundamentals | Cr.Hrs: 3-1 | Prereq: None
+Total Semester Credits: 15-3
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester II
+- Code: SS2043 | Title: Civics and Community Engagement | Cr.Hrs: 2-0 | Prereq: None
+- Code: EE1005 | Title: Digital Logic Design | Cr.Hrs: 3-1 | Prereq: None
+- Code: SS1014 | Title: Expository Writing | Cr.Hrs: 2-1 | Prereq: None
+- Code: SS1007 | Title: Islamic Studies/Ethics | Cr.Hrs: 2-0 | Prereq: None
+- Code: MT1008 | Title: Multivariable Calculus | Cr.Hrs: 3-0 | Prereq: MT1003
+- Code: CS1004 | Title: Object Oriented Programming | Cr.Hrs: 3-1 | Prereq: CS1002
+- Code: SS1019 | Title: Understanding Sirat-Un-Nabi (PBUH) | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 15-3
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester III
+- Code: EE2003 | Title: Computer Organization and Assembly Language | Cr.Hrs: 3-1 | Prereq: EE1005
+- Code: CS2001 | Title: Data Structures | Cr.Hrs: 3-1 | Prereq: CS1004
+- Code: CS1005 | Title: Discrete Structures | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT1004 | Title: Linear Algebra | Cr.Hrs: 3-0 | Prereq: None
+- Code: AI2001 | Title: Programming for AI | Cr.Hrs: 3-1 | Prereq: None
+- Code: SS1021 | Title: Understanding of Holy Quran-I | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester IV
+- Code: AI2002 | Title: Artificial Intelligence | Cr.Hrs: 3-1 | Prereq: AI2001
+- Code: CS2005 | Title: Database Systems | Cr.Hrs: 3-1 | Prereq: CS2001
+- Code: CS2004 | Title: Fundamentals of Software Engineering | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS2006 | Title: Operating Systems | Cr.Hrs: 3-1 | Prereq: CS2001
+- Code: MT2005 | Title: Probability and Statistics | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1022 | Title: Understanding of Holy Quran-II | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester V
+- Code: CS3001 | Title: Computer Networks | Cr.Hrs: 3-1 | Prereq: CS2001
+- Code: CS2009 | Title: Design and Analysis of Algorithms | Cr.Hrs: 3-0 | Prereq: CS2001
+- Code: AI3001 | Title: Knowledge Representation and Reasoning | Cr.Hrs: 3-0 | Prereq: AI2001
+- Code: AI3002 | Title: Machine Learning | Cr.Hrs: 3-1 | Prereq: AI2001
+- Code: SS2007 | Title: Technical and Business Writing | Cr.Hrs: 3-0 | Prereq: SS1014
+Total Semester Credits: 15-2
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester VI
+- Code: AI3003 | Title: Artificial Neural Networks | Cr.Hrs: 3-0 | Prereq: AI2001
+- Code: AI4002 | Title: Computer Vision | Cr.Hrs: 3-1 | Prereq: AI3002
+- Code: CS3006 | Title: Parallel and Distributed Computing | Cr.Hrs: 3-0 | Prereq: CS2006
+- Code: AIxxxx | Title: AI Elective - I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: SS/MG | Title: SS/MG Elective - I | Cr.Hrs: 2-0 | Prereq: None
+Total Semester Credits: 14-1
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester VII
+- Code: AI4091 | Title: Final Year Project - I | Cr.Hrs: 0-3 | Prereq: Eligibility for FYP-I (99 CH)
+- Code: MG4011 | Title: Entrepreneurship | Cr.Hrs: 3-0 | Prereq: None
+- Code: AIxxxx | Title: AI Elective - II | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: AIxxxx | Title: AI Elective - III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: SS/MG | Title: SS/MG Elective - II | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 12-3
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Semester VIII
+- Code: AI4092 | Title: Final Year Project - II | Cr.Hrs: 0-3 | Prereq: AI4091
+- Code: CS3002 | Title: Information Security | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS4001 | Title: Professional Practices | Cr.Hrs: 3-0 | Prereq: None
+- Code: AIxxxx | Title: AI Elective - IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: AIxxxx | Title: AI Elective - V | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 12-4
+
+[Study Plan]
+Program Code: BS_AI | Program Title: Bachelor of Science (Artificial Intelligence) | Level: Undergraduate | Domain: Computing
+Internship
+- Code: CS2019 | Title: Computing Internship* | Cr.Hrs: 0-1
+Notes:
+- Eligibility for FYP-I: 99 credit hours completed.
+- * Internship can be registered in any semester after the second and including the eighth semester.
+- The Internship credit hours and grade shall be used in the calculation of the CGPA of the completed degree.
+- It will not be used in the determination of semester CGPA and merit position.

@@ -5,10 +5,15 @@ yarn-debug.log*
 yarn-error.log*
 
 # Embedded Python RAG workspace artifacts
-services/chatbot-service/FYP/
 services/chatbot-service/FYP/.venv/
 services/chatbot-service/FYP/.venv*/
 services/chatbot-service/FYP/vector_store/
+services/chatbot-service/FYP/model_cache/
+services/chatbot-service/FYP/__pycache__/
+services/chatbot-service/FYP/**/__pycache__/
+services/chatbot-service/FYP/**/*.pyc
+services/chatbot-service/FYP/.env
+services/chatbot-service/FYP/*.pdf
 
 
 

@@ -67,6 +67,17 @@ router.post(
 );
 
 /**
+ * @route   GET /api/career/recommend
+ * @desc    Get latest stored AI recommendations for user
+ * @access  Private (authenticated user or guest session)
+ */
+router.get(
+  '/recommend',
+  authenticateOrGuest,
+  careerController.getRecommendations
+);
+
+/**
  * @route   POST /api/career/chat/:sessionId
  * @desc    Send follow-up chat message
  * @access  Private (authenticated user or guest session)

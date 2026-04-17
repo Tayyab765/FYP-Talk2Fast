@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Data Transformers
  * Transform data between different formats:
  * - User answers → Normalized internal format
@@ -82,7 +82,13 @@ export function transformAnswersToProfile(userId, answers) {
     
     // Career Inclination
     career_inclination: {
-      appealing_role: answers.appealing_role
+      appealing_role: answers.appealing_role,
+      ideal_work_environment_desc: answers.ideal_work_environment_desc,
+      passionate_project_desc: answers.passionate_project_desc,
+      problem_solving_desc: answers.problem_solving_desc,
+      career_dream_desc: answers.career_dream_desc,
+      disliked_tasks_desc: answers.disliked_tasks_desc,
+      impact_desc: answers.impact_desc
     },
     
     status: 'completed'
@@ -155,7 +161,13 @@ export function transformProfileToAnswers(profile) {
     continuous_learning_attitude: workStyle.continuous_learning_attitude,
     preferred_location: workStyle.preferred_location || 'no_preference',
 
-    appealing_role: inclination.appealing_role
+    appealing_role: inclination.appealing_role,
+    ideal_work_environment_desc: inclination.ideal_work_environment_desc,
+    passionate_project_desc: inclination.passionate_project_desc,
+    problem_solving_desc: inclination.problem_solving_desc,
+    career_dream_desc: inclination.career_dream_desc,
+    disliked_tasks_desc: inclination.disliked_tasks_desc,
+    impact_desc: inclination.impact_desc
   };
 }
 
@@ -296,7 +308,13 @@ export function transformProfileToAIFormat(profile) {
     
     // Career Inclination
     career_inclination: {
-      most_appealing_role: profile.career_inclination.appealing_role?.replace(/_/g, ' ') || 'Not specified'
+      most_appealing_role: profile.career_inclination.appealing_role?.replace(/_/g, ' ') || 'Not specified',
+      ideal_work_environment: profile.career_inclination.ideal_work_environment_desc || 'Not specified',
+      passionate_project: profile.career_inclination.passionate_project_desc || 'Not specified',
+      problem_solving_interest: profile.career_inclination.problem_solving_desc || 'Not specified',
+      career_dream: profile.career_inclination.career_dream_desc || 'Not specified',
+      disliked_tasks: profile.career_inclination.disliked_tasks_desc || 'Not specified',
+      desired_impact: profile.career_inclination.impact_desc || 'Not specified'
     }
   };
   

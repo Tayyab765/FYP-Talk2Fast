@@ -1,0 +1,91 @@
+[Program Mission]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+The mission of the MS (Cyber Security) program is to develop knowledgeable professionals with the skills to detect,
+respond to, and prevent cyber‑attacks in organizations and protect national security. With a graduate degree in
+cyber security, students build a comprehensive and strong foundation in the technical skills needed to keep
+organizational computer systems, networks, and data safe, secure, and private. The program is designed to prepare
+students with both theoretical and practical knowledge and to enhance their research skills in these emerging areas.
+
+[Career Opportunities]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+This program prepares students to meet challenges posed by a highly interconnected world. Graduates can work
+in roles related to mobile computing, sensor networks, and other emerging technologies that require a thorough
+understanding of related technologies and the latest trends in cyber security.
+
+[Program Learning Outcomes]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+1. Equip students so that they are able to play an effective role in international efforts to make cyberspace
+   safe, secure, and reliable for the national and international community.
+2. Prepare students to learn the technical aspects of information security by understanding current threats
+   and vulnerabilities and examining ways of developing effective countermeasures.
+3. Produce skilled professionals who are able to contribute towards protecting national information infrastructure
+   from all kinds of threats.
+4. Prepare students who can understand the implications of handling data in terms of data security and
+   business/organizational ethics, and who can make effective oral and written presentations on technical topics.
+
+[Deficiency / Prerequisite Courses]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+For interdisciplinary admissions, the following undergraduate‑level deficiency courses may be considered:
+- CYxxx Cyber Security
+- CYxxx Computer Networks
+- CSxxx Software Engineering
+Additional notes:
+- Deficiency courses are determined by the Graduate Studies Committee before admitting the student.
+- Deficiency courses must typically be passed in the first two semesters.
+- Fee is not charged for studying deficiency courses.
+
+[Award of Degree]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+For the award of Master of Science (Cyber Security) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all core courses.
+- Earned a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+Semester I
+- Code: CS5001 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: CORE-I | Title: Core Course-I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CORE-II | Title: Core Course-II | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: CS4002 | Title: Applied Programming* | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 9-0 (excluding NC course)
+
+[Study Plan]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+Semester II
+- Code: CORE-III | Title: Core Course-III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: ELEC-I | Title: Elective-I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: ELEC-II | Title: Elective-II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0
+
+[Study Plan]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+Semester III
+- Code: ELEC-III | Title: Elective-III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH1 | Title: MS Thesis-I / MS Project-I | Cr.Hrs: 0-3 | Prereq: See thesis registration rules
+Total Semester Credits: 3-3
+
+
+[Study Plan]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+Semester IV
+- Code: ELEC-IV | Title: Elective-IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH2 | Title: MS Thesis-II / MS Project-II | Cr.Hrs: 0-3 | Prereq: MS_TH1
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis / Project]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+Registration in 'MS Thesis-I / Project-I' is allowed provided the student has:
+- Earned at least 15 credit hours.
+- Passed the 'Research Methodology' course (CS5001).
+- CGPA is equal to or more than 2.50.
+
+[Notes]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+- * Applied Programming is a non‑credit (NC) course, which must be cleared during the first semester.
+  The course may be exempted based on good performance in the admission test.
+
+[Core Courses for MS (Cyber Security)]
+Program Code: MS_CY | Program Title: Master of Science (Cyber Security) | Level: Graduate | Domain: Computing
+- CYxxxx Applied Information Security
+- CYxxxx Advanced Network Security
+- CYxxxx Secure Systems Design

@@ -19,18 +19,38 @@ export async function getTestHistory(userId) {
     .sort({ completedAt: -1 })
     .lean();
 
-  // Enrich with test titles
-  const testIds = [...new Set(attempts.map(a => a.testId.toString()))];
-  const tests = await MockTest.find({ _id: { $in: testIds } }).select('title').lean();
+  // For dynamic tests, generate title from difficulty
+  // For legacy tests with testId, fetch from MockTest
+  const testIds = attempts
+    .filter(a => a.testId)
+    .map(a => a.testId.toString());
+  
+  const tests = testIds.length > 0
+    ? await MockTest.find({ _id: { $in: testIds } }).select('title').lean()
+    : [];
+  
   const testMap = Object.fromEntries(tests.map(t => [t._id.toString(), t.title]));
 
-  return attempts.map(a => ({
-    attemptId: a._id,
-    testTitle: testMap[a.testId.toString()] ?? 'Unknown Test',
-    score: a.score?.total ?? 0,
-    percentage: a.score?.percentage ?? 0,
-    completedAt: a.completedAt,
-  }));
+  return attempts.map(a => {
+    let testTitle = 'FAST Entry Test';
+    
+    if (a.testDifficulty) {
+      // Dynamic test
+      testTitle = `FAST Entry Test - ${a.testDifficulty.charAt(0).toUpperCase() + a.testDifficulty.slice(1)}`;
+    } else if (a.testId) {
+      // Legacy test
+      testTitle = testMap[a.testId.toString()] ?? 'Unknown Test';
+    }
+
+    return {
+      attemptId: a._id,
+      testTitle,
+      testDifficulty: a.testDifficulty,
+      score: a.score?.total ?? 0,
+      percentage: a.score?.percentage ?? 0,
+      completedAt: a.completedAt,
+    };
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -94,9 +114,30 @@ function computeSectionStats(attempts) {
 async function computeTopicStats(attempts) {
   if (attempts.length === 0) return [];
 
-  const testIds = [...new Set(attempts.map(a => a.testId.toString()))];
-  const questions = await Question.find({ testId: { $in: testIds } }).lean();
+  // Collect all question IDs from all attempts
+  const allQuestionIds = [];
+  for (const attempt of attempts) {
+    if (attempt.questionOrder) {
+      // Handle both Map and plain object formats
+      const questionOrderEntries = attempt.questionOrder instanceof Map
+        ? attempt.questionOrder.entries()
+        : Object.entries(attempt.questionOrder);
+      
+      for (const [sectionName, questionIds] of questionOrderEntries) {
+        allQuestionIds.push(...questionIds);
+      }
+    }
+  }
 
+  // Remove duplicates
+  const uniqueQuestionIds = [...new Set(allQuestionIds.map(id => id.toString()))];
+  
+  // Fetch all questions
+  const questions = uniqueQuestionIds.length > 0
+    ? await Question.find({ _id: { $in: uniqueQuestionIds } }).lean()
+    : [];
+
+  const questionMap = new Map(questions.map(q => [q._id.toString(), q]));
   const topicMap = new Map();
 
   for (const attempt of attempts) {
@@ -104,15 +145,29 @@ async function computeTopicStats(attempts) {
       ? Object.fromEntries(attempt.answers)
       : attempt.answers ?? {};
 
-    const attemptQuestions = questions.filter(q => q.testId.toString() === attempt.testId.toString());
+    // Get all question IDs for this attempt
+    const attemptQuestionIds = [];
+    if (attempt.questionOrder) {
+      // Handle both Map and plain object formats
+      const questionOrderEntries = attempt.questionOrder instanceof Map
+        ? attempt.questionOrder.entries()
+        : Object.entries(attempt.questionOrder);
+      
+      for (const [sectionName, questionIds] of questionOrderEntries) {
+        attemptQuestionIds.push(...questionIds.map(id => id.toString()));
+      }
+    }
 
-    for (const q of attemptQuestions) {
+    for (const qId of attemptQuestionIds) {
+      const q = questionMap.get(qId);
+      if (!q) continue;
+
       if (!topicMap.has(q.topic)) {
         topicMap.set(q.topic, { topic: q.topic, totalQuestions: 0, correctAnswers: 0 });
       }
       const t = topicMap.get(q.topic);
       t.totalQuestions++;
-      if (answers[q._id.toString()] === q.correctAnswer) {
+      if (answers[qId] === q.correctAnswer) {
         t.correctAnswers++;
       }
     }

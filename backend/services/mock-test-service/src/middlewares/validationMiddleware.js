@@ -171,12 +171,14 @@ export const validateSectionSubmission = [
 
 /**
  * Validation chain for test start
- * Validates: testId (valid ObjectId)
+ * Validates: difficulty (easy, medium, hard)
  */
 export const validateTestStart = [
-  param('testId')
-    .custom(isValidObjectId)
-    .withMessage('Invalid test ID'),
+  body('difficulty')
+    .notEmpty()
+    .withMessage('Difficulty is required')
+    .isIn(['easy', 'medium', 'hard'])
+    .withMessage('Difficulty must be one of: easy, medium, hard'),
   
   handleValidationErrors
 ];

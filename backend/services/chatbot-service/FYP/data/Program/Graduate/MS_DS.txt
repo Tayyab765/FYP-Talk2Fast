@@ -1,0 +1,82 @@
+[Program Mission]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+The MS (Data Science) coursework is tailored according to international standards to nurture capacity building
+and original thinking in postgraduates for lifelong learning. The goal is to produce graduates who are highly
+sought after by national and international organizations and who can pursue further studies in national and
+international universities.
+
+[Career Opportunities]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+This program equips students to transform data into actionable insights that enable complex business decisions.
+Students will be able to process large and complex data sets through computational, statistical, and machine learning
+techniques. The program provides exposure to the latest trends and technologies in data science, thus producing
+the manpower to fuel national and international emerging markets of data science products.
+
+[Program Learning Outcomes]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+1. Equip students to transform data into actionable insights to make complex business decisions.
+2. Enable students to understand and analyze problems and arrive at computable, data‑driven solutions.
+3. Expose students to technologies that match real‑world data science solutions.
+4. Provide hands‑on experience with data‑centric tools for statistical analysis, visualization, and big‑data
+   applications at a practical, rigorous scale.
+5. Help students understand the implications of handling data in terms of data security and business ethics.
+6. Develop students' ability to make effective oral and written presentations on technical data‑science topics.
+
+[Deficiency / Prerequisite Courses]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+The following (or equivalent) undergraduate‑level courses are prerequisites for starting MS (Data Science) coursework:
+- Object Oriented Programming
+- Data Structures and Algorithms
+Additional notes:
+- A student selected for admission having deficiencies in the above courses may be required to study them.
+- These deficiency courses must be passed in the first two semesters.
+- Deficiency courses are determined by the Graduate Studies Committee before admitting the student.
+- Fee is not charged for studying deficiency courses.
+- A student may take the Statistics and Mathematical Data Science course along with the deficiency courses.
+
+[Award of Degree]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+For the award of Master of Science (Data Science) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including all core courses.
+- Earned a CGPA of at least 2.50.
+
+[Study Plan]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+Semester I
+- Code: CS4002 | Title: Applied Programming* | Cr.Hrs: NC | Prereq: None
+- Code: DS5002 | Title: Data Science Tools and Techniques | Cr.Hrs: 3-0 | Prereq: None
+- Code: DS5003 | Title: Statistics and Mathematical Methods for Data Science | Cr.Hrs: 3-0 | Prereq: None
+- Code: DS-SC-I | Title: Specialized Core-I | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0 (excluding NC course)
+Semester II
+- Code: CS5001 | Title: Research Methodology | Cr.Hrs: 3-0 | Prereq: None
+- Code: DS5004 | Title: Machine Learning for Data Science | Cr.Hrs: 3-0 | Prereq: None
+- Code: DS-SC-II | Title: Specialized Core-II | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-0
+Semester III
+- Code: CSE-EL-I | Title: Computing Elective-I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH1 | Title: MS Thesis-I / MS Project-I | Cr.Hrs: 0-3 | Prereq: See thesis registration rules
+Total Semester Credits: 3-3
+Semester IV
+- Code: CSE-EL-IV | Title: Computing Elective-IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MS_TH2 | Title: MS Thesis-II / MS Project-II | Cr.Hrs: 0-3 | Prereq: MS_TH1
+Total Semester Credits: 3-3
+
+[Registration Rules for Thesis / Project]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+Registration in 'MS Thesis-I / Project-I' is allowed provided the student has:
+- Earned at least 15 credit hours.
+- Passed the 'Research Methodology' course (CS5001).
+- CGPA is equal to or more than 2.50.
+
+[Notes]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+- * Applied Programming (CS4002) is a non‑credit (NC) course, which must be cleared during the first semester.
+  The course may be exempted based on good performance in the admission test.
+
+[Specialized Core Courses (Choose 2)]
+Program Code: MS_DS | Program Title: Master of Science (Data Science) | Level: Graduate | Domain: Computing
+- DS5001 Advanced Big Data Analytics (3 credit hours)
+- DS5005 Distributed Data Processing (3 credit hours)
+- DS5006 Deep Learning (3 credit hours)
+- DS5007 Natural Language Processing (3 credit hours)
