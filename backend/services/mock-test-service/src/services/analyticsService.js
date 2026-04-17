@@ -118,7 +118,12 @@ async function computeTopicStats(attempts) {
   const allQuestionIds = [];
   for (const attempt of attempts) {
     if (attempt.questionOrder) {
-      for (const [sectionName, questionIds] of attempt.questionOrder.entries()) {
+      // Handle both Map and plain object formats
+      const questionOrderEntries = attempt.questionOrder instanceof Map
+        ? attempt.questionOrder.entries()
+        : Object.entries(attempt.questionOrder);
+      
+      for (const [sectionName, questionIds] of questionOrderEntries) {
         allQuestionIds.push(...questionIds);
       }
     }
@@ -143,7 +148,12 @@ async function computeTopicStats(attempts) {
     // Get all question IDs for this attempt
     const attemptQuestionIds = [];
     if (attempt.questionOrder) {
-      for (const [sectionName, questionIds] of attempt.questionOrder.entries()) {
+      // Handle both Map and plain object formats
+      const questionOrderEntries = attempt.questionOrder instanceof Map
+        ? attempt.questionOrder.entries()
+        : Object.entries(attempt.questionOrder);
+      
+      for (const [sectionName, questionIds] of questionOrderEntries) {
         attemptQuestionIds.push(...questionIds.map(id => id.toString()));
       }
     }
