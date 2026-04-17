@@ -1,44 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getTests } from '../../api/mockTestApi'
 import { useNotification } from '../../context/NotificationContext'
+import { getHistory } from '../../api/mockTestApi'
 import './MockTestList.css'
 
 export default function MockTestList() {
   const navigate = useNavigate()
   const { showError } = useNotification()
-  const [tests, setTests] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [difficultyFilter, setDifficultyFilter] = useState('all')
+  const [selectedDifficulty, setSelectedDifficulty] = useState(null)
+  const [activeTab, setActiveTab] = useState('all-tests') // 'all-tests' or 'previous-tests'
+  const [testHistory, setTestHistory] = useState([])
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
 
+  // Fetch test history when switching to previous tests tab
   useEffect(() => {
-    loadTests()
-  }, [difficultyFilter])
+    if (activeTab === 'previous-tests' && testHistory.length === 0) {
+      fetchTestHistory()
+    }
+  }, [activeTab])
 
-  async function loadTests() {
-    setLoading(true)
-    setError('')
+  async function fetchTestHistory() {
     try {
-      const options = difficultyFilter !== 'all' ? { difficulty: difficultyFilter } : {}
-      const data = await getTests(options)
-      setTests(data.tests || [])
+      setIsLoadingHistory(true)
+      const data = await getHistory()
+      setTestHistory(data.attempts || [])
     } catch (err) {
-      const errorMessage = err.message || 'Failed to load tests'
-      setError(errorMessage)
-      showError(errorMessage, {
-        showRetry: true,
-        onRetry: loadTests
-      })
+      console.error('Failed to fetch test history:', err)
+      showError('Failed to load test history. Please try again.')
     } finally {
-      setLoading(false)
+      setIsLoadingHistory(false)
     }
   }
 
-  function handleStartTest(testId) {
-    // MongoDB uses _id, convert to string
-    const id = typeof testId === 'object' ? testId.toString() : testId
-    navigate(`/dashboard/mock-tests/${id}/take`)
+  function handleStartTest(difficulty) {
+    // Navigate to test taking page with difficulty parameter
+    navigate(`/dashboard/mock-tests/take?difficulty=${difficulty}`)
+  }
+
+  function handleViewResults(attemptId) {
+    navigate(`/dashboard/mock-tests/results/${attemptId}`)
   }
 
   function getDifficultyColor(difficulty) {
@@ -54,162 +54,214 @@ export default function MockTestList() {
     }
   }
 
+  const testLevels = [
+    {
+      difficulty: 'easy',
+      title: 'Easy Test',
+      description: 'Perfect for beginners and first-time test takers. Focus on fundamental concepts with easier questions.',
+      distribution: '70 Easy • 40 Medium • 10 Hard',
+      icon: '🌱',
+      color: 'easy'
+    },
+    {
+      difficulty: 'medium',
+      title: 'Medium Test',
+      description: 'Balanced difficulty for intermediate students. Good mix of easy, medium, and challenging questions.',
+      distribution: '30 Easy • 67 Medium • 23 Hard',
+      icon: '📚',
+      color: 'medium'
+    },
+    {
+      difficulty: 'hard',
+      title: 'Hard Test',
+      description: 'Advanced level for final preparation. Majority of questions are challenging to test your mastery.',
+      distribution: '10 Easy • 65 Medium • 45 Hard',
+      icon: '🎯',
+      color: 'hard'
+    }
+  ]
+
   return (
     <div className="mock-test-list-page">
       <div className="mock-test-header">
-        <div>
-          <h1 className="mock-test-title">Mock Tests</h1>
-          <p className="mock-test-subtitle">
-            Practice with realistic FAST entry test simulations
-          </p>
-        </div>
-        <div className="filter-section">
-          <label htmlFor="difficulty-filter" className="filter-label">
-            Difficulty:
-          </label>
-          <select
-            id="difficulty-filter"
-            className="difficulty-filter"
-            value={difficultyFilter}
-            onChange={(e) => setDifficultyFilter(e.target.value)}
-          >
-            <option value="all">All Levels</option>
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-        </div>
+        <h1 className="mock-test-title">Mock Tests</h1>
+        <p className="mock-test-subtitle">
+          Practice with realistic FAST entry test simulations
+        </p>
       </div>
 
-      {error && (
-        <div className="error-banner">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
+      {/* Tab Navigation */}
+      <div className="tab-navigation">
+        <button
+          className={`tab-button ${activeTab === 'all-tests' ? 'active' : ''}`}
+          onClick={() => setActiveTab('all-tests')}
+        >
+          All Tests
+        </button>
+        <button
+          className={`tab-button ${activeTab === 'previous-tests' ? 'active' : ''}`}
+          onClick={() => setActiveTab('previous-tests')}
+        >
+          Previous Tests
+        </button>
+      </div>
+
+      {/* All Tests Tab Content */}
+      {activeTab === 'all-tests' && (
+        <>
+          <div className="tab-content-header">
+            <h2 className="tab-content-title">Choose Your Test Difficulty</h2>
+            <p className="tab-content-subtitle">
+              Select a difficulty level to start your FAST entry test practice
+            </p>
+          </div>
+          <div className="test-cards">
+        {testLevels.map((level) => (
+          <div 
+            key={level.difficulty} 
+            className={`test-card ${selectedDifficulty === level.difficulty ? 'selected' : ''}`}
+            onMouseEnter={() => setSelectedDifficulty(level.difficulty)}
+            onMouseLeave={() => setSelectedDifficulty(null)}
           >
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="8" x2="12" y2="12" />
-            <line x1="12" y1="16" x2="12.01" y2="16" />
-          </svg>
-          {error}
-        </div>
+            <div className="test-card-icon">{level.icon}</div>
+            
+            <div className="test-card-header">
+              <h3 className="test-card-title">{level.title}</h3>
+              <span className={`difficulty-badge ${getDifficultyColor(level.difficulty)}`}>
+                {level.difficulty}
+              </span>
+            </div>
+
+            <p className="test-card-description">{level.description}</p>
+
+            <div className="test-card-details">
+              <h4 className="sections-title">Test Structure:</h4>
+              <div className="sections-list">
+                <div className="section-item">
+                  <span className="section-name">Advance Math</span>
+                  <span className="section-meta">50Q · 50min</span>
+                </div>
+                <div className="section-item">
+                  <span className="section-name">Basic Math</span>
+                  <span className="section-meta">20Q · 20min</span>
+                </div>
+                <div className="section-item">
+                  <span className="section-name">IQ & Logical</span>
+                  <span className="section-meta">20Q · 20min</span>
+                </div>
+                <div className="section-item">
+                  <span className="section-name">English</span>
+                  <span className="section-meta">30Q · 30min</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              className={`start-test-btn ${getDifficultyColor(level.difficulty)}`}
+              onClick={() => handleStartTest(level.difficulty)}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+                <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
+              </svg>
+              Start {level.title}
+            </button>
+          </div>
+        ))}
+          </div>
+        </>
       )}
 
-      {loading ? (
-        <div className="loading-state">
-          <div className="spinner" />
-          <p>Loading tests...</p>
-        </div>
-      ) : tests.length === 0 ? (
-        <div className="empty-state">
-          <svg
-            width="64"
-            height="64"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-          <h3>No tests available</h3>
-          <p>Check back later for new practice tests</p>
-        </div>
-      ) : (
-        <div className="test-cards">
-          {tests.map((test) => (
-            <div key={test._id} className="test-card">
-              <div className="test-card-header">
-                <h3 className="test-card-title">{test.title}</h3>
-                <span className={`difficulty-badge ${getDifficultyColor(test.difficulty)}`}>
-                  {test.difficulty}
-                </span>
-              </div>
-
-              <p className="test-card-description">{test.description}</p>
-
-              <div className="test-card-details">
-                <div className="detail-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                  <span>{test.totalQuestions} Questions</span>
-                </div>
-                <div className="detail-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span>{test.totalDuration} Minutes</span>
-                </div>
-              </div>
-
-              <div className="test-card-sections">
-                <h4 className="sections-title">Sections:</h4>
-                <div className="sections-list">
-                  {test.sections?.map((section, idx) => (
-                    <div key={idx} className="section-item">
-                      <span className="section-name">{section.name}</span>
-                      <span className="section-meta">
-                        {section.questionCount}Q · {section.duration}min
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {test.userAttempts > 0 && (
-                <div className="test-card-stats">
-                  <div className="stat-item">
-                    <span className="stat-label">Attempts:</span>
-                    <span className="stat-value">{test.userAttempts}</span>
-                  </div>
-                  {test.highestScore !== undefined && (
-                    <div className="stat-item">
-                      <span className="stat-label">Best Score:</span>
-                      <span className="stat-value stat-value-highlight">
-                        {test.highestScore}%
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-
+      {/* Previous Tests Tab Content */}
+      {activeTab === 'previous-tests' && (
+        <div className="previous-tests-content">
+          {isLoadingHistory ? (
+            <div className="loading-state">
+              <div className="spinner"></div>
+              <p>Loading test history...</p>
+            </div>
+          ) : testHistory.length === 0 ? (
+            <div className="empty-state">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <h3>No Test History</h3>
+              <p>You haven't completed any tests yet. Take your first test to see your history!</p>
               <button
-                className="start-test-btn"
-                onClick={() => handleStartTest(test._id)}
+                className="empty-state-btn"
+                onClick={() => setActiveTab('all-tests')}
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
-                  <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                  <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
-                </svg>
-                Start Test
+                Start a Test
               </button>
             </div>
-          ))}
+          ) : (
+            <>
+              <div className="tab-content-header">
+                <h2 className="tab-content-title">Your Test History</h2>
+                <p className="tab-content-subtitle">
+                  Review your previously attempted tests and track your progress
+                </p>
+              </div>
+              <div className="history-table-wrapper">
+                <table className="history-table">
+                  <thead>
+                    <tr>
+                      <th>Test Name</th>
+                      <th>Difficulty</th>
+                      <th>Date Completed</th>
+                      <th>Score</th>
+                      <th>Percentage</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {testHistory.map((attempt) => (
+                      <tr key={attempt.attemptId}>
+                        <td className="test-name-cell">{attempt.testTitle}</td>
+                        <td>
+                          <span className={`difficulty-badge ${getDifficultyColor(attempt.testDifficulty)}`}>
+                            {attempt.testDifficulty || 'N/A'}
+                          </span>
+                        </td>
+                        <td className="date-cell">
+                          {new Date(attempt.completedAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </td>
+                        <td className="score-cell">{attempt.score}/120</td>
+                        <td>
+                          <span className={`percentage-badge ${
+                            attempt.percentage >= 80 ? 'percentage-high' :
+                            attempt.percentage >= 60 ? 'percentage-medium' :
+                            'percentage-low'
+                          }`}>
+                            {attempt.percentage.toFixed(1)}%
+                          </span>
+                        </td>
+                        <td>
+                          <button
+                            className="view-results-btn"
+                            onClick={() => handleViewResults(attempt.attemptId)}
+                          >
+                            View Results
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

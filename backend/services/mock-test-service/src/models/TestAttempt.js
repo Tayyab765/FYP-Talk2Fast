@@ -99,7 +99,13 @@ const testAttemptSchema = new mongoose.Schema({
   testId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'MockTest',
+    required: false,  // Optional for dynamic test generation
+    index: true
+  },
+  testDifficulty: {
+    type: String,
     required: true,
+    enum: ['easy', 'medium', 'hard'],
     index: true
   },
   currentSection: {
@@ -127,6 +133,11 @@ const testAttemptSchema = new mongoose.Schema({
   markedForReview: {
     type: [String],
     default: []
+  },
+  questionOrder: {
+    type: Map,
+    of: [String],
+    default: new Map()
   },
   sectionTimestamps: {
     type: [sectionTimestampSchema],

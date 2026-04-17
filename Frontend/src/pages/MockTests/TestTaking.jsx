@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTest } from '../../context/TestContext'
 import { useNotification } from '../../context/NotificationContext'
 import SectionHeader from '../../components/MockTest/SectionHeader'
@@ -23,8 +23,8 @@ import './TestTaking.css'
  *               9.1, 9.2, 9.4, 9.5, 9.6, 10.7, 22.3, 22.4, 22.5, 24.4
  */
 export default function TestTaking() {
-  const { testId } = useParams()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const { showError, showWarning } = useNotification()
   const {
     currentAttempt,
@@ -45,15 +45,17 @@ export default function TestTaking() {
     const initializeTest = async () => {
       try {
         // Check if we have an attemptId in URL params (for resuming)
-        const urlParams = new URLSearchParams(window.location.search)
-        const attemptId = urlParams.get('attemptId')
+        const attemptId = searchParams.get('attemptId')
+        const difficulty = searchParams.get('difficulty')
 
         if (attemptId) {
           // Resume existing attempt
           await resumeTest(attemptId)
+        } else if (difficulty) {
+          // Start new test with difficulty
+          await startNewTest(difficulty)
         } else {
-          // Start new test
-          await startNewTest(testId)
+          throw new Error('No difficulty or attemptId provided')
         }
 
         setIsInitialized(true)
@@ -74,7 +76,7 @@ export default function TestTaking() {
     if (!isInitialized) {
       initializeTest()
     }
-  }, [testId, startNewTest, resumeTest, isInitialized, showError])
+  }, [searchParams, startNewTest, resumeTest, isInitialized, showError])
 
   // Handle auto-submit when timer expires
   useEffect(() => {

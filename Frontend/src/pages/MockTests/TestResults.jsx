@@ -55,11 +55,8 @@ export default function TestResults() {
 
   // Handle retake test
   const handleRetakeTest = () => {
-    if (results && results.testId) {
-      navigate(`/dashboard/mock-tests/${results.testId}/take`)
-    } else {
-      navigate('/dashboard/mock-tests')
-    }
+    // Just navigate back to test list to choose difficulty again
+    navigate('/dashboard/mock-tests')
   }
 
   // Handle review answers

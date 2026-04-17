@@ -31,7 +31,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/chat" element={<ChatAssistant />} />
           <Route path="/dashboard/mock-tests" element={<MockTestList />} />
-          <Route path="/dashboard/mock-tests/:testId/take" element={<TestTaking />} />
+          <Route path="/dashboard/mock-tests/take" element={<TestTaking />} />
           <Route path="/dashboard/mock-tests/results/:attemptId" element={<TestResults />} />
           <Route path="/dashboard/mock-tests/analytics" element={<TestAnalytics />} />
           <Route path="/dashboard/analytics" element={<Dashboard />} />

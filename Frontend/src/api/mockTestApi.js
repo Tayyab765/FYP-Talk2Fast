@@ -42,12 +42,15 @@ export async function getTest(testId) {
 // ============================================================================
 
 /**
- * Start a new test attempt
- * @param {string} testId - Test template ID
+ * Start a new test attempt with specified difficulty
+ * @param {string} difficulty - Test difficulty level (easy, medium, hard)
  * @returns {Promise<Object>} Attempt details with first section questions
  */
-export async function startTest(testId) {
-  return httpJson(`/api/mock-tests/${testId}/start`, { method: 'POST' })
+export async function startTest(difficulty) {
+  return httpJson('/api/mock-tests/start', {
+    method: 'POST',
+    body: JSON.stringify({ difficulty }),
+  })
 }
 
 /**

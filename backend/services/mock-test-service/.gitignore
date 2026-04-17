@@ -1,0 +1,12 @@
+# Logs
+logs/
+*.log
+
+# Dependencies
+node_modules/
+
+# Temporary export data (regenerate as needed)
+data-export/
+
+# OS files
+.DS_Store

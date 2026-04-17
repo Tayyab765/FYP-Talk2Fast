@@ -3,6 +3,7 @@ Simple RAG System (No LLM Required)
 A lightweight version that uses retrieval-only for answering questions
 """
 
+import os
 from pathlib import Path
 from typing import Dict, Any, List, Tuple
 import re
@@ -973,26 +974,26 @@ class SimpleRAG:
             if not context_parts:
                 # Fallback: use top test-pattern docs directly
                 context_parts = [doc.page_content for doc, score in docs_with_scores[:3]]
-            answer = "\n\n".join(context_parts[:3])
+            answer = self._format_general_answer(question, context_parts)
         elif is_eligibility_query:
-            # For eligibility queries, just accumulate context - LLM will answer from it
+            # For eligibility queries, always build a retrieval-based fallback answer first.
+            # If LLM is enabled and succeeds later, it can overwrite this answer.
             if not context_parts:
                 # Fallback: use top docs directly
                 context_parts = [doc.page_content for doc, score in docs_with_scores[:5]]
-            # Don't set answer here - let LLM generate it from context
-            answer = ""  # Will be set by LLM below
+            answer = self._format_general_answer(question, context_parts, max_points=3)
         elif is_facility_query and context_parts:
-            answer = "\n\n".join(context_parts[:3])
+            answer = self._format_facility_answer(question, context_parts)
         elif is_attendance_query and context_parts:
-            answer = "\n\n".join(context_parts[:3])
+            answer = self._format_general_answer(question, context_parts)
         elif is_rules_query and context_parts:
-            answer = "\n\n".join(context_parts[:3])
+            answer = self._format_general_answer(question, context_parts)
         elif is_apply_query and context_parts:
-            answer = "\n\n".join(context_parts[:3])
+            answer = self._format_general_answer(question, context_parts)
         else:
             max_docs = 3
             context = "\n\n".join(context_parts[:max_docs])  # Use top docs
-            answer = f"Based on the admission information:\n\n{context}"
+            answer = self._format_general_answer(question, context_parts) if context_parts else f"Based on the admission information:\n\n{context}"
         
         # If no context was accumulated (e.g., after strict filtering), fall back to top docs
         if not context_parts and documents_to_process:
@@ -1005,11 +1006,17 @@ class SimpleRAG:
                 context_parts.append(chunk_content)
 
         # LLM generation (optional) — skip only for structured lists (campus program listings, faculty lists, explicit program listings)
-        # For eligibility queries, always use LLM if available
+        # For normal Q&A, prefer LLM with richer retrieved context.
         if self.use_llm and not (is_campus_query or is_faculty_query or is_listing_query):
-            llm_context = "\n\n".join(context_parts) if context_parts else "\n\n".join([doc.page_content for doc, score in docs_with_scores[:5]])
-            # Limit very large contexts to keep prompt manageable
-            llm_context = llm_context[:4000]
+            # Build LLM context from top retrieved documents directly (richer than condensed context_parts).
+            llm_doc_limit = int(os.getenv("RAG_LLM_DOCS", "10"))
+            llm_context = "\n\n".join([doc.page_content for doc, score in docs_with_scores[:llm_doc_limit]])
+            if not llm_context.strip() and context_parts:
+                llm_context = "\n\n".join(context_parts)
+
+            # Allow substantially larger context for complete answers.
+            llm_context_chars = int(os.getenv("RAG_LLM_CONTEXT_CHARS", "14000"))
+            llm_context = llm_context[:llm_context_chars]
             print(f"[LLM] Invoking {self.llm_model_name} with context length={len(llm_context)} chars")
             llm_answer = self._llm_generate(question, llm_context)
             if llm_answer and llm_answer.strip():
@@ -1019,8 +1026,8 @@ class SimpleRAG:
                 answer = "\n\n".join(context_parts[:3])
 
         # Truncate if too long (but never truncate faculty responses and never truncate LLM-generated answer)
-        if (not is_faculty_query) and (not self.use_llm) and len(answer) > 2000:
-            answer = answer[:2000] + "..."
+        if (not is_faculty_query) and (not self.use_llm) and len(answer) > 5000:
+            answer = answer[:5000] + "..."
         
         # Prepare sources (use top k documents for sources, not all processed)
         sources = []
@@ -1046,6 +1053,90 @@ class SimpleRAG:
             "sources": sources,
             "source_documents": return_documents
         }
+
+    def _format_facility_answer(self, question: str, context_parts: List[str]) -> str:
+        """Return a concise sentence response for facility questions."""
+        return self._format_general_answer(question, context_parts, max_points=2)
+
+    def _format_general_answer(self, question: str, context_parts: List[str], max_points: int = 5) -> str:
+        """Create concise, sentence-level answers for general query types."""
+        if not context_parts:
+            return "I couldn't find enough relevant information to answer this clearly."
+
+        question_lower = question.lower()
+        question_terms = {
+            t for t in re.findall(r"[a-zA-Z]{3,}", question_lower)
+            if t not in {
+                "what", "when", "where", "which", "about", "from", "that", "this",
+                "with", "have", "there", "their", "your", "please", "tell", "give"
+            }
+        }
+
+        candidates = []
+        seen = set()
+        for block in context_parts:
+            # Sentence-level parsing gives cleaner answers than raw lines/chunks.
+            for raw_sentence in re.split(r'(?<=[.!?])\s+', block):
+                sentence = raw_sentence.strip()
+                if not sentence:
+                    continue
+                sentence_l = sentence.lower()
+
+                # Skip noisy headings and labels.
+                if sentence_l.startswith("section:") or sentence_l.startswith("source:"):
+                    continue
+                if "national university of computer and emerging sciences" in sentence_l and len(sentence) < 120:
+                    continue
+                if len(sentence) < 20:
+                    continue
+
+                # Keep lines that are likely relevant to question terms.
+                tokens = set(re.findall(r"[a-zA-Z]{3,}", sentence_l))
+                overlap = len(tokens & question_terms)
+                if question_terms and overlap == 0:
+                    continue
+
+                key = re.sub(r"\s+", " ", sentence_l)
+                if key in seen:
+                    continue
+                seen.add(key)
+                # Prefer medium-length explanatory sentences.
+                length_penalty = abs(len(sentence) - 120) / 120.0
+                score = overlap - (0.4 * length_penalty)
+                candidates.append((score, sentence))
+
+        if not candidates:
+            # fallback to first meaningful sentences
+            for block in context_parts:
+                for raw_sentence in re.split(r'(?<=[.!?])\s+', block):
+                    sentence = raw_sentence.strip()
+                    if len(sentence) >= 20:
+                        key = re.sub(r"\s+", " ", sentence.lower())
+                        if key not in seen:
+                            seen.add(key)
+                            candidates.append((0, sentence))
+                    if len(candidates) >= max_points:
+                        break
+                if len(candidates) >= max_points:
+                    break
+
+        # Prefer sentences with better relevance scores.
+        candidates.sort(key=lambda x: x[0], reverse=True)
+        top_sentences = [s for _, s in candidates[:max_points]]
+
+        if not top_sentences:
+            return "I found related information, but couldn't form a concise answer."
+
+        # Yes/No style for direct questions.
+        is_yes_no = bool(re.match(r"^\s*(is|are|can|does|do|has|have|was|were)\b", question_lower))
+        if is_yes_no:
+            positive_signals = ["available", "provides", "provide", "offered", "facility", "hostel", "transport"]
+            has_positive = any(any(sig in s.lower() for sig in positive_signals) for s in top_sentences)
+            prefix = "Yes" if has_positive else "Based on available information"
+            return f"{prefix}, {top_sentences[0]}"
+
+        # Default: short paragraph style.
+        return " ".join(top_sentences[:2])
 
     def _extract_programs_for_campus(self, docs_with_scores, target_campus: str):
         """Extract program names and levels for a given campus from Programs Offered content."""
