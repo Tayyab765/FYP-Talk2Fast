@@ -96,7 +96,7 @@ class CareerService {
       
       await session.save();
       
-      logger.info('Recommendations generated successfully', { 
+      logger.info('Recommendation session saved successfully', { 
         userId, 
         sessionId: session._id
       });

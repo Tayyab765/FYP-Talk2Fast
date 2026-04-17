@@ -102,12 +102,6 @@ class CareerController {
       
       const result = await this.careerService.generateRecommendations(userId);
       
-      logger.info('Recommendations generated', {
-        userId,
-        userType: req.user?.type || 'unknown',
-        sessionId: result.sessionId
-      });
-      
       res.status(200).json({
         success: true,
         message: 'Recommendations generated successfully',
