@@ -20,13 +20,179 @@ const featureCards = [
     to: '/dashboard/mock-tests',
   },
   {
-    title: 'View Recommendations',
-    description: 'Analyze your profile to see top-matching universities based on your grades, interests, and budget.',
-    buttonText: 'Browse Matches',
+    title: 'Career Counseling',
+    description: 'Get personalized career recommendations based on your interests, skills, and academic performance.',
+    buttonText: 'Explore Careers',
     icon: 'target',
-    to: '/dashboard/analytics',
+    to: '/dashboard/career',
   },
 ]
+
+// Helper function to calculate study streak
+function calculateStudyStreak(attempts) {
+  if (!attempts || attempts.length === 0) {
+    return { currentStreak: 0, longestStreak: 0 }
+  }
+
+  const sortedAttempts = [...attempts].sort((a, b) => 
+    new Date(b.completedAt) - new Date(a.completedAt)
+  )
+
+  let currentStreak = 0
+  let longestStreak = 0
+  let tempStreak = 0
+  let lastDate = null
+
+  for (const attempt of sortedAttempts) {
+    const attemptDate = new Date(attempt.completedAt)
+    attemptDate.setHours(0, 0, 0, 0)
+
+    if (!lastDate) {
+      tempStreak = 1
+      currentStreak = 1
+    } else {
+      const daysDiff = Math.floor((lastDate - attemptDate) / (1000 * 60 * 60 * 24))
+      
+      if (daysDiff === 1) {
+        tempStreak++
+        if (currentStreak > 0) currentStreak++
+      } else if (daysDiff > 1) {
+        currentStreak = 0
+        tempStreak = 1
+      }
+    }
+
+    longestStreak = Math.max(longestStreak, tempStreak)
+    lastDate = attemptDate
+  }
+
+  // Check if streak is still active (last test within 1 day)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const lastTestDate = new Date(sortedAttempts[0].completedAt)
+  lastTestDate.setHours(0, 0, 0, 0)
+  const daysSinceLastTest = Math.floor((today - lastTestDate) / (1000 * 60 * 60 * 24))
+  
+  if (daysSinceLastTest > 1) {
+    currentStreak = 0
+  }
+
+  return { currentStreak, longestStreak }
+}
+
+// Helper function to generate recommended actions
+function generateRecommendedActions(attempts, weakTopics, daysSinceLastTest, overallStats) {
+  const actions = []
+
+  // Action based on days since last test
+  if (daysSinceLastTest === 0) {
+    actions.push({
+      icon: '🎉',
+      text: 'Great job testing today! Review your results to identify areas for improvement.',
+      action: 'View Results',
+      link: '/dashboard/mock-tests/analytics'
+    })
+  } else if (daysSinceLastTest >= 3) {
+    actions.push({
+      icon: '⏰',
+      text: `It's been ${daysSinceLastTest} days since your last test. Time to practice!`,
+      action: 'Take Test',
+      link: '/dashboard/mock-tests'
+    })
+  } else if (daysSinceLastTest === 1) {
+    actions.push({
+      icon: '🔥',
+      text: 'Keep your streak alive! Take another test today.',
+      action: 'Start Test',
+      link: '/dashboard/mock-tests'
+    })
+  }
+
+  // Action based on weak topics
+  if (weakTopics.length > 0) {
+    actions.push({
+      icon: '📚',
+      text: `Focus on ${weakTopics[0].topic} - your accuracy is ${weakTopics[0].accuracy.toFixed(0)}%`,
+      action: 'Practice',
+      link: '/dashboard/mock-tests'
+    })
+  }
+
+  // Action based on performance
+  if (overallStats?.averageScore < 60) {
+    actions.push({
+      icon: '💪',
+      text: 'Start with Easy tests to build confidence and fundamentals.',
+      action: 'Take Easy Test',
+      link: '/dashboard/mock-tests'
+    })
+  } else if (overallStats?.averageScore >= 60 && overallStats?.averageScore < 80) {
+    actions.push({
+      icon: '🎯',
+      text: 'You\'re doing well! Try Medium tests to challenge yourself.',
+      action: 'Take Medium Test',
+      link: '/dashboard/mock-tests'
+    })
+  } else if (overallStats?.averageScore >= 80) {
+    actions.push({
+      icon: '🚀',
+      text: 'Excellent progress! Ready for Hard tests?',
+      action: 'Take Hard Test',
+      link: '/dashboard/mock-tests'
+    })
+  }
+
+  // Action to view analytics
+  if (attempts.length >= 3) {
+    actions.push({
+      icon: '📊',
+      text: 'Check your detailed analytics to track improvement trends.',
+      action: 'View Analytics',
+      link: '/dashboard/mock-tests/analytics'
+    })
+  }
+
+  return actions.slice(0, 3) // Return top 3 actions
+}
+
+// Helper function to generate activity feed
+function generateActivityFeed(attempts) {
+  if (!attempts || attempts.length === 0) return []
+
+  const activities = attempts.slice(0, 5).map(attempt => {
+    const date = new Date(attempt.completedAt)
+    const now = new Date()
+    const diffMs = now - date
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    let timeAgo
+    if (diffMins < 60) {
+      timeAgo = `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`
+    } else if (diffHours < 24) {
+      timeAgo = `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`
+    } else if (diffDays === 1) {
+      timeAgo = 'Yesterday'
+    } else if (diffDays < 7) {
+      timeAgo = `${diffDays} days ago`
+    } else {
+      timeAgo = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    }
+
+    const emoji = attempt.percentage >= 80 ? '🎉' : 
+                  attempt.percentage >= 60 ? '📝' : '📚'
+
+    return {
+      icon: emoji,
+      text: `Completed ${attempt.testTitle} - ${attempt.percentage.toFixed(0)}%`,
+      timeAgo,
+      attemptId: attempt.attemptId
+    }
+  })
+
+  return activities
+}
 
 export default function Dashboard() {
   const { userName } = useAuth()
@@ -35,6 +201,14 @@ export default function Dashboard() {
     overallReadiness: 0,
     totalAttempts: 0,
     averageScore: 0,
+    highestScore: 0,
+    lastAttemptDays: 0,
+    currentStreak: 0,
+    longestStreak: 0,
+    weakTopics: [],
+    recommendedActions: [],
+    activityFeed: [],
+    progressToGoal: 0,
     isLoading: true
   })
 
@@ -89,6 +263,30 @@ export default function Dashboard() {
         lastAttemptDays = Math.floor((today - lastAttempt) / (1000 * 60 * 60 * 24))
       }
 
+      // Calculate study streak
+      const { currentStreak, longestStreak } = calculateStudyStreak(historyData.attempts)
+
+      // Get weak topics (top 3)
+      const weakTopics = performanceData?.topicWisePerformance
+        ?.filter(t => t.category === 'weak')
+        .slice(0, 3) || []
+
+      // Generate recommended actions
+      const recommendedActions = generateRecommendedActions(
+        historyData.attempts,
+        weakTopics,
+        lastAttemptDays,
+        performanceData?.overallStats
+      )
+
+      // Generate activity feed (last 5 activities)
+      const activityFeed = generateActivityFeed(historyData.attempts)
+
+      // Calculate progress towards 90% goal
+      const targetScore = 90
+      const currentAvg = performanceData?.overallStats?.averageScore || 0
+      const progressToGoal = Math.min(Math.round((currentAvg / targetScore) * 100), 100)
+
       const newData = {
         recentScores: recentScores.length > 0 ? recentScores : [{ day: 'No Data', value: 0 }],
         overallReadiness: Math.round(overallReadiness),
@@ -96,6 +294,12 @@ export default function Dashboard() {
         averageScore: performanceData?.overallStats?.averageScore || 0,
         highestScore: performanceData?.overallStats?.highestScore || 0,
         lastAttemptDays: lastAttemptDays,
+        currentStreak,
+        longestStreak,
+        weakTopics,
+        recommendedActions,
+        activityFeed,
+        progressToGoal,
         isLoading: false
       }
 
@@ -112,6 +316,12 @@ export default function Dashboard() {
         averageScore: 0,
         highestScore: 0,
         lastAttemptDays: 0,
+        currentStreak: 0,
+        longestStreak: 0,
+        weakTopics: [],
+        recommendedActions: [],
+        activityFeed: [],
+        progressToGoal: 0,
         isLoading: false
       })
     }
@@ -226,6 +436,106 @@ export default function Dashboard() {
               <div className="quick-stat-content">
                 <div className="quick-stat-value">{dashboardData.lastAttemptDays}</div>
                 <div className="quick-stat-label">Days Since Last Test</div>
+              </div>
+            </div>
+
+            <div className="quick-stat-card">
+              <div className="quick-stat-icon quick-stat-icon-fire">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2c1.5 4 4 6 7 7-3 1-5.5 3-7 7-1.5-4-4-6-7-7 3-1 5.5-3 7-7z" />
+                </svg>
+              </div>
+              <div className="quick-stat-content">
+                <div className="quick-stat-value">{dashboardData.currentStreak} 🔥</div>
+                <div className="quick-stat-label">Day Streak</div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Activity Feed */}
+        {!dashboardData.isLoading && dashboardData.activityFeed.length > 0 && (
+          <div className="activity-feed-section">
+            <h3 className="section-subtitle">Recent Activity</h3>
+            <div className="activity-feed">
+              {dashboardData.activityFeed.map((activity, index) => (
+                <div key={index} className="activity-item">
+                  <span className="activity-icon">{activity.icon}</span>
+                  <div className="activity-content">
+                    <p className="activity-text">{activity.text}</p>
+                    <span className="activity-time">{activity.timeAgo}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Weak Topics Alert */}
+        {!dashboardData.isLoading && dashboardData.weakTopics.length > 0 && (
+          <div className="weak-topics-alert">
+            <div className="alert-header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <h3>Topics Needing Attention</h3>
+            </div>
+            <div className="weak-topics-list">
+              {dashboardData.weakTopics.map((topic, index) => (
+                <div key={index} className="weak-topic-item">
+                  <div className="topic-info">
+                    <span className="topic-rank">{index + 1}</span>
+                    <span className="topic-name">{topic.topic}</span>
+                  </div>
+                  <span className="topic-accuracy">{topic.accuracy.toFixed(0)}% accuracy</span>
+                </div>
+              ))}
+            </div>
+            <Link to="/dashboard/mock-tests" className="alert-action-btn">
+              Practice These Topics
+            </Link>
+          </div>
+        )}
+
+        {/* Recommended Actions */}
+        {!dashboardData.isLoading && dashboardData.recommendedActions.length > 0 && (
+          <div className="recommended-actions-section">
+            <h3 className="section-subtitle">Recommended for You</h3>
+            <div className="recommended-actions">
+              {dashboardData.recommendedActions.map((action, index) => (
+                <div key={index} className="action-card">
+                  <span className="action-icon">{action.icon}</span>
+                  <p className="action-text">{action.text}</p>
+                  <Link to={action.link} className="action-btn">
+                    {action.action}
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Progress Towards Goal */}
+        {!dashboardData.isLoading && dashboardData.totalAttempts > 0 && (
+          <div className="progress-goal-section">
+            <h3 className="section-subtitle">Progress Towards Goal</h3>
+            <div className="progress-goal-card">
+              <div className="progress-info">
+                <div className="progress-labels">
+                  <span className="progress-label">Target: 90%</span>
+                  <span className="progress-label">Current: {dashboardData.averageScore.toFixed(0)}%</span>
+                </div>
+                <div className="progress-bar-container">
+                  <div 
+                    className="progress-bar-fill" 
+                    style={{ width: `${dashboardData.progressToGoal}%` }}
+                  />
+                </div>
+                <p className="progress-message">
+                  {dashboardData.progressToGoal >= 100 
+                    ? '🎉 Goal achieved! Set a new target!' 
+                    : `You're ${dashboardData.progressToGoal}% of the way there! Keep going! 💪`}
+                </p>
               </div>
             </div>
           </div>

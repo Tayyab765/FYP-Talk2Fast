@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getHistory, getPerformance } from '../../api/mockTestApi'
 import { useNotification } from '../../context/NotificationContext'
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, BarChart, Bar, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import './TestAnalytics.css'
 
 /**
@@ -26,6 +26,7 @@ export default function TestAnalytics() {
   const [performance, setPerformance] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [dateRange, setDateRange] = useState('all') // 'week', 'month', '3months', 'all'
 
   // Fetch analytics data on mount
   useEffect(() => {
@@ -105,17 +106,125 @@ export default function TestAnalytics() {
     )
   }
 
-  const { overallStats, sectionStats, topicStats, scoreTrend, recommendations } = performance
+  // Safely destructure performance data with defaults
+  const overallStats = performance?.overallStats || { totalAttempts: 0, averageScore: 0, highestScore: 0, lowestScore: 0 }
+  const sectionStats = performance?.sectionWisePerformance || []
+  const topicStats = performance?.topicWisePerformance || []
+  const scoreTrend = performance?.scoreTrend || []
+  const recommendations = performance?.recommendations || []
+
+  // Filter data based on date range
+  const filterDataByDateRange = (data, range) => {
+    if (range === 'all') return data
+    
+    const now = new Date()
+    const cutoffDate = new Date()
+    
+    switch (range) {
+      case 'week':
+        cutoffDate.setDate(now.getDate() - 7)
+        break
+      case 'month':
+        cutoffDate.setMonth(now.getMonth() - 1)
+        break
+      case '3months':
+        cutoffDate.setMonth(now.getMonth() - 3)
+        break
+      default:
+        return data
+    }
+    
+    return data.filter(item => new Date(item.completedAt) >= cutoffDate)
+  }
+
+  const filteredAttempts = history?.attempts ? filterDataByDateRange(history.attempts, dateRange) : []
+  const filteredScoreTrend = scoreTrend.length > 0 ? filterDataByDateRange(scoreTrend, dateRange) : []
+
+  // Calculate platform average (mock data - in real app, fetch from backend)
+  const platformAverage = 65
+  const topPerformers = 92
+  const userPercentile = overallStats.averageScore > platformAverage 
+    ? Math.min(Math.round(((overallStats.averageScore - platformAverage) / (topPerformers - platformAverage)) * 40 + 50), 99)
+    : Math.round((overallStats.averageScore / platformAverage) * 50)
+
+  // Calculate improvement rate
+  const calculateImprovementRate = () => {
+    if (!scoreTrend || scoreTrend.length < 2) return null
+    
+    const firstFive = scoreTrend.slice(0, Math.min(5, scoreTrend.length))
+    const lastFive = scoreTrend.slice(Math.max(0, scoreTrend.length - 5))
+    
+    const firstAvg = firstFive.reduce((sum, t) => sum + t.percentage, 0) / firstFive.length
+    const lastAvg = lastFive.reduce((sum, t) => sum + t.percentage, 0) / lastFive.length
+    
+    const improvement = lastAvg - firstAvg
+    const improvementPercent = ((improvement / firstAvg) * 100).toFixed(1)
+    const perTestRate = (improvement / scoreTrend.length).toFixed(1)
+    
+    return { firstAvg, lastAvg, improvement, improvementPercent, perTestRate }
+  }
+
+  const improvementData = scoreTrend && scoreTrend.length >= 2 ? calculateImprovementRate() : null
+
+  // Calculate time analysis
+  const calculateTimeAnalysis = () => {
+    if (!filteredAttempts || !filteredAttempts.length) return null
+    
+    const totalTime = filteredAttempts.reduce((sum, attempt) => {
+      const attemptTime = attempt.sectionTimestamps?.reduce((s, ts) => s + (ts.timeSpent || 0), 0) || 0
+      return sum + attemptTime
+    }, 0)
+    
+    const avgTime = totalTime / filteredAttempts.length
+    
+    return {
+      totalTests: filteredAttempts.length,
+      avgTimePerTest: avgTime.toFixed(0),
+      totalTimeSpent: (totalTime / 60).toFixed(1) // in hours
+    }
+  }
+
+  const timeAnalysis = calculateTimeAnalysis()
 
   return (
     <div className="test-analytics">
       <div className="test-analytics__container">
         {/* Header */}
         <div className="test-analytics__header">
-          <h1 className="test-analytics__title">Performance Analytics</h1>
-          <p className="test-analytics__subtitle">
-            Track your progress and identify areas for improvement
-          </p>
+          <div>
+            <h1 className="test-analytics__title">Performance Analytics</h1>
+            <p className="test-analytics__subtitle">
+              Track your progress and identify areas for improvement
+            </p>
+          </div>
+          
+          {/* Date Range Filter */}
+          <div className="date-range-filter">
+            <button 
+              className={`filter-btn ${dateRange === 'week' ? 'active' : ''}`}
+              onClick={() => setDateRange('week')}
+            >
+              Last 7 Days
+            </button>
+            <button 
+              className={`filter-btn ${dateRange === 'month' ? 'active' : ''}`}
+              onClick={() => setDateRange('month')}
+            >
+              Last Month
+            </button>
+            <button 
+              className={`filter-btn ${dateRange === '3months' ? 'active' : ''}`}
+              onClick={() => setDateRange('3months')}
+            >
+              Last 3 Months
+            </button>
+            <button 
+              className={`filter-btn ${dateRange === 'all' ? 'active' : ''}`}
+              onClick={() => setDateRange('all')}
+            >
+              All Time
+            </button>
+          </div>
         </div>
 
         {/* Overall Stats Cards */}
@@ -169,12 +278,133 @@ export default function TestAnalytics() {
           </div>
         </div>
 
+        {/* Comparison with Platform Average */}
+        <div className="analytics-section comparison-section">
+          <h2 className="section-title">How You Compare</h2>
+          <div className="comparison-grid">
+            <div className="comparison-card">
+              <div className="comparison-label">Your Average</div>
+              <div className="comparison-value your-score">{overallStats.averageScore.toFixed(1)}%</div>
+            </div>
+            <div className="comparison-card">
+              <div className="comparison-label">Platform Average</div>
+              <div className="comparison-value platform-score">{platformAverage}%</div>
+            </div>
+            <div className="comparison-card">
+              <div className="comparison-label">Top 10%</div>
+              <div className="comparison-value top-score">{topPerformers}%</div>
+            </div>
+            <div className="comparison-card">
+              <div className="comparison-label">Your Percentile</div>
+              <div className="comparison-value percentile-score">{userPercentile}th</div>
+            </div>
+          </div>
+          <div className="comparison-bar-container">
+            <div className="comparison-bar">
+              <div className="bar-segment platform" style={{ width: `${(platformAverage / 100) * 100}%` }}>
+                <span className="bar-label">Platform Avg</span>
+              </div>
+              <div 
+                className="bar-marker your-marker" 
+                style={{ left: `${overallStats.averageScore}%` }}
+                title={`You: ${overallStats.averageScore.toFixed(1)}%`}
+              >
+                <div className="marker-dot"></div>
+                <span className="marker-label">You</span>
+              </div>
+              <div 
+                className="bar-marker top-marker" 
+                style={{ left: `${topPerformers}%` }}
+                title={`Top 10%: ${topPerformers}%`}
+              >
+                <div className="marker-dot"></div>
+                <span className="marker-label">Top 10%</span>
+              </div>
+            </div>
+          </div>
+          <p className="comparison-message">
+            {overallStats.averageScore > platformAverage 
+              ? `🎉 You're performing ${((overallStats.averageScore - platformAverage) / platformAverage * 100).toFixed(0)}% better than the platform average!`
+              : `Keep practicing! You're ${((platformAverage - overallStats.averageScore) / platformAverage * 100).toFixed(0)}% away from the platform average.`}
+          </p>
+        </div>
+
+        {/* Improvement Rate */}
+        {improvementData && (
+          <div className="analytics-section improvement-section">
+            <h2 className="section-title">Improvement Rate</h2>
+            <div className="improvement-grid">
+              <div className="improvement-card">
+                <div className="improvement-label">First 5 Tests Average</div>
+                <div className="improvement-value">{improvementData.firstAvg.toFixed(1)}%</div>
+              </div>
+              <div className="improvement-card">
+                <div className="improvement-label">Last 5 Tests Average</div>
+                <div className="improvement-value">{improvementData.lastAvg.toFixed(1)}%</div>
+              </div>
+              <div className="improvement-card highlight">
+                <div className="improvement-label">Total Improvement</div>
+                <div className="improvement-value">
+                  {improvementData.improvement > 0 ? '+' : ''}{improvementData.improvement.toFixed(1)}%
+                  <span className="improvement-percent">({improvementData.improvementPercent > 0 ? '+' : ''}{improvementData.improvementPercent}%)</span>
+                </div>
+              </div>
+              <div className="improvement-card">
+                <div className="improvement-label">Per Test Rate</div>
+                <div className="improvement-value">{improvementData.perTestRate > 0 ? '+' : ''}{improvementData.perTestRate}%</div>
+              </div>
+            </div>
+            <p className="improvement-message">
+              {improvementData.improvement > 0 
+                ? `🚀 You're improving at ${improvementData.perTestRate}% per test! Keep up the great work!`
+                : `📚 Your scores are stable. Focus on weak topics to see improvement.`}
+            </p>
+          </div>
+        )}
+
+        {/* Time Analysis */}
+        {timeAnalysis && (
+          <div className="analytics-section time-analysis-section">
+            <h2 className="section-title">Time Analysis</h2>
+            <div className="time-analysis-grid">
+              <div className="time-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10"/>
+                  <polyline points="12 6 12 12 16 14"/>
+                </svg>
+                <div className="time-info">
+                  <div className="time-value">{timeAnalysis.avgTimePerTest} min</div>
+                  <div className="time-label">Average per Test</div>
+                </div>
+              </div>
+              <div className="time-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                <div className="time-info">
+                  <div className="time-value">{timeAnalysis.totalTimeSpent} hrs</div>
+                  <div className="time-label">Total Time Spent</div>
+                </div>
+              </div>
+              <div className="time-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
+                <div className="time-info">
+                  <div className="time-value">{timeAnalysis.totalTests}</div>
+                  <div className="time-label">Tests Analyzed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Score Trend Chart */}
         <div className="analytics-section">
           <h2 className="section-title">Score Trend</h2>
           <div className="chart-container">
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={scoreTrend}>
+              <LineChart data={filteredScoreTrend}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis 
                   dataKey="attemptNumber" 
@@ -213,9 +443,10 @@ export default function TestAnalytics() {
         {/* Section-wise Performance Chart */}
         <div className="analytics-section">
           <h2 className="section-title">Section-wise Performance</h2>
-          <div className="chart-container">
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={sectionStats}>
+          {sectionStats && sectionStats.length > 0 ? (
+            <div className="chart-container">
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={sectionStats}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis 
                   dataKey="section" 
@@ -246,9 +477,57 @@ export default function TestAnalytics() {
               </BarChart>
             </ResponsiveContainer>
           </div>
+          ) : (
+            <p className="no-data-message">No section data available yet. Complete more tests to see section-wise performance.</p>
+          )}
         </div>
 
+        {/* Section Strength Radar Chart */}
+        {sectionStats && sectionStats.length > 0 && (
+        <div className="analytics-section">
+          <h2 className="section-title">Section Strength Overview</h2>
+          <div className="chart-container">
+            <ResponsiveContainer width="100%" height={400}>
+              <RadarChart data={sectionStats}>
+                <PolarGrid stroke="#e5e7eb" />
+                <PolarAngleAxis 
+                  dataKey="section" 
+                  tick={{ fill: '#6b7280', fontSize: 12 }}
+                />
+                <PolarRadiusAxis 
+                  angle={90} 
+                  domain={[0, 100]}
+                  tick={{ fill: '#6b7280', fontSize: 10 }}
+                />
+                <Radar 
+                  name="Accuracy" 
+                  dataKey="averageAccuracy" 
+                  stroke="#a61c31" 
+                  fill="#a61c31" 
+                  fillOpacity={0.6}
+                />
+                <Tooltip 
+                  contentStyle={{ 
+                    background: 'white', 
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+                  }}
+                  formatter={(value) => [`${value.toFixed(1)}%`, 'Accuracy']}
+                />
+                <Legend />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+          <p className="chart-note">
+            This radar chart shows your performance balance across all sections. 
+            A more circular shape indicates balanced performance.
+          </p>
+        </div>
+        )}
+
         {/* Topic-wise Performance Table */}
+        {topicStats && topicStats.length > 0 && (
         <div className="analytics-section">
           <h2 className="section-title">Topic-wise Performance</h2>
           <div className="topic-table-container">
@@ -284,6 +563,7 @@ export default function TestAnalytics() {
             </table>
           </div>
         </div>
+        )}
 
         {/* Recommendations */}
         {recommendations && recommendations.length > 0 && (
@@ -305,6 +585,7 @@ export default function TestAnalytics() {
         )}
 
         {/* Past Attempts History */}
+        {history?.attempts && history.attempts.length > 0 && (
         <div className="analytics-section">
           <h2 className="section-title">Test History</h2>
           <div className="history-table-container">
@@ -353,6 +634,7 @@ export default function TestAnalytics() {
             </table>
           </div>
         </div>
+        )}
 
         {/* Back Button */}
         <div className="analytics-actions">

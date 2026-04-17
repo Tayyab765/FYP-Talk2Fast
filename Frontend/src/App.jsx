@@ -34,7 +34,6 @@ function App() {
           <Route path="/dashboard/mock-tests/take" element={<TestTaking />} />
           <Route path="/dashboard/mock-tests/results/:attemptId" element={<TestResults />} />
           <Route path="/dashboard/mock-tests/analytics" element={<TestAnalytics />} />
-          <Route path="/dashboard/analytics" element={<Dashboard />} />
           <Route path="/dashboard/settings" element={<Dashboard />} />
           {/* Career Counseling Module */}
           <Route path="/dashboard/career" element={<CareerDashboard />} />

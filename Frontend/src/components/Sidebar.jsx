@@ -21,8 +21,8 @@ const careerSubNav = [
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid', exact: true },
   { to: '/dashboard/chat', label: 'AI Chat Assistant', icon: 'chat' },
-  { to: '/dashboard/mock-tests', label: 'Mock Tests', icon: 'doc' },
-  { to: '/dashboard/analytics', label: 'Performance Analytics', icon: 'chart' },
+  { to: '/dashboard/mock-tests', label: 'Mock Tests', icon: 'doc', exact: true },
+  { to: '/dashboard/mock-tests/analytics', label: 'Performance Analytics', icon: 'chart' },
   { to: '/dashboard/career', label: 'Career Counseling', icon: 'compass', hasChildren: true },
   { to: '/dashboard/settings', label: 'Settings', icon: 'gear' },
 ]
@@ -119,7 +119,7 @@ export default function Sidebar() {
             <NavLink
               key={to}
               to={to}
-              end={exact}
+              end={exact === true}
               className={({ isActive }) => `sidebar-link${isActive ? ' active' : ''}`}
             >
               <span className="sidebar-link-icon"><NavIcon icon={icon} /></span>
