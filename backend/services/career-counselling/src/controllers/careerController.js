@@ -130,6 +130,33 @@ class CareerController {
       next(error);
     }
   };
+
+  /**
+   * GET /api/career/recommend
+   * Get latest stored AI recommendations
+   * UserId extracted from req.user
+   */
+  getRecommendations = async (req, res, next) => {
+    try {
+      const userId = req.user?.id || req.user?.userId || req.user?.guestId;
+
+      if (!userId) {
+        return res.status(401).json({
+          success: false,
+          message: 'User authentication required'
+        });
+      }
+
+      const result = await this.careerService.getRecommendations(userId);
+
+      res.status(200).json({
+        success: true,
+        data: result
+      });
+    } catch (error) {
+      next(error);
+    }
+  };
   
   /**
    * POST /api/career/chat/:sessionId
