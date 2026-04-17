@@ -188,6 +188,11 @@ export default function Questionnaire() {
     flashSaved()
   }
 
+  function handleText(e) {
+    setAnswers(prev => ({ ...prev, [q.id]: e.target.value }))
+    flashSaved()
+  }
+
   function flashSaved() {
     setSaved(false)
     clearTimeout(timeoutRef.current)
@@ -322,6 +327,19 @@ export default function Questionnaire() {
             {selected !== undefined && (
               <p className="q-scale-selected-label">{q.scaleLabels?.[selected]}</p>
             )}
+          </div>
+        )}
+
+        {/* ── text ─────────────────────────────────────────────────────────── */}
+        {q.type === 'text' && (
+          <div className="q-text-input">
+            <textarea
+              className="q-textarea"
+              placeholder="Type your answer here..."
+              value={selected || ''}
+              onChange={handleText}
+              rows={4}
+            />
           </div>
         )}
       </div>

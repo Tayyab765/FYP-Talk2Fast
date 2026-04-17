@@ -17,3 +17,11 @@ ENV PORT=8000
 EXPOSE 8000
 
 CMD ["sh", "-c", "uvicorn rag_system.api_server:app --host 0.0.0.0 --port ${PORT}"]
+
+
+
+# commands to run this service
+# python -m venv .venv
+# .\.venv\Scripts\Activate.ps1
+# pip install -r requirements.txt
+# python -m uvicorn rag_system.api_server:app --host 0.0.0.0 --port 8000

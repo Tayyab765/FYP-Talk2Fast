@@ -102,7 +102,15 @@ const profileSubmissionSchema = Joi.object({
     // ===== CAREER INCLINATION (1 question) =====
     appealing_role: Joi.string()
       .valid('software_engineer', 'data_analyst', 'ai_engineer', 'electrical_engineer', 'business_manager', 'entrepreneur', 'researcher')
-      .optional()
+      .optional(),
+      
+    // ===== OPEN ENDED QUESTIONS FOR LLM (6 questions) =====
+    ideal_work_environment_desc: Joi.string().max(1000).optional().allow(''),
+    passionate_project_desc: Joi.string().max(1000).optional().allow(''),
+    problem_solving_desc: Joi.string().max(1000).optional().allow(''),
+    career_dream_desc: Joi.string().max(1000).optional().allow(''),
+    disliked_tasks_desc: Joi.string().max(1000).optional().allow(''),
+    impact_desc: Joi.string().max(1000).optional().allow('')
   }).required()
 });
 
