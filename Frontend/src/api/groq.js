@@ -35,15 +35,15 @@ export async function getQuestionExplanation(questionText, options, correctAnswe
         messages: [
           {
             role: 'system',
-            content: 'You are an expert tutor helping students understand test questions. Provide clear, concise explanations that help students learn the concept behind the question.'
+            content: 'You are a helpful tutor. Provide SHORT, clear explanations (3-4 sentences max). Be direct and concise. No lengthy introductions or repetitive text.'
           },
           {
             role: 'user',
             content: prompt
           }
         ],
-        temperature: 0.7,
-        max_tokens: 1000
+        temperature: 0.5,
+        max_tokens: 300
       })
     })
 
@@ -64,7 +64,7 @@ export async function getQuestionExplanation(questionText, options, correctAnswe
  * Build the prompt for question explanation
  */
 function buildExplanationPrompt(questionText, options, correctAnswer, userAnswer, topic) {
-  let prompt = `Please explain this question and why the correct answer is right:\n\n`
+  let prompt = `Explain this question briefly and clearly:\n\n`
   prompt += `Question: ${questionText}\n\n`
   prompt += `Options:\n`
   
@@ -75,21 +75,19 @@ function buildExplanationPrompt(questionText, options, correctAnswer, userAnswer
   prompt += `\nCorrect Answer: ${correctAnswer}) ${options[correctAnswer]}\n`
   
   if (userAnswer && userAnswer !== correctAnswer) {
-    prompt += `\nStudent's Answer: ${userAnswer}) ${options[userAnswer]}\n`
-    prompt += `Please also explain why the student's answer is incorrect.\n`
+    prompt += `Student's Answer: ${userAnswer}) ${options[userAnswer]}\n`
   }
   
   if (topic) {
-    prompt += `\nTopic: ${topic}\n`
+    prompt += `Topic: ${topic}\n`
   }
   
-  prompt += `\nProvide a clear explanation that:\n`
-  prompt += `1. Explains what the question is asking\n`
-  prompt += `2. Explains why the correct answer is right\n`
-  prompt += `3. Provides the key concept or formula needed\n`
+  prompt += `\nProvide a SHORT explanation (3-4 sentences max) that:\n`
+  prompt += `1. Briefly explains why ${correctAnswer} is correct\n`
   if (userAnswer && userAnswer !== correctAnswer) {
-    prompt += `4. Explains the common mistake in the student's answer\n`
+    prompt += `2. Explains why ${userAnswer} is wrong\n`
   }
+  prompt += `\nKeep it simple and concise. No lengthy introductions or repetition.`
   
   return prompt
 }
