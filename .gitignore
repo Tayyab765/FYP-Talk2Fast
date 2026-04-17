@@ -16,3 +16,4 @@ __pycache__/
 # Data files (too large for git)
 complete_fast_mcqs_collection.json
 
+.venv/

@@ -15,7 +15,7 @@ const careerProfileSchema = new mongoose.Schema({
   academic_background: {
     qualification_type: {
       type: String,
-      enum: ['local_board', 'alevels', 'other'],
+      enum: ['fsc', 'alevels', 'other'],
       required: true
     },
     study_stream: {

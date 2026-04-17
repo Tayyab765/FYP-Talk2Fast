@@ -92,10 +92,10 @@ class OllamaService {
     const personalityStrengths = this._formatArray(this._extractPersonalityStrengths(profile));
     const goals = this._truncateText(
       profile?.goals
-        || profile?.career_goal
-        || profile?.career_inclination?.appealing_role
-        || profile?.work_style?.career_motivation
-        || 'N/A'
+      || profile?.career_goal
+      || profile?.career_inclination?.appealing_role
+      || profile?.work_style?.career_motivation
+      || 'N/A'
     );
 
     return [
@@ -107,7 +107,7 @@ class OllamaService {
       `Goals: ${goals}`
     ].join('\n');
   }
-  
+
   /**
    * Test Ollama connection and model availability
    * @returns {Promise<boolean>}
@@ -117,28 +117,28 @@ class OllamaService {
       const response = await axios.get(`${this.baseURL}/api/tags`, {
         timeout: 5000
       });
-      
+
       const models = response.data.models || [];
       const modelExists = models.some(m => m.name === this.model);
-      
+
       if (!modelExists) {
-        logger.warn(`Model ${this.model} not found in Ollama. Available models:`, 
+        logger.warn(`Model ${this.model} not found in Ollama. Available models:`,
           models.map(m => m.name).join(', '));
         return false;
       }
-      
+
       logger.info('Ollama connection successful', { model: this.model });
       return true;
-      
+
     } catch (error) {
-      logger.error('Failed to connect to Ollama', { 
+      logger.error('Failed to connect to Ollama', {
         error: error.message,
-        baseURL: this.baseURL 
+        baseURL: this.baseURL
       });
       return false;
     }
   }
-  
+
   /**
    * Generate response from Ollama
    * @param {string} prompt - The prompt to send
@@ -158,15 +158,15 @@ class OllamaService {
         ...options.modelOptions
       }
     };
-    
+
     try {
-      logger.info('Sending request to Ollama', { 
+      logger.info('Sending request to Ollama', {
         model: this.model,
-        promptLength: prompt.length 
+        promptLength: prompt.length
       });
-      
+
       const response = await this._callOllamaWithRetry(requestBody);
-      
+
       const generatedText = response?.data?.response || '';
       const usage = {
         eval_count: response?.data?.eval_count ?? 0,
@@ -174,26 +174,26 @@ class OllamaService {
         prompt_eval_count: response?.data?.prompt_eval_count ?? 0,
         prompt_eval_duration: response?.data?.prompt_eval_duration ?? 0
       };
-      
+
       logger.info('Ollama response received', {
         responseLength: generatedText.length,
         evalCount: usage.eval_count,
         evalDuration: usage.eval_duration
       });
-      
+
       return {
         text: generatedText.trim(),
         usage
       };
-      
+
     } catch (error) {
-      logger.error('Failed to generate response from Ollama', { 
-        error: error.message 
+      logger.error('Failed to generate response from Ollama', {
+        error: error.message
       });
       throw new Error(`Ollama generation failed: ${error.message}`);
     }
   }
-  
+
   /**
    * Generate AI-powered degree recommendations
    * @param {Object} profileData - Descriptive profile in AI-friendly format
@@ -202,30 +202,30 @@ class OllamaService {
   async generateRecommendation(profile) {
     const compressedProfile = this.compressProfile(profile);
     const prompt = this._buildRecommendationPrompt(compressedProfile);
-    
+
     try {
       logger.info('Generating career recommendations via Ollama');
-      
+
       const result = await this.generateResponse(prompt, {
         temperature: 0.7,
         num_predict: 300
       });
-      
+
       // Extract and parse JSON from response
       const parsed = this._extractAndParseJSON(result.text);
       const recommendations = this._normalizeRecommendationStructure(parsed);
-      
+
       // Validate structure
       if (!this._validateRecommendationStructure(recommendations)) {
         throw new Error('Invalid recommendation structure received from Ollama');
       }
-      
+
       logger.info('Successfully generated career recommendations', {
         degreeCount: recommendations.top_3_degrees?.length || 0
       });
-      
+
       return recommendations;
-      
+
     } catch (error) {
       logger.error('Failed to generate recommendations', { error: error.message });
       throw new Error(`AI recommendation generation failed: ${error.message}`);
@@ -235,16 +235,16 @@ class OllamaService {
   _normalizeRecommendationStructure(data) {
     const normalizedDegrees = Array.isArray(data?.top_3_degrees)
       ? data.top_3_degrees
-          .filter(Boolean)
-          .map((degree) => ({
-            degree_name: degree?.degree_name || 'N/A',
-            match_percentage: Number(degree?.match_percentage) || 0,
-            reasoning: degree?.reasoning || 'N/A',
-            career_paths: Array.isArray(degree?.career_paths) ? degree.career_paths : [],
-            eligibility: ['Yes', 'No'].includes(degree?.eligibility)
-              ? degree.eligibility
-              : 'N/A'
-          }))
+        .filter(Boolean)
+        .map((degree) => ({
+          degree_name: degree?.degree_name || 'N/A',
+          match_percentage: Number(degree?.match_percentage) || 0,
+          reasoning: degree?.reasoning || 'N/A',
+          career_paths: Array.isArray(degree?.career_paths) ? degree.career_paths : [],
+          eligibility: ['Yes', 'No'].includes(degree?.eligibility)
+            ? degree.eligibility
+            : 'N/A'
+        }))
       : [];
 
     return {
@@ -253,7 +253,7 @@ class OllamaService {
       next_steps: Array.isArray(data?.next_steps) ? data.next_steps : []
     };
   }
-  
+
   /**
    * Generate memory summary for session
    * Compresses recommendation into concise summary for future context
@@ -267,22 +267,22 @@ Profile:\n${compressedProfile}
 Top Recommendation: ${recommendations.top_3_degrees[0].degree_name} (${recommendations.top_3_degrees[0].match_percentage}% match)
 
 Create a brief summary for future reference. Return ONLY the summary text, nothing else.`;
-    
+
     try {
       const result = await this.generateResponse(prompt, {
         temperature: 0.5,
         num_predict: 120
       });
-      
+
       return result.text;
-      
+
     } catch (error) {
       logger.error('Failed to generate memory summary', { error: error.message });
       // Fallback to basic summary
       return `Student profile captured with key strengths and goals. Top recommendation: ${recommendations.top_3_degrees[0].degree_name}.`;
     }
   }
-  
+
   /**
    * Continue career counseling conversation with context
    * @param {Object} sessionData - Session context including memory, profile, and chat history
@@ -291,101 +291,94 @@ Create a brief summary for future reference. Return ONLY the summary text, nothi
    */
   async continueCareerChat(sessionData, userMessage) {
     const prompt = this._buildChatPrompt(sessionData, userMessage);
-    
+
     try {
-      logger.info('Processing career chat message', { 
+      logger.info('Processing career chat message', {
         sessionId: sessionData.sessionId,
-        messageLength: userMessage.length 
+        messageLength: userMessage.length
       });
-      
+
       const result = await this.generateResponse(prompt, {
         temperature: 0.7,
         num_predict: 15000
       });
-      
+
       logger.info('Chat response generated', {
         sessionId: sessionData.sessionId,
         responseLength: result.text.length,
         evalCount: result?.usage?.eval_count ?? 0
       });
-      
+
       return {
         response: result.text,
         usage: result.usage
       };
-      
+
     } catch (error) {
       logger.error('Failed to process chat message', { error: error.message });
       throw new Error(`Chat processing failed: ${error.message}`);
     }
   }
-  
+
   /**
    * Build comprehensive recommendation prompt
    */
   _buildRecommendationPrompt(compressedProfile) {
-  return `You are a highly accurate and strict career counseling AI for Pakistani students.
+    return `You are a highly accurate career counseling AI for Pakistani students.
+    Your task is to analyze the student profile and recommend the top 3 most suitable university degrees.
 
-Your task is to analyze the student profile and recommend the top 3 most suitable university degrees.
+    Student Profile:
+    ${compressedProfile}
 
-You MUST follow real-world eligibility rules based on:
-- HEC Pakistan undergraduate policies
-- FAST-NUCES admission criteria
-
-Eligibility Rules (IMPORTANT):
-- Pre-Engineering students → eligible for all computing and engineering fields
-- ICS students → eligible for computing fields
-- Pre-Medical students → NOT directly eligible for computing fields unless they pass additional Mathematics exam
-- Clearly mention this condition if applicable
-- Do NOT mark a student eligible if requirements are not met
-
-Student Profile:
-${compressedProfile}
-
-Return ONLY valid JSON in this exact format:
-
-{
-  "top_3_degrees": [
+    Return ONLY valid JSON in this exact format:
     {
-      "degree_name": "",
-      "match_percentage": 0,
-      "reasoning": "",
-      "career_paths": ["", "", ""],
-      "eligibility": "Yes/No with short condition if needed"
+      "top_3_degrees": [
+        {
+          "degree_name": "",
+          "match_percentage": 0,
+          "reasoning": "",
+          "career_paths": ["", "", ""],
+          "eligibility": "Yes/No with short condition if needed"
+        }
+      ],
+      "skill_gap_analysis": {
+        "current_strengths": ["", ""],
+        "skills_to_develop": ["", ""],
+        "recommended_certifications": ["", ""]
+      },
+      "overall_assessment": "",
+      "next_steps": ["", ""]
     }
-  ],
-  "overall_assessment": "",
-  "next_steps": ["", ""]
-}
 
-STRICT INSTRUCTIONS:
+    STRICT INSTRUCTIONS:
+    1. Output MUST be valid JSON only (no text before or after)
+    2. Exactly 3 degree recommendations
+    3. match_percentage must be realistic (0–100), based primarily on student interests, strengths, and academic background
+    4. reasoning must be SHORT (1-2 lines, to the point) — focus on why this degree fits the student, not eligibility
+    5. career_paths → exactly 3 concise roles with a short description each
+    6. eligibility → briefly note "Yes" or "No" with a one-phrase condition only if truly restrictive (e.g., "No – requires Mathematics exam"). Do NOT over-explain or repeat eligibility in reasoning.
+    7. skill_gap_analysis:
+      - current_strengths → 2-4 skills the student already demonstrates
+      - skills_to_develop → 2-4 skills needed for their top recommended degree
+      - recommended_certifications → 2-3 short, practical certifications available in Pakistan (e.g., Google IT Support, Cisco CCNA, Coursera ML)
+    8. overall_assessment → max 1 short sentence summarizing the student's overall profile fit
+    9. next_steps → max 2 short actionable steps the student should take now
+    10. Base recommendations strictly on:
+        - student interests
+        - academic background
+        - skill strengths
+    11. Prefer high-demand and practical degrees in Pakistan
 
-1. Output MUST be valid JSON only (no text before or after)
-2. Exactly 3 degree recommendations
-3. match_percentage must be realistic (0–100)
-4. reasoning must be SHORT (1 line, to the point)
-5. career_paths → exactly 3 concise roles
-6. eligibility must:
-   - clearly say "Yes" or "No"
-   - include condition if required (e.g., "No – requires Mathematics exam")
-7. overall_assessment → max 1 short sentence
-8. next_steps → max 2 short actionable steps
-9. Avoid generic or vague answers
-10. Base recommendations strictly on:
-    - student interests
-    - academic background
-    - skill strengths
-11. Prefer high-demand and practical degrees in Pakistan
+    DO NOT:
+    - Add explanations outside JSON
+    - Write long paragraphs
+    - Recommend unrealistic or irrelevant degrees
+    - Make eligibility the dominant factor — it is a secondary note only
+    - Repeat eligibility concerns inside reasoning or overall_assessment
 
-DO NOT:
-- Add explanations outside JSON
-- Write long paragraphs
-- Recommend unrealistic or irrelevant degrees
-- Ignore eligibility constraints
+    Ensure the response is concise, accurate, profile-driven, and strictly formatted.`;
+  }
 
-Ensure the response is concise, accurate, and strictly formatted.`;
-}
-  
   /**
    * Build chat prompt with full context
    */
@@ -402,10 +395,10 @@ GUIDELINES:
 - Always maintain context of their profile and previous conversation
 
 `;
-    
+
     // Add memory summary
     prompt += `STUDENT CONTEXT:\n${sessionData.memorySummary}\n\n`;
-    
+
     // Add previous recommendations summary
     if (sessionData.recommendationJSON?.top_3_degrees?.length > 0) {
       const topDegree = sessionData.recommendationJSON.top_3_degrees[0];
@@ -413,12 +406,12 @@ GUIDELINES:
       prompt += `Top recommendation: ${topDegree.degree_name} (${topDegree.match_percentage}% match)\n`;
       prompt += `Other recommendations: ${sessionData.recommendationJSON.top_3_degrees.slice(1).map(d => d.degree_name).join(', ')}\n\n`;
     }
-    
+
     // Include recent chat history (last 6-10 messages for context)
     if (sessionData.chatHistory && sessionData.chatHistory.length > 0) {
       prompt += `CONVERSATION HISTORY:\n`;
       const recentMessages = sessionData.chatHistory.slice(-8);
-      
+
       for (const msg of recentMessages) {
         if (msg.role === 'user') {
           prompt += `User: ${msg.content}\n`;
@@ -428,14 +421,14 @@ GUIDELINES:
       }
       prompt += `\n`;
     }
-    
+
     // Add current user message
     prompt += `Current Question:\n${userMessage}\n\n`;
     prompt += `Respond clearly and helpfully as the assistant:`;
-    
+
     return prompt;
   }
-  
+
   /**
    * Extract JSON from response (handles cases where model adds extra text)
    */
@@ -517,7 +510,7 @@ GUIDELINES:
     logger.error('No valid JSON found in response', { text });
     throw new Error('No valid JSON found in Ollama response');
   }
-  
+
   /**
    * Validate recommendation structure
    */
@@ -525,7 +518,7 @@ GUIDELINES:
     if (!data || typeof data !== 'object') return false;
     if (!Array.isArray(data.top_3_degrees)) return false;
     if (data.top_3_degrees.length < 1) return false;
-    
+
     // Validate each degree object
     for (const degree of data.top_3_degrees) {
       if (!degree.degree_name || typeof degree.match_percentage !== 'number' || !degree.reasoning) {
@@ -534,10 +527,10 @@ GUIDELINES:
       if (!Array.isArray(degree.career_paths)) return false;
       if (!degree.eligibility) return false;
     }
-    
+
     return true;
   }
-  
+
   /**
    * Call Ollama API with retry logic
    */
@@ -553,20 +546,20 @@ GUIDELINES:
           }
         }
       );
-      
+
       return response;
-      
+
     } catch (error) {
       // Check if Ollama is not running
       if (error.code === 'ECONNREFUSED') {
         throw new Error('Ollama is not running. Please start Ollama service at ' + this.baseURL);
       }
-      
+
       // Handle timeout
       if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') {
         throw new Error('Ollama request timed out. The model may be loading or the prompt is too complex.');
       }
-      
+
       // Handle temporary errors with retry
       if (attempt < this.maxRetries && error.response?.status >= 500) {
         const delay = this.retryDelay * attempt;
@@ -574,11 +567,11 @@ GUIDELINES:
         await this._sleep(delay);
         return this._callOllamaWithRetry(requestBody, attempt + 1);
       }
-      
+
       throw error;
     }
   }
-  
+
   /**
    * Sleep utility for retry delays
    */

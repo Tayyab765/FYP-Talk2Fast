@@ -10,7 +10,7 @@ const profileSubmissionSchema = Joi.object({
   answers: Joi.object({
     // ===== ACADEMIC BACKGROUND (5 questions) =====
     qualification_type: Joi.string()
-      .valid('local_board', 'alevels', 'other')
+      .valid('fsc', 'alevels', 'other')
       .required(),
     
     study_stream: Joi.string()
