@@ -1,0 +1,127 @@
+[Program Vision]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+To be a leading master's program in Business Analytics, producing experts who use data‑driven insights to make
+innovative decisions and take meaningful action in a complex global business environment.
+
+[Program Mission]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+The Master of Science (Business Analytics) program aims to equip graduates with advanced analytics tools,
+statistical methods, and machine learning techniques to solve complex business problems. Emphasizing ethical,
+data‑driven decision‑making, sustainability, and a culturally informed approach, the program inspires innovation,
+entrepreneurial action, and sustainable business improvement, preparing business analysts who drive digital
+transformation and create meaningful value for society.
+
+[Career Opportunities]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Graduates of the Master of Science (Business Analytics) program can choose from roles such as:
+- Business analytics consultant
+- Operations analyst
+- People (HR) analyst
+- Financial analyst
+- Market or consumer analyst
+- Business intelligence analyst
+- Analytics consultant
+- Product or strategy analyst
+
+[Career Opportunities]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+The program prepares graduates with a computer science background to transition into strategic management roles
+by gaining business knowledge, while enabling those with a business background to move into data‑driven
+leadership positions by developing technical analytics skills.
+
+[Award of Degree]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+For the award of Master of Science (Business Analytics) degree, a student must have:
+- Passed courses totaling at least 43 credit hours.
+- Obtained a CGPA of at least 2.50.
+
+[Credit Structure]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Total Program Credits: 43 credit hours.
+Both business and non‑business background students follow a four‑semester structure with:
+- Core analytics and methods courses (e.g., Advanced Data Analysis, Decision Science for Business).
+- Supporting courses in programming, databases, and business foundations (depending on background).
+- Electives in MG/AF/BA/CS.
+- MS Project or MS Dissertation (two‑stage: Dissertation‑I and Dissertation‑II).
+
+[Credit Structure]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Registration in 'MS Dissertation‑I' shall be allowed provided the student has:
+- Earned at least 18 credit hours; and
+- Passed the 'Research Methodology' course; and
+- CGPA is equal to or more than 2.50.
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Business Background Track
+Semester I
+- Code: CS4089 | Title: Programming for Business Applications | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5005 | Title: Applied Calculus for Business | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS5059 | Title: Database Systems | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5006 | Title: Advanced Data Analysis | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester II
+- Code: MG5011 | Title: Advanced Research Methods | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG5047 | Title: Decision Science for Business | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5004 | Title: Machine Learning Models for Business Analytics | Cr.Hrs: 3-0 | Prereq: None
+- Code: BL5004 | Title: Machine Learning Models for Business Analytics Lab | Cr.Hrs: 1-0 | Prereq: BA5004
+Total Semester Credits: 9-1
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester III
+- Code: MG5055 | Title: Ethics in Business Analytics | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG5050 | Title: Econometrics | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5xxx | Title: MG/AF/BA/CS Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: BA5xxx or BA5094 | Title: MG/AF/BA/CS Elective‑II or MS Dissertation‑I | Cr.Hrs: 3-0 | Prereq: Registration rules above
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester IV
+- Code: BA5002 | Title: Data Driven Decision Making and Optimization | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5xxx | Title: Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: BA5090 or BA5095 | Title: MS Project or MS Dissertation‑II | Cr.Hrs: 3-0 | Prereq: BA5094 (if dissertation track)
+Total Semester Credits: 9-0
+Business Background Track Grand Total: 43 credit hours
+
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Non‑Business Background Track
+Semester 1
+- Code: AF4010 | Title: Accounting and Finance for Managers | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4010 | Title: Marketing | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4006 | Title: Management and Organizational Behavior | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5006 | Title: Advanced Data Analysis | Cr.Hrs: 3-0 | Prereq: None
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester 2
+- Code: MG5011 | Title: Advanced Research Methods | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG5047 | Title: Decision Science for Business | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5004 | Title: Machine Learning Models for Business Analytics | Cr.Hrs: 3-0 | Prereq: None
+- Code: BL5004 | Title: Machine Learning Models for Business Analytics Lab | Cr.Hrs: 1-0 | Prereq: BA5004
+Total Semester Credits: 9-1
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester 3
+- Code: MG5055 | Title: Ethics in Business Analytics | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG5050 | Title: Econometrics | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5xxx | Title: MG/AF/BA/CS Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: BA5xxx or BA5094 | Title: MG/AF/BA/CS Elective‑II or MS Dissertation‑I | Cr.Hrs: 3-0 | Prereq: Registration rules above
+Total Semester Credits: 12-0
+
+[Study Plan]
+Program Code: MS_BA | Program Title: Master of Science (Business Analytics) | Level: Graduate | Domain: Management Sciences
+Semester 4
+- Code: BA5002 | Title: Data Driven Decision Making and Optimization | Cr.Hrs: 3-0 | Prereq: None
+- Code: BA5xxx | Title: Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: BA5090 or BA5095 | Title: MS Project or MS Dissertation‑II | Cr.Hrs: 3-0 | Prereq: BA5094 (if dissertation track)
+Total Semester Credits: 9-0
+Non‑Business Background Track Grand Total: 43 credit hours

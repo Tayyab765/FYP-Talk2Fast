@@ -1,0 +1,123 @@
+Eligibility Criteria - National University of Computer and Emerging Sciences (NUCES)
+Updated on: August 6, 2025
+Section: Eligibility Criteria Overview
+The eligibility criteria for National University of Computer and Emerging Sciences (NUCES) has been updated on August 6, 2025. Those who have taken the HSSC or an equivalent examination and are awaiting results are also eligible to apply. The four-year undergraduate programs of full-time study are divided into eight semesters.
+
+---
+
+Section: Undergraduate/Bachelors/BS Engineering Programs
+The BS Engineering programs include Bachelor of Science in Civil Engineering, Bachelor of Science in Electrical Engineering, and Bachelor of Science in Computer Engineering. For admission tests, applicants must select only one out of three options: FAST-NUCES, SAT, or NTS NAT-IE. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have SSC (Matric) or equivalent examination with 60% minimum marks, HSSC (FSc) or equivalent examination with 60% minimum marks, and courses studied at HSSC or equivalent level must include Pre-Engineering (Chemistry, Mathematics, Physics) or ICS (Computer Science, Mathematics, Physics).
+For selection criteria, the weightage of admission test marks is 33%, weightage of HSSC or equivalent is 50%, and weightage of SSC or equivalent is 17%. The weightage of HSSC marks shall be calculated based on marks obtained in HSSC part I and II, or marks obtained in HSSC part I if HSSC part II not available, or marks/percentage given in IBCC equivalence certificate of A-level, or marks/percentage given in IBCC equivalence certificate of O-level. Merit cut-off marks are to be determined by the university.
+
+---
+
+Section: Undergraduate/Bachelors/BS Computing Programs
+The BS Computing programs include Bachelor of Science in Artificial Intelligence, Bachelor of Science in Computer Science, Bachelor of Science in Cyber Security, Bachelor of Science in Data Science, and Bachelor of Science in Software Engineering. For admission tests, applicants must select only one out of three options: FAST-NUCES, SAT, or NTS NAT-IE/NAT-ICS. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have SSC (Matric) or equivalent examination with 60% minimum marks, HSSC (FSc) or equivalent examination with 50% minimum marks, and courses studied at HSSC or equivalent level must include Mathematics.
+For selection criteria, the weightage of admission test marks is 50%, weightage of HSSC or equivalent is 40%, and weightage of SSC or equivalent is 10%. Pre-medical students who have passed additional maths or are waiting for results are eligible to apply for admission in computing programs.
+
+---
+
+Section: Undergraduate/Bachelors/BBA and BS Business Programs
+The BBA and BS Business programs include Bachelor of Business Administration, Bachelor of Science in Accounting and Finance, Bachelor of Science in Business Analytics, and Bachelor of Science in Financial Technology. For admission tests, applicants must select only one out of three options: FAST-NUCES, SAT, or NTS NAT-IE/NAT-ICS. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have SSC (Matric) or equivalent examination with 60% minimum marks, HSSC (FSc) or equivalent examination with 50% minimum marks, and courses studied at HSSC or equivalent level must include Mathematics.
+For selection criteria, the weightage of admission test marks is 50%, weightage of HSSC or equivalent is 40%, and weightage of SSC or equivalent is 10%.
+
+---
+
+Section: Graduate Programs - MS Computer Science
+The Master of Science in Computer Science program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Computer Science or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Electrical Engineering
+The Master of Science in Electrical Engineering program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Electrical Engineering or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Civil Engineering
+The Master of Science in Civil Engineering program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Civil Engineering or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Software Engineering
+The Master of Science in Software Engineering program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Software Engineering or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Data Science
+The Master of Science in Data Science program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Data Science or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Cyber Security
+The Master of Science in Cyber Security program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Cyber Security or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Artificial Intelligence
+The Master of Science in Artificial Intelligence program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Artificial Intelligence or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Business Analytics
+The Master of Science in Business Analytics program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have Bachelor of Science in Business Analytics or equivalent degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: Graduate Programs - MS Mathematics
+The Master of Science in Mathematics program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-B General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have a degree in a relevant subject or related discipline earned from a recognized university after 16 years of education with minimum 55% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (4 year Bachelor or 2 year Bachelor/2 year Master) is 50%.
+
+---
+
+Section: Graduate Programs - MS Applied Linguistics
+The Master of Science in Applied Linguistics program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-B General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have a Master Degree in English Language Teaching (ELT), or Teaching English as a Second Language (TESL) or English Literature (EL) or a related degree from a recognized university after 16 years of education with minimum 55% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (4 year Bachelor or 2 year Bachelor/2 year Master) is 50%.
+
+---
+
+Section: Graduate Programs - MBA
+The Master of Business Administration program requires applicants to select only one out of three admission test options: FAST-NUCES, GRE General, or NTS GAT-A General. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have a Bachelor degree from a recognized university after 16 years of education with minimum 60% marks or CGPA of at least 2.00 on a scale of 4.00.
+For selection criteria, the weightage of admission test marks is 50% and weightage of past academic record (Bachelor) is 50%.
+
+---
+
+Section: PhD Programs
+The PhD programs include PhD in Computer Science, PhD in Software Engineering, PhD in Civil Engineering, PhD in Electrical Engineering, PhD in Management Sciences, PhD in Mathematics, and PhD English (Linguistics).
+For admission tests, applicants must select only one out of two options: FAST-NUCES or NTS-GAT subject tests in Computer Science, Civil/Electrical Engineering, Management Sciences, Mathematics, or Linguistics. NTS tests from specific universities will not be acceptable.
+For eligibility, applicants must have a degree in relevant subject earned from a recognized university after 18 years of education with minimum 60% marks or CGPA of at least 3.00 on a scale of 4.00 in the MS/MPhil/Equivalent.
+For selection criteria, admission test marks have 60% weightage and interview to assess research potential has 40% weightage.
+
+---
+
+Section: PhD Provisional Admission
+Students having a minimum CGPA of 2.90 (out of 4.00 in semester system) or 58% (in the annual system) are provisionally admitted into PhD degree provided they successfully complete a Zero Semester. Zero Semester shall be a regular semester offered in the university in which the students shall study additional courses of 9 CH of level 7 and score minimum 3.00 out of 4.00 GPA. The additional courses shall be approved by the Graduate Studies Committee (GSC). The GSC shall recommend admission to PhD if it is satisfied that the student's knowledge of primary area (level 7) has sufficiently prepared him/her to undertake the course of studies of the doctoral program.
+
+---
+
+Section: Important Notes
+All documents/transcripts will be checked at the time of admission. Any incorrect/false information submitted by the applicant or any attempt to hide information will lead to disqualification of the candidate for admission. Merit cut-off marks are to be determined by the university. The applicant must obtain a minimum of 60% marks in the admission test after which the merit will be determined based on the 60% admission test marks and 40% panel evaluation.
+
+
+

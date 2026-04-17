@@ -1,0 +1,137 @@
+[Program Vision]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+To be a premier undergraduate program that develops graduates with strong analytical, professional, and ethical
+business skills, who excel in the global job market and in their professional journeys.
+
+[Program Mission]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+The BBA program strives to deliver a rigorous curriculum that develops high‑achieving and aspiring management
+professionals with the leadership, decision‑making, and analytical skills needed to make responsible contributions
+for societal and economic development.
+
+[Career Opportunities]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Graduates of the Bachelor of Business Administration program can choose from a number of pathways as they enter
+their professional life, including:
+- General management
+- Human resource management
+- Finance
+- Marketing
+- Project management
+- Supply chain management
+- Business analytics
+- Operations management
+The program also develops the skills needed to become potential entrepreneurs and facilitates those with an
+entrepreneurial inclination in planning for and launching their business ventures.
+
+[Award of Degree]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+For the award of Bachelor of Business Administration degree, a student must have:
+- Passed courses totaling at least 135 credit hours, including all those courses specified as core courses.
+- Obtained a CGPA of at least 2.00.
+
+[Credit Hour Distribution]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Eligibility for FYP‑I: 105 credit hours (CH) completed.
+Domain‑wise Credit Hours:
+- General Education: 34 credit hours
+- Disciplinary Major: 80 credit hours
+- Interdisciplinary: 12 credit hours
+- Field Experience (Internship): 3 credit hours
+- Capstone Project (FYP): 6 credit hours
+- Total: 135 credit hours
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester I
+- Code: SS2019 / SS2018 | Title: Psychology / Sociology | Cr.Hrs: 2-0 | Prereq: None
+- Code: AF1001 | Title: Fundamentals of Accounting | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT1002 | Title: Business Math‑I | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG1001 | Title: Fundamentals of Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1016 | Title: English‑I | Cr.Hrs: 2-1 | Prereq: None
+- Code: SS1007 | Title: Islamic Studies/Ethics | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1019 | Title: Understanding Sirat‑un‑Nabi | Cr.Hrs: NC | Prereq: None
+Total Semester Credits: 15-1
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester II
+- Code: AF1002 | Title: Financial Accounting | Cr.Hrs: 3-1 | Prereq: AF1001
+- Code: MG2008 | Title: Data Analysis for Business I | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG1002 | Title: Marketing Management | Cr.Hrs: 3-0 | Prereq: None
+- Code: CS1001 | Title: IT in Business | Cr.Hrs: 2-1 | Prereq: None
+- Code: SS1006 | Title: English‑II | Cr.Hrs: 3-1 | Prereq: SS1016
+- Code: SS1015 | Title: Pakistan Studies | Cr.Hrs: 2-0 | Prereq: None
+Total Semester Credits: 16-3
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester III
+- Code: MG2012 | Title: Business Economics | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS2041 | Title: Critical Thinking | Cr.Hrs: 2-0 | Prereq: None
+- Code: AF2003 | Title: Management Accounting | Cr.Hrs: 3-0 | Prereq: AF1002
+- Code: MG2009 | Title: Data Analysis for Business II | Cr.Hrs: 3-1 | Prereq: MG2008
+- Code: MG2001 | Title: Organizational Behaviour | Cr.Hrs: 3-0 | Prereq: MG1001
+- Code: SS2043 | Title: Civics and Community Engagement | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1021 | Title: Understanding of Holy Quran‑I | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 17-1
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester IV
+- Code: AF2004 | Title: Business Finance | Cr.Hrs: 3-0 | Prereq: AF1002, MT1002
+- Code: MG2011 | Title: Environmental Science and Sustainability for Business | Cr.Hrs: 3-0 | Prereq: None
+- Code: MT2004 | Title: Business Math‑II | Cr.Hrs: 3-0 | Prereq: MT1002
+- Code: CS2016 | Title: Programming for Business | Cr.Hrs: 3-1 | Prereq: None
+- Code: MG2010 | Title: Business Communication | Cr.Hrs: 3-0 | Prereq: None
+- Code: SS1013 | Title: Ideology and Constitution of Pakistan | Cr.Hrs: 2-0 | Prereq: None
+- Code: SS1022 | Title: Understanding of Holy Quran‑II | Cr.Hrs: 1-0 | Prereq: None
+Total Semester Credits: 18-1
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester V
+- Code: MG2003 | Title: Consumer Behaviour | Cr.Hrs: 3-0 | Prereq: MG1002
+- Code: AF3001 | Title: Financial Management | Cr.Hrs: 3-1 | Prereq: AF2004
+- Code: MG3006 | Title: Operations Management | Cr.Hrs: 3-0 | Prereq: MT1002
+- Code: MG3004 | Title: Human Resource Management | Cr.Hrs: 3-0 | Prereq: MG1001
+- Code: MG3014 | Title: Advanced Business Communication | Cr.Hrs: 3-0 | Prereq: MG2010
+Total Semester Credits: 15-1
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester VI
+- Code: CS3003 | Title: Management Information Systems | Cr.Hrs: 3-1 | Prereq: CS1001
+- Code: BA2006 | Title: Fundamentals of Business Analytics | Cr.Hrs: 3-0 | Prereq: MG2009, CS2016
+- Code: MG3038 | Title: Digital Media Marketing | Cr.Hrs: 3-0 | Prereq: MG1002
+- Code: MG3010 | Title: Methods in Business Research | Cr.Hrs: 3-1 | Prereq: None
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑I | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 15-2
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester VII
+- Code: MG3002 | Title: Business Law | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4091 | Title: Final Year Project‑I | Cr.Hrs: 0-3 | Prereq: Eligibility for FYP‑I (105 CH)
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑II | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑III | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 9-3
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Semester VIII
+- Code: MG4003 | Title: Strategic Management | Cr.Hrs: 3-0 | Prereq: MG1001
+- Code: MG4011 | Title: Entrepreneurship | Cr.Hrs: 3-0 | Prereq: None
+- Code: MG4092 | Title: Final Year Project‑II | Cr.Hrs: 0-3 | Prereq: MG4091
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑IV | Cr.Hrs: 3-0 | Prereq: See catalog
+- Code: MG/AF/BA/CSxxxx | Title: MG/AF/BA/CS Elective‑V | Cr.Hrs: 3-0 | Prereq: See catalog
+Total Semester Credits: 12-3
+
+[Study Plan]
+Program Code: BS_BBA | Program Title: Bachelor of Business Administration | Level: Undergraduate | Domain: Management Sciences
+Internship
+- Code: MG4052 | Title: Internship* | Cr.Hrs: 3-0
+Notes:
+- * Internship can be registered in any semester after the fourth and before the eighth semester.
+- The Internship credit hours and grade shall be used in the calculation of the CGPA of the completed degree.
+- It will not be used in the determination of semester CGPA and merit position.

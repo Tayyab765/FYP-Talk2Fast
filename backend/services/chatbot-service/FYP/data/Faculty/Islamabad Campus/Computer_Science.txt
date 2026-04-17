@@ -1,0 +1,272 @@
+Department of Computer Science
+
+Dr. Muhammad Arshad Islam
+Professor and HOD (CS)
+PhD (CS), University of Konstanz, Germany (2011)
+PhD Approved Supervisor
+MS (CS), GIKI, Swabi Topi (2004)
+BS (CS), Foundation University, Islamabad (2002)
+
+Dr. Hammad Majeed
+Professor and Director (IQAE)
+PhD (CS), University of Limerick, Ireland (2008)
+PhD Approved Supervisor
+BE (SE), NUST, Islamabad (1999)
+
+Dr. Akhtar Jamil
+Associate Professor GSC (Coordinator)
+PhD (CS), Yildiz Technical University, Turkey (2018)
+PhD Approved Supervisor
+MS (CSE), NUST, Islamabad (2012)
+BS (CS), University of Karachi (2007)
+
+Dr. Ahmad Raza Shahid
+Professor
+PhD (CS), University of York, UK (2012)
+PhD Approved Supervisor
+MS (CS), Michigan State University, USA (2002)
+BS (EE), UET, Taxila (1998)
+
+Dr. Danish Shehzad
+Associate Professor
+PhD (CE), Kadir Has University, Turkey (2019)
+PhD Approved Supervisor
+MS (CS), Hazara University, Mansehra (2014)
+BS (Tel. & Net.), Comsats, Abbottabad (2010)
+
+Dr. Imran Ashraf
+Associate Professor
+PhD (CE), Delft University of Technology, Netherlands (2016)
+PhD Approved Supervisor
+MS (ES), Delft University of Technology, Netherlands (2011)
+MSc (EE), UET, Peshawar (2008)
+BSc (EE), UET, Peshawar (2006)
+
+Dr. Ejaz Ahmed
+Associate Professor
+PhD (Data Base), University of Bedfordshire, UK (2011)
+PhD Approved Supervisor
+MSc (SD), University of Coventry, UK (1997)
+MPhil (Math), QAU, Islamabad (1994)
+MSc (Math), University of the Punjab (1990)
+BSc (Math), University of the Punjab (1987)
+
+Dr. Labiba Fahad
+Associate Professor
+PhD (CS), City University of London, UK (2016)
+PhD Approved Supervisor
+MS (CS), GIKI, Topi (2006)
+BS (CS), UAAR, Rawalpindi (2004)
+
+Dr. Faisal Cheema
+Assistant Professor
+PhD (CS), University of Leipzig, Germany (2017)
+PhD Approved Supervisor
+MS (CS), NUCES, Islamabad (2005)
+BS (CS), IIU, Islamabad (2003)
+
+Dr. Mehreen Alam
+Assistant Professor
+PhD (CS), NUCES, Islamabad (2021)
+PhD Approved Supervisor
+MS (CS), LUMS, Lahore (2005)
+BS (CS), NUCES, Islamabad (2003)
+
+Dr. Sayed Qaiser Ali Shah
+Assistant Professor
+PhD (CS), UET, Taxila (2022)
+PhD Approved Supervisor
+MS (IT), NUST, Islamabad (2014)
+MSc (CS), IMSciences, Peshawar (2011)
+BSc (CS), KUST, Kohat (2008)
+
+Dr. Ali Zeeshan Ijaz
+Assistant Professor
+PhD (Bio Infor.), Western Sydney University, Australia
+(2018)
+MS (Bio & Brain Engr.), KAIST S. Korea (2009)
+BS (CSE), GIKI, Topi (2006)
+
+Dr. Hina Ayaz
+Assistant Professor
+PhD (CS), GIKI, Topi (2023)
+MS (CS), NUCES, Peshawar (2018)
+BS (CS), UET, Peshawar (2008)
+
+Dr. Muhammad Adnan Tariq
+Assistant Professor
+PhD (CS), University of Stuttgart, Germany (2013)
+MS (Soft. Sys. Engr.), RWTH Aachen University, Germany
+(2007)
+BS (Comp. Sys. Engg.), GIKI, Topi (2001)
+
+Dr. Tajwar Mehmood
+Assistant Professor
+PhD (CS), NUST, Islamabad (2024)
+MS (SE), RIU, Islamabad (2016)
+BS (SE), FJWU, Rawalpindi (2013)
+
+Dr. Basharat Hussain
+Assistant Professor
+PhD (CS), Comsats, Wah (2025)
+MS (CS), IIU, Islamabad (2016)
+MCS, IIU, Islamabad (2001)
+BSc, University of the Punjab (1997)
+
+Ms. Amna Irum
+Assistant Professor
+MS (CE&S), Myongji University, S. Korea (2009)
+BS (CSE), NUST, Islamabad (2006)
+
+Ms. Noor Ul Ain
+Assistant Professor
+MS (CS), NUCES, Islamabad (2009)
+BS (CS), IIU, Islamabad (2007)
+
+--- Page 40 ---
+Mr. Aqib Rehman
+Lecturer
+MPhil (CS), QAU, Islamabad (2018)
+BS (CS), MAJU, Islamabad (2015)
+
+Mr. Fahad Shafique Mirza
+Lecturer
+MS (CS), Air University, Islamabad (2024)
+Bsc (CE), UET, Taxila (2015)
+
+Ms. Hira Mastoor
+Lecturer
+MS (CS), NUCES, Islamabad (2024)
+BS (CS), NUCES, Islamabad (2019)
+
+Mr. Majid Hussain
+Lecturer
+MS (CS), MAJU, Karachi (2018)
+BS (CS), University of Karachi (2010)
+
+Ms. Marium Hida
+Lecturer
+MS (SE), NUST, Islamabad (2016)
+BS (SE), FJWU, Rawalpindi (2013)
+
+Ms. Maryam Shahbaz
+Lecturer
+MS (CS), NUCES, Islamabad (2023)
+BS (CS), QAU, Islamabad (2020)
+
+Mr. Muhammad Aadil Ur Rehman
+Lecturer
+MS (CS), CUST, Islamabad (2018)
+BS (CS), MAJU, Karachi (2013)
+
+Mr. Muhammad Aamir Gulzar
+Lecturer
+MS (CS), NUCES, Islamabad (2024)
+BS (CS), PMAS-AAUR, Rawalpindi (2021)
+
+Mr. Muhammad Almas Khan
+Lecturer
+MPhil (CS), QAU, Islamabad (2021)
+Msc (CS), University of Peshawar (2017)
+
+Mr. Muhammad Farrukh Bashir
+Lecturer
+MS (CS), NUCES, Islamabad (2019)
+BS (CS), Comsats, Vehari (2017)
+
+Mr. Muhammad Owais Idrees
+Lecturer
+MS (CS), NUCES, Islamabad (2020)
+BS (IT), Islamia University, Bahawalpur (2017)
+
+Ms. Nirmal Tariq
+Lecturer
+MS (CS), NUST, Islamabad (2016)
+BS (CS), FJWU, Rawalpindi (2014)
+
+Ms. Rabail Zahid
+Lecturer
+MS (CS), NUCES, Islamabad (2020)
+BS (CS), CUST, Islamabad (2016)
+
+Ms. Sana Razzaq
+Lecturer
+MS (CS), NUCES, Islamabad (2024)
+BS (CS), CUST, Islamabad (2021)
+
+Mr. Shams Farooq
+Lecturer
+MS (ESE), University of Huddersfield, UK (2006)
+BS (CS), University of Peshawar (2004)
+
+Mr. Shehreyar Rashid
+Lecturer
+MS (IT), NUST, Islamabad (2018)
+BS (CSE), GIKI, Topi (2012)
+
+Syed Muhammad Aqleem Abbas
+Lecturer
+MPhil (CS), QAU, Islamabad (2023)
+BS (CS), University of Sargodha (2021)
+
+Syed Muhammad Saad Salman
+Lecturer
+MS (CS), NUCES, Islamabad (2019)
+BS (CS), IMSciences, Peshawar (2015)
+
+--- Page 41 ---
+Ms. Urooj Ghani
+Lecturer
+MS (CS), NUCES, Islamabad (2022)
+BS (SE), IIU, Islamabad (2019)
+
+Ms. Bushra Fatima
+Lecturer
+MS (CS), NUCES, Islamabad (2025)
+BS (CS), NUCES, Islamabad (2022)
+
+Ms. Amina Ashfaq
+Instructor
+BS (IT), University of Sargodha (2021)
+
+Ms. Asma Tufail
+Instructor
+BS (CS), Air University, Islamabad (2022)
+
+Ms. Hajira Uzair
+Instructor
+BS (CS), NUCES, Islamabad (2023)
+
+Mr. Hamza Mahmood Sheikh
+Instructor
+BS (CS), NUCES, Islamabad (2021)
+
+Ms. Laiba Noor
+Instructor
+BS (CS), NUCES, Islamabad (2024)
+
+Ms. Maryam Khalid
+Instructor
+BS (CS), NUCES, Islamabad (2025)
+
+Mr. Muhammad Ismail
+Instructor
+BS (CS), Comsats, Abbottabad (2023)
+
+Mr. Muhammad Talha Sharif
+Instructor
+BS (CS), Comsats, Abbottabad (2023)
+
+Mr. Usama Bin Imran
+Instructor
+BS (SE), Comsats, Islamabad (2021)
+
+Mr. Zahoor ul Hassan
+Instructor
+BS (CS), CUST, Islamabad (2024)
+
+Ms. Zille Huma
+Instructor
+BS (Bio Infor.), Comsats, Islamabad (2021)
+
+--- Page 42 ---

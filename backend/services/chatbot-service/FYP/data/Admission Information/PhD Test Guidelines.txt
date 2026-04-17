@@ -1,0 +1,55 @@
+PhD Admission Test Guidelines - National University of Computer and Emerging Sciences (NUCES)
+Fall 2025 Guidelines
+Section: PhD Admission Test Overview
+The PhD Admission Test will be a 2-hours test with no negative marking. The test is designed to assess candidates' subject knowledge and research potential across various PhD programs.
+
+---
+
+Section: PhD Programs and Test Details
+PhD (Computer Science):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2-hours
+Description: MCQs
+Test Core Areas (Section-A): Programming, Data Science and Algorithms, Computer Networks, Operating Systems, Database Systems, Software Engineering, Theory of Automata
+
+PhD (Management Sciences):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2-hours
+Description: MCQs
+Test Core Areas (Section-A): Economics (10%), Management (15%), Quantitative Techniques (15%), Research Methods (15%), Marketing (15%), Finance and Accounting (10%+10%), Business Communication and Report Writing (10%)
+Section-B: Duration 1-hour, Description: Applicants will be required to write an essay or answer a subjective question
+
+PhD (Electrical Engineering):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2-hours
+Description: MCQs
+Test Core Areas (Section-A): Signals, Systems and Controls, Electrical Circuits and Network Analysis, Probability and Random Variables, Electromagnetics and Telecommunications, Electromechanical Systems and Power Engineering, Electronics, Digital Logic Design and Computer Engineering, Computing, Programming and Data Structures
+
+PhD (Mathematics):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2.5-hours
+Description: MCQs
+Test Core Areas (Section-A): Calculus (50%), Algebra (25%), Introductory Real Analysis (25%), Discrete Mathematics, General Topology, Probability and Statistics, Numerical Analysis, Complex Analysis
+
+PhD English (Linguistics):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2-hours
+Description: MCQs
+Test Core Areas (Section-A): General Linguistics, Phonetics and Phonology, Morphology and Syntax, Semantics and Pragmatics, Sociolinguistics and Applied Linguistics, Research Methods in Linguistics
+Section-B: Duration 1-hour, Description: Applicants will be required to write an essay or answer a subjective question related to theoretical or applied aspects of linguistics
+
+PhD (Civil Engineering):
+Test Date: 26th July 2025 (Saturday)
+Duration: 2-hours
+Description: MCQs
+Test Core Areas (Section-A): Structures and Engineering Mechanics, Foundations and Geotechnical Engineering, Hydraulics and Water resource Engineering, Transportation Engineering, Construction Engineering and Management, Structural Dynamics
+
+---
+
+Section: Important Notes
+Applicants will be called for interviews after reviewing the marks of Section-A. The final merit will be calculated by adding the marks of Section-A, Section-B (applicable for PhD Management Sciences only) and the interview marks. Admissions will be offered based on the availability and consent of supervisors.
+
+---
+
+Section: Test Format Summary
+All PhD programs have a 2-hour test duration except Mathematics which has 2.5 hours. The test consists of MCQs in Section-A covering core subject areas. PhD Management Sciences and PhD English Linguistics also include Section-B with essay writing or subjective questions lasting 1 hour.

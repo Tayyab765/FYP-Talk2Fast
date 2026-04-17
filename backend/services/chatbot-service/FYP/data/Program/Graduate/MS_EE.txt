@@ -1,0 +1,67 @@
+[Program Mission]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+The purpose of the Master of Science program in Electrical Engineering is to attain theoretical and practical
+depth in one of the areas of interest. The MS (EE) program is structured to enhance students’ critical thinking
+and intuitive abilities through a combination of highly specialized courses and expert supervision. The program
+aims to produce graduates who have the abilities and skills to be employed as practicing engineers in fields
+such as design, research and development, testing, and manufacturing, as well as to assume positions of leadership
+and responsibility within organizations.
+
+[Program Educational Objectives (PEOs)]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+The mission is to:
+- Provide students with advanced learning and application in a discipline or sub‑discipline of Electrical Engineering.
+- Teach tools and techniques required for advanced learning, research, and application in any discipline or
+  sub‑discipline of Electrical Engineering.
+- Enhance skills in areas such as problem‑solving, mathematical modelling, writing and oral presentation,
+  leadership, understanding the interrelation of business with technology, and ethics applied to Electrical Engineering.
+
+[Award of Degree]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+For the award of Master of Science (Electrical Engineering) degree, a student must have:
+- Passed courses totaling at least 30 credit hours, including three core courses.
+- Obtained a CGPA of at least 2.50.
+
+[Credit Structure]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+The MS (EE) program comprises:
+- Core Courses: at least 3 advanced EE core courses.
+- Elective Courses: a set of CS/EE electives in the chosen area of specialization.
+- Research Methodology: a mandatory core course for the thesis option.
+- Thesis/Project: MS Thesis or MS Project (for thesis‑based option), as approved by the Departmental Graduate
+  Studies Committee (DGSC), summing to a total of 30 credit hours.
+
+[Study Plan]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+The typical study plan spans four semesters and includes:
+- Completion of the required core courses.
+- Completion of elective courses in the chosen specialization (e.g., controls, embedded systems, communications,
+  power/energy, signal processing, networks, etc.).
+- Completion of MS Thesis or MS Project as per the approved path, with total credit hours summing to 30.
+
+[Registration Rules for Thesis / Project]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+- Research Methodology (EE5011) is mandatory for MS with thesis.
+- Registration in 'MS Thesis‑I / Project‑I' is allowed provided the student has:
+  - Earned at least 15 credit hours; and
+  - CGPA is equal to or more than 2.50.
+- Subjected to the approval of Departmental Graduate Studies Committee (DGSC).
+
+
+[Core and Elective Courses]
+Program Code: MS_EE | Program Title: Master of Science (Electrical Engineering) | Level: Graduate | Domain: Engineering
+Core Courses:
+- EE5035 Engineering Optimization
+- EE5049 Computational Statistics
+- EE5043 Advanced Embedded Systems and Networks
+- IO5031 Internet of Things
+- EE5041 Advanced Control Systems
+- EE5011 Research Methodology* (mandatory for MS with thesis)
+Elective Courses (examples):
+- AI5003 Advanced Machine Learning
+- DS5006 Deep Learning
+- CS5042 Advanced Network Security
+- CS5024 Advanced Computer Networks
+- XX‑xxxx Any other approved elective from CS / EE
+- EE5011 Research Methodology*
+*Research Methodology is mandatory for MS with thesis

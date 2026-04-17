@@ -1,0 +1,281 @@
+Department of Computer Science
+
+Dr. Kashif Zafar
+Professor, HOD (CS) and Head of School (Computing)
+PhD (CS), NUCES, Islamabad (2010)
+PhD Approved Supervisor
+MS (CS), City University of New York, USA (2002)
+BSc (Engg.), UET, Lahore (1999)
+
+Dr. Syed Asif Mahmood Gilani
+Professor
+PhD (CS), University of Patras, Greece (2002)
+PhD Approved Supervisor
+MSc (Phy.), IUB, Bahawalpur (1993)
+BSc, University of the Punjab (1989)
+
+Dr. Zareen Alamgir
+Professor
+PhD (CS), NUCES, Lahore (2014)
+PhD Approved Supervisor
+MS (CS), NUCES, Lahore (2006)
+BS (CS), NUCES, Lahore (2004)
+
+Dr. Saira Karim
+Associate Professor
+PhD (CS), NUCES, Lahore (2013)
+PhD Approved Supervisor
+MS (CS), NUCES, Lahore (2006)
+BS (CS), NUCES, Lahore (2004)
+
+Dr. Zeeshan Ali Khan
+Associate Professor
+PhD (Wireless Sensor Networks), Universite De Nice-
+Sophia Antipolis, France (2011)
+PhD Approved Supervisor
+MS (Embedded Systems), Universite De Nice-Sophia
+Antipolis, France (2008)
+MSc (EE), UET, Taxila (2007)
+BSc (EE), UET, Lahore (2004)
+
+Dr. Muhammad Aasim Qureshi
+Associate Professor
+PhD (IT), Petronas Technological University, Malaysia
+(2015)
+MS (CS), LUMS, Lahore (2006)
+MCS (CS), University of the Punjab (1998)
+
+Dr. Aatira Anum
+Assistant Professor
+PhD Approved Supervisor
+PhD (CS), LUMS, Lahore (2023)
+MS (CS), LUMS, Lahore (2015)
+BS (CS), NUCES, Lahore (2010)
+
+Dr. Muhammad Ahmad Raza
+Assistant Professor
+PhD Approved Supervisor
+PhD (Engg. & IT), University of Technology, Australia
+(2023)
+MS (EE), NUCES, Lahore (2013)
+BS (TE), NUCES, Lahore (2008)
+
+Dr. Tahir Ejaz
+Assistant Professor
+PhD Approved Supervisor
+PhD (Natural Sci.), TU Dortmund University, Germany
+(2016)
+MS (CS), LUMS, Lahore (2005)
+MCom, University of the Punjab (1999)
+BCom, University of the Punjab (1995)
+
+Dr. Syed Mohammad Irteza
+Assistant Professor
+PhD (CS), LUMS, Lahore (2018)
+MS (CS), LUMS, Lahore (2005)
+BS (CS), LUMS, Lahore (2002)
+
+Dr. Abdul Qadeer
+Assistant Professor
+PhD (CS), University of Southern California, USA (2021)
+MS (CS), University of Southern California, USA (2008)
+MS (CS), LUMS, Lahore (2006)
+BS (CS), NUCES, Lahore (2001)
+BSc, University of the Punjab (1997)
+
+Dr. Faisal Aslam
+Assistant Professor
+PhD (CS), University of Freiburg, Germany (2011)
+MS (CS), LUMS, Lahore (2004)
+BCS, University of the Punjab (1998)
+
+Dr. Sobia Tariq Javed
+Assistant Professor
+PhD (CS), NUCES, Lahore (2025)
+MS (CS), NUCES, Lahore (2007)
+BS (CS), NUCES, Lahore (2005)
+
+Mr. Aamir Raheem
+Assistant Professor
+MS (CS), NUCES, Lahore (2005)
+BS (CS), IMS (Pak-AIMS), Lahore (2003)
+
+Ms. Abeeda Akram
+Assistant Professor
+MS (CS), NUCES, Lahore (2015)
+BS (CS), NUCES, Lahore (2011)
+
+Ms. Lehmia Kiran
+Assistant Professor
+MS (CS), NUCES, Lahore (2010)
+BS (CS), NUCES, Lahore (2008)
+
+Ms. Maimoona Akram
+Assistant Professor
+MS (EE), NUCES, Lahore (2013)
+BS (CE), NUCES, Lahore (2008)
+Mirza Waqar Baig
+Assistant Professor and Head (IEO)
+MS (Elect. & Comp. Engg.), Hanyang University,
+S. Korea (2011)
+BSc (EE), BZU, Multan (2007)
+
+--- Page 87 ---
+Mr. Muhammad Ishaq Raza
+Assistant Professor
+MS (CS), UCP, Lahore (2013)
+MSc (CS), QAU, Islamabad (1995)
+
+Mr. Muhammad Waqas Manzoor
+Assistant Professor
+MS (CS), NUCES, Lahore (2015)
+BS (CS), University of the Punjab (2006)
+
+Ms. Samin Iftikhar
+Assistant Professor
+MS (CS), NUCES, Lahore (2014)
+BS (CS), NUCES, Lahore (2006)
+
+Ms. Aleena Ahmad
+Lecturer
+MS (SE), NUST, Islamabad (2020)
+BS (SE), PUCIT, Lahore (2017)
+
+Mr. Danyal Farhat
+Lecturer
+MS (CS), UCP, Lahore (2021)
+BS (CS), NUCES, Islamabad (2018)
+
+Ms. Maham Naeem
+Lecturer
+MS (CS), NUCES, Lahore (2020)
+BS (CS), BZU, Multan (2017)
+
+Ms. Mamoona Akbar Khan
+Lecturer
+MS (CS), NUCES, Lahore (2021)
+BS (CS), LCWU, Lahore (2017)
+
+Ms. Mariam Nasim
+Lecturer
+MS (DS) NUST, Islamabad (2024)
+BS (SE), NUST, Islamabad (2021)
+
+Ms. Marwa Khan
+Lecturer
+MS (CS), NUCES, Lahore (2022)
+BS (CS), Bahria University, Islamabad (2020)
+
+Mr. Mubashar Hussain
+Lecturer
+MS (CS), Comsats, Lahore (2021)
+MCS, Comsats, Sahiwal (2016)
+BSc, University of the Punjab (2013)
+
+Mr. Muhammad Naveed
+Lecturer
+MS (CS), ITU, Lahore (2021)
+BS (CS), Comsats, Vehari (2018)
+
+Mr. Muhammad Umar Bin Farooq
+Lecturer
+MS (Elect. & Comp. Engg.), University of Oklahoma,
+USA (2021)
+MS (CS), ITU, Lahore (2018)
+BS (Elect. & Comp. Engg.), LUMS, Lahore (2015)
+
+Mr. Muhammad Usama Hassan Alvi
+Lecturer
+MPhil (CS), PUCIT, Lahore (2019)
+BS (CS), PUCIT, Lahore (2017)
+
+Mr. Muhammad Usman Anwer
+Lecturer
+MS (DS), NUCES, Lahore (2024)
+BS (CSE), Islamia University, Bahawalpur (2015)
+
+Mr. Muhammad Zeeshan Nazar
+Lecturer
+MS (CS), NUCES, Peshawar (2021)
+BS (CS), UCP, Lahore (2018)
+
+Ms. Namra Absar
+Lecturer
+MPhil (CS), University of the Punjab (2019)
+BS (IT), University of the Punjab (2014)
+
+Ms. Rakhshan Imtiaz
+Lecturer
+MS (CS), NUCES, Lahore (2023)
+BS (CS), GCU, Lahore (2021)
+
+Ms. Rubab Anam Janjua
+Lecturer
+MS (CS), LCWU, Lahore (2017)
+BS (CS), LCWU, Lahore (2014)
+
+--- Page 88 ---
+Ms. Saba Tariq
+Lecturer
+MS (CS), NUCES, Lahore (2023)
+BS (CS), LCWU, Lahore (2021)
+
+Mr. Sajid Ali Kazmi
+Lecturer
+MPhil (CS), University of the Punjab (2023)
+BS (IT), PUCIT, Lahore (2018)
+
+Ms. Seemab Ayub
+Lecturer
+MS (CS) Comsats, Lahore (2023)
+BS (CS), University of the Punjab (2018)
+
+Syed Uzair Hussain Naqvi
+Lecturer
+MS (CS), LUMS, Lahore (2020)
+BS (CS), NUCES, Lahore (2016)
+
+Ms. Aqsa Khalid
+Lecturer
+MS (DS), ITU, Lahore (2023)
+BS (CS), ITU, Lahore (2019)
+
+Mr. Muhammad Saifullah Tanvir
+Lecturer
+MS (CS), NUCES, Lahore (2022)
+BS (CS), FCCU, Lahore (2017)
+
+Mr. Junaid Hussain Muzammal
+Lecturer
+MS (DS), NUCES, Lahore (2025)
+BS (CS), NUCES, Chiniot-Faisalabad (2018)
+
+Mr. Nauman Moazzam Hayat
+Faculty (Adjunct)
+MS (EE), University of Southern California, USA (2001)
+BS (EE), UET, Lahore (1999)
+
+Mr. Amina Qaiser
+Instructor
+BS (CS), NUCES, Lahore (2023)
+
+Mr. Muhammad Faheem
+Instructor
+BS (CS), NUCES, Lahore (2019)
+
+Mr. Muhammad Hashir Mohsineen
+Instructor
+BS (CS), NUCES, Chiniot-Faisalabad (2021)
+
+Mr. Muhammad Kamran
+Instructor
+BS (CS), NUCES, Lahore (2021)
+
+Ms. Sukhan Amir
+Instructor
+BS (CS), NUCES, Lahore (2023)
+
+Ms. Zoha Waheed
+Instructor
+BS (EE), NUCES, Lahore (2018)
+

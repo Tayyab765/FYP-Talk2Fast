@@ -1,0 +1,20 @@
+
+The National University of Computer and Emerging Sciences (NUCES) has specific test patterns for different programs. There will be Negative Marking and use of calculators is not allowed in the Admission Test.
+Section: Test Pattern Composition by Program
+For BBA and BS (AF/BA/FinTech) Programs:
+The English section has a weight of 10%, Essay Writing has 15%, Analytical Skills and IQ has 25%, and Basic Math has 50%.
+For BS (CS/Engg.) Programs:
+The English section has a weight of 10%, Analytical Skills and IQ has 20%, Basic Math has 20%, and Advanced Math has 50%.
+For MBA Programs:
+The English section has a weight of 10%, Essay Writing has 30%, Analytical Skills and IQ has 20%, Quantitative Methods has 20%, and Business related Knowledge has 20%.
+For MS (Applied Linguistics) Programs:
+The English section has a weight of 15%, Essay Writing has 25%, Analytical Skills and IQ has 15%, and Specialization Area has 45%.
+For MS (Computing) Programs:
+The Essay Writing section has a weight of 10%, Analytical Skills and IQ has 30%, Specialization Area has 30%, and Quantitative Methods has 30%.
+For Other MS Programs:
+The English section has a weight of 5%, Essay Writing has 10%, Analytical Skills and IQ has 20%, Advanced Math has 10%, Specialization Area has 40%, and Quantitative Methods has 15%.
+
+
+
+
+
