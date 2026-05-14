@@ -56,14 +56,28 @@ export default function CareerChat() {
           return
         }
         setSessionId(sid)
-        // Prepopulate with greeting
-        setMessages([
-          {
-            id: msgId++,
-            role: 'bot',
-            text: "Hi! I'm your Profile Insight AI! I've reviewed your career profile and assessment results. Ask me anything about your recommended paths, skill gaps, or university options!",
-          },
-        ])
+
+        const history = Array.isArray(session?.chatHistory) ? session.chatHistory : []
+        if (history.length > 0) {
+          setMessages(history
+            .slice(-10)
+            .sort((a, b) => new Date(a.timestamp || 0) - new Date(b.timestamp || 0))
+            .map(item => ({
+              id: msgId++,
+              role: item.role === 'user' ? 'user' : 'bot',
+              text: item.content || '',
+            }))
+          )
+        } else {
+          // Prepopulate with greeting when there is no saved conversation yet
+          setMessages([
+            {
+              id: msgId++,
+              role: 'bot',
+              text: "Hi! I'm your Profile Insight AI! I've reviewed your career profile and assessment results. Ask me anything about your recommended paths, skill gaps, or university options!",
+            },
+          ])
+        }
         setSessionLoading(false)
       })
       .catch(err => {

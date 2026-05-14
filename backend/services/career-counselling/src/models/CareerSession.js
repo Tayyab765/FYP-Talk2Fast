@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 
+const MAX_CHAT_MESSAGES = 10;
+
 /**
  * Message Schema
  * Represents a single chat message in the conversation
@@ -130,7 +132,12 @@ careerSessionSchema.methods.addMessage = function(role, content, tokenCount = 0)
     tokenCount,
     timestamp: new Date()
   });
-  this.messageCount += 1;
+
+  if (this.chatHistory.length > MAX_CHAT_MESSAGES) {
+    this.chatHistory.splice(0, this.chatHistory.length - MAX_CHAT_MESSAGES);
+  }
+
+  this.messageCount = this.chatHistory.length;
   this.lastActivityAt = new Date();
   
   if (tokenCount > 0) {
