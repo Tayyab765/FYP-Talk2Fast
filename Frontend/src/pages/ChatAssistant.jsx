@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 import { deleteChatHistory, loadChatHistory, sendChatMessage } from '../api/chat.js'
 import './ChatAssistant.css'
 
@@ -24,6 +25,10 @@ export default function ChatAssistant() {
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
   const [conversationId, setConversationId] = useState(null)
+  const [isListening, setIsListening] = useState(false)
+  const [isSpeaking, setIsSpeaking] = useState(false)
+  const [recognition, setRecognition] = useState(null)
+  const [speechSynthesis, setSpeechSynthesis] = useState(null)
 
   useEffect(() => {
     let cancelled = false
@@ -50,6 +55,39 @@ export default function ChatAssistant() {
     }
 
     bootstrapHistory()
+    
+    // Initialize Speech Recognition (STT)
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+      const recognitionInstance = new SpeechRecognition()
+      recognitionInstance.continuous = false
+      recognitionInstance.interimResults = false
+      recognitionInstance.lang = 'en-US'
+      
+      recognitionInstance.onresult = (event) => {
+        const transcript = event.results[0][0].transcript
+        setInput(transcript)
+        setIsListening(false)
+      }
+      
+      recognitionInstance.onerror = (event) => {
+        console.error('Speech recognition error:', event.error)
+        setIsListening(false)
+        setError('Speech recognition failed. Please try again.')
+      }
+      
+      recognitionInstance.onend = () => {
+        setIsListening(false)
+      }
+      
+      setRecognition(recognitionInstance)
+    }
+    
+    // Initialize Speech Synthesis (TTS)
+    if ('speechSynthesis' in window) {
+      setSpeechSynthesis(window.speechSynthesis)
+    }
+    
     return () => {
       cancelled = true
     }
@@ -57,6 +95,13 @@ export default function ChatAssistant() {
 
   const handleClear = useCallback(async () => {
     setError('')
+    
+    // Stop any ongoing speech
+    if (speechSynthesis) {
+      speechSynthesis.cancel()
+      setIsSpeaking(false)
+    }
+    
     try {
       if (conversationId) {
         await deleteChatHistory(conversationId)
@@ -66,7 +111,7 @@ export default function ChatAssistant() {
     }
     setConversationId(null)
     setMessages(buildIntroMessages())
-  }, [conversationId])
+  }, [conversationId, speechSynthesis])
 
   const handleSend = async (preset) => {
     const text = (preset || input).trim()
@@ -119,6 +164,58 @@ export default function ChatAssistant() {
     } finally {
       setSending(false)
     }
+  }
+
+  const toggleListening = () => {
+    if (!recognition) {
+      setError('Speech recognition is not supported in your browser.')
+      return
+    }
+
+    if (isListening) {
+      recognition.stop()
+      setIsListening(false)
+    } else {
+      setError('')
+      recognition.start()
+      setIsListening(true)
+    }
+  }
+
+  const speakMessage = (text) => {
+    if (!speechSynthesis) {
+      setError('Text-to-speech is not supported in your browser.')
+      return
+    }
+
+    // Stop any ongoing speech
+    if (isSpeaking) {
+      speechSynthesis.cancel()
+      setIsSpeaking(false)
+      return
+    }
+
+    // Remove markdown formatting for better speech
+    const cleanText = text
+      .replace(/\*\*/g, '') // Remove bold
+      .replace(/\*/g, '') // Remove italic
+      .replace(/#{1,6}\s/g, '') // Remove headers
+      .replace(/`/g, '') // Remove code markers
+      .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1') // Remove links, keep text
+
+    const utterance = new SpeechSynthesisUtterance(cleanText)
+    utterance.lang = 'en-US'
+    utterance.rate = 0.9
+    utterance.pitch = 1
+    
+    utterance.onstart = () => setIsSpeaking(true)
+    utterance.onend = () => setIsSpeaking(false)
+    utterance.onerror = () => {
+      setIsSpeaking(false)
+      setError('Text-to-speech failed.')
+    }
+
+    speechSynthesis.speak(utterance)
   }
 
   return (
@@ -184,10 +281,33 @@ export default function ChatAssistant() {
                   <div className="chat-bubble-group">
                     <div className="chat-bubble chat-bubble-assistant">
                       {msg.text.map((line, idx) => (
-                        <p key={idx}>{line}</p>
+                        <ReactMarkdown key={idx}>{line}</ReactMarkdown>
                       ))}
                     </div>
-                    <span className="chat-meta">AI Assistant • {msg.time}</span>
+                    <div className="chat-message-actions">
+                      <span className="chat-meta">AI Assistant • {msg.time}</span>
+                      {speechSynthesis && (
+                        <button
+                          type="button"
+                          className="chat-speak-btn"
+                          onClick={() => speakMessage(msg.text.join(' '))}
+                          title={isSpeaking ? 'Stop speaking' : 'Read aloud'}
+                        >
+                          {isSpeaking ? (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <rect x="6" y="4" width="4" height="16" />
+                              <rect x="14" y="4" width="4" height="16" />
+                            </svg>
+                          ) : (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               )
@@ -277,11 +397,17 @@ export default function ChatAssistant() {
         </div>
 
         <div className="chat-input-wrap">
+          {isListening && (
+            <div className="listening-indicator">
+              <span className="pulse-dot"></span>
+              Listening...
+            </div>
+          )}
           <input
             type="text"
-            placeholder="Ask about FAST admissions, test centers, or deadlines..."
+            placeholder={isListening ? "Listening..." : "Ask about FAST admissions, test centers, or deadlines..."}
             value={input}
-            disabled={sending}
+            disabled={sending || isListening}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
@@ -290,7 +416,42 @@ export default function ChatAssistant() {
               }
             }}
           />
-          <button type="button" onClick={() => handleSend()} disabled={sending}>
+          {recognition && (
+            <button
+              type="button"
+              className={`chat-mic-btn ${isListening ? 'listening' : ''}`}
+              onClick={toggleListening}
+              disabled={sending}
+              title={isListening ? 'Stop listening' : 'Speak your message'}
+            >
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                {isListening ? (
+                  <>
+                    <rect x="9" y="2" width="6" height="11" rx="3" />
+                    <path d="M12 13v8" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                  </>
+                ) : (
+                  <>
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                  </>
+                )}
+              </svg>
+            </button>
+          )}
+          <button type="button" onClick={() => handleSend()} disabled={sending || isListening}>
             <svg
               width="18"
               height="18"
