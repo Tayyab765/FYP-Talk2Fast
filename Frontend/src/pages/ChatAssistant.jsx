@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
-import { deleteChatHistory, loadChatHistory, sendChatMessage } from '../api/chat.js'
+import { deleteChatHistory, loadChatHistory, sendChatMessage, getAllConversations, createNewConversation } from '../api/chat.js'
 import './ChatAssistant.css'
 
 function buildIntroMessages() {
@@ -25,30 +25,46 @@ export default function ChatAssistant() {
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
   const [conversationId, setConversationId] = useState(null)
+  const [conversations, setConversations] = useState([])
+  const [sidebarOpen, setSidebarOpen] = useState(true)
   const [isListening, setIsListening] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [recognition, setRecognition] = useState(null)
   const [speechSynthesis, setSpeechSynthesis] = useState(null)
+  const [loadingConversations, setLoadingConversations] = useState(false)
 
   useEffect(() => {
     let cancelled = false
 
     async function bootstrapHistory() {
       try {
-        const history = await loadChatHistory()
+        // Load all conversations
+        setLoadingConversations(true)
+        const allConvs = await getAllConversations()
         if (cancelled) return
+        setConversations(allConvs)
+        setLoadingConversations(false)
 
-        if (history.conversationId) {
-          setConversationId(history.conversationId)
-        }
+        // Load the most recent conversation or create intro
+        if (allConvs.length > 0) {
+          const mostRecent = allConvs[0]
+          setConversationId(String(mostRecent.id))
+          
+          const history = await loadChatHistory(String(mostRecent.id))
+          if (cancelled) return
 
-        if (Array.isArray(history.messages) && history.messages.length > 0) {
-          setMessages(mapHistoryToUi(history.messages))
+          if (Array.isArray(history.messages) && history.messages.length > 0) {
+            setMessages(mapHistoryToUi(history.messages))
+          } else {
+            setMessages(buildIntroMessages())
+          }
         } else {
           setMessages(buildIntroMessages())
         }
-      } catch {
+      } catch (err) {
         if (cancelled) return
+        console.error('Error loading conversations:', err)
+        setLoadingConversations(false)
         // Keep intro if history can't load (e.g., first time use)
         setMessages(buildIntroMessages())
       }
@@ -105,6 +121,9 @@ export default function ChatAssistant() {
     try {
       if (conversationId) {
         await deleteChatHistory(conversationId)
+        // Refresh conversations list
+        const allConvs = await getAllConversations()
+        setConversations(allConvs)
       }
     } catch (e) {
       setError(e.message || 'Could not clear chat on server')
@@ -112,6 +131,35 @@ export default function ChatAssistant() {
     setConversationId(null)
     setMessages(buildIntroMessages())
   }, [conversationId, speechSynthesis])
+
+  const handleNewChat = async () => {
+    try {
+      const newConv = await createNewConversation()
+      setConversationId(String(newConv.id))
+      setMessages(buildIntroMessages())
+      
+      // Refresh conversations list
+      const allConvs = await getAllConversations()
+      setConversations(allConvs)
+    } catch (e) {
+      setError(e.message || 'Could not create new chat')
+    }
+  }
+
+  const handleSelectConversation = async (convId) => {
+    try {
+      setConversationId(String(convId))
+      const history = await loadChatHistory(String(convId))
+      
+      if (Array.isArray(history.messages) && history.messages.length > 0) {
+        setMessages(mapHistoryToUi(history.messages))
+      } else {
+        setMessages(buildIntroMessages())
+      }
+    } catch (e) {
+      setError(e.message || 'Could not load conversation')
+    }
+  }
 
   const handleSend = async (preset) => {
     const text = (preset || input).trim()
@@ -129,9 +177,15 @@ export default function ChatAssistant() {
     setSending(true)
 
     try {
-      const data = await sendChatMessage(text)
+      const data = await sendChatMessage(text, conversationId)
       if (data?.conversationId != null) {
-        setConversationId(String(data.conversationId))
+        const newConvId = String(data.conversationId)
+        if (newConvId !== conversationId) {
+          setConversationId(newConvId)
+          // Refresh conversations list
+          const allConvs = await getAllConversations()
+          setConversations(allConvs)
+        }
       }
       const aiText = data?.aiMessage?.text ?? ''
       if (!aiText) {
@@ -219,34 +273,104 @@ export default function ChatAssistant() {
   }
 
   return (
-    <div className="chat-shell">
-      <div className="chat-topbar">
-        <div>
-          <h2 className="chat-topbar-title">AI Admission Assistant</h2>
-          <p className="chat-topbar-subtitle">
-            Ask questions about FAST admissions, eligibility, and policies
-          </p>
+    <div className="chat-container">
+      {/* Sidebar with conversations */}
+      <div className={`chat-sidebar ${sidebarOpen ? 'open' : 'closed'}`}>
+        <div className="chat-sidebar-header">
+          <button className="new-chat-btn" onClick={handleNewChat}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              <line x1="9" y1="10" x2="15" y2="10" />
+              <line x1="12" y1="7" x2="12" y2="13" />
+            </svg>
+            New Chat
+          </button>
         </div>
-        <button type="button" className="chat-clear-btn" onClick={handleClear} disabled={sending}>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="3 6 5 6 21 6" />
-            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-            <path d="M10 11v6" />
-            <path d="M14 11v6" />
-            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-          </svg>
-          Clear Chat
-        </button>
+        
+        <div className="chat-sidebar-list">
+          {loadingConversations ? (
+            <div className="chat-sidebar-loading">Loading conversations...</div>
+          ) : conversations.length === 0 ? (
+            <div className="chat-sidebar-empty">No conversations yet<br/>Start a new chat!</div>
+          ) : (
+            conversations.map((conv) => (
+              <div
+                key={conv.id}
+                className={`chat-sidebar-item ${String(conv.id) === conversationId ? 'active' : ''}`}
+                onClick={() => handleSelectConversation(conv.id)}
+              >
+                <div className="chat-sidebar-item-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <div className="chat-sidebar-item-content">
+                  <div className="chat-sidebar-item-title">{conv.title}</div>
+                  <div className="chat-sidebar-item-time">
+                    {new Date(conv.updatedAt).toLocaleDateString()}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Sidebar Footer */}
+        <div className="chat-sidebar-footer">
+          <div className="chat-sidebar-footer-content">
+            <div className="chat-sidebar-footer-avatar">
+              HA
+            </div>
+            <div className="chat-sidebar-footer-info">
+              <div className="chat-sidebar-footer-name">Hamza Arshad</div>
+              <div className="chat-sidebar-footer-role">Student</div>
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Main chat area */}
+      <div className="chat-shell">
+        <div className="chat-topbar">
+          <div className="chat-topbar-left">
+            <button 
+              className="sidebar-toggle-btn" 
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              title={sidebarOpen ? 'Close sidebar' : 'Open sidebar'}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <line x1="3" y1="18" x2="21" y2="18" />
+              </svg>
+            </button>
+            <div>
+              <h2 className="chat-topbar-title">AI Admission Assistant</h2>
+              <p className="chat-topbar-subtitle">
+                Ask questions about FAST admissions, eligibility, and policies
+              </p>
+            </div>
+          </div>
+          <button type="button" className="chat-clear-btn" onClick={handleClear} disabled={sending}>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="3 6 5 6 21 6" />
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+              <path d="M10 11v6" />
+              <path d="M14 11v6" />
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+            </svg>
+            Clear Chat
+          </button>
+        </div>
 
       <div className="chat-main">
         <div className="chat-date-row">
@@ -472,6 +596,7 @@ export default function ChatAssistant() {
           the official NUCES prospectus for legally binding policies.
         </p>
       </div>
+    </div>
     </div>
   )
 }

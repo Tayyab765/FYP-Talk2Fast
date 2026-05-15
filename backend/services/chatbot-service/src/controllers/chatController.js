@@ -9,7 +9,7 @@ export const sendMessage = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(422).json({ errors: errors.array() });
 
-    const { recipient_id, message } = req.body;
+    const { recipient_id, message, conversationId } = req.body;
     const user = req.user;
     if (!user) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -20,21 +20,37 @@ export const sendMessage = async (req, res, next) => {
     const db = getDb();
     const convColl = db.collection('conversations');
 
-    // find or create conversation
-    const participants = [userId, recipient_id].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
-    let conversation = await convColl.findOne({ participants });
+    let conversation = null;
+
+    // If conversationId is provided, use that specific conversation
+    if (conversationId && ObjectId.isValid(conversationId)) {
+      conversation = await convColl.findOne({ _id: new ObjectId(conversationId) });
+      
+      // Verify user is a participant
+      if (conversation && !conversation.participants.includes(userId)) {
+        return res.status(403).json({ error: 'Forbidden: Not a participant' });
+      }
+    }
+
+    // If no conversation found or not provided, find or create default conversation
     if (!conversation) {
-      logger.info(`Creating new conversation for participants: ${participants.join(', ')}`);
-      const result = await convColl.insertOne({ 
-        participants, 
-        messages: [],
-        createdAt: new Date(),
-        participantTypes: {
-          [userId]: userType,
-          [recipient_id]: 'ai'
-        }
-      });
-      conversation = await convColl.findOne({ _id: result.insertedId });
+      const participants = [userId, recipient_id || 'ai'].sort((a, b) => (a > b ? 1 : a < b ? -1 : 0));
+      conversation = await convColl.findOne({ participants });
+      
+      if (!conversation) {
+        logger.info(`Creating new conversation for participants: ${participants.join(', ')}`);
+        const result = await convColl.insertOne({ 
+          participants, 
+          messages: [],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          participantTypes: {
+            [userId]: userType,
+            [recipient_id || 'ai']: 'ai'
+          }
+        });
+        conversation = await convColl.findOne({ _id: result.insertedId });
+      }
     }
 
     // Save user message
@@ -60,7 +76,7 @@ export const sendMessage = async (req, res, next) => {
       createdAt: new Date()
     };
 
-    // Save both messages to MongoDB
+    // Save both messages to MongoDB and update timestamp
     await convColl.updateOne(
       { _id: conversation._id }, 
       { 
@@ -68,6 +84,9 @@ export const sendMessage = async (req, res, next) => {
           messages: { 
             $each: [userMsg, aiMsg] 
           }
+        },
+        $set: {
+          updatedAt: new Date()
         }
       }
     );
@@ -207,6 +226,89 @@ export const clearHistory = async (req, res, next) => {
         return res.json({ message: 'Conversation deleted successfully' });
     } catch (err) {
         logger.error(`Error deleting conversation: ${err.message}`);
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+export const getAllConversations = async (req, res, next) => {
+    try {
+        const user = req.user;
+        if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+        const userId = user.id;
+        const userType = user.type || 'authenticated';
+        logger.info(`${userType === 'guest' ? 'Guest' : 'User'} ${userId} fetching all conversations`);
+
+        const db = getDb();
+        const convColl = db.collection('conversations');
+
+        // Find all conversations where user is a participant
+        const conversations = await convColl
+            .find({ participants: userId })
+            .sort({ updatedAt: -1, createdAt: -1 })
+            .toArray();
+
+        // Format conversations with preview
+        const formattedConversations = conversations.map(conv => {
+            const messages = conv.messages || [];
+            const lastMessage = messages.length > 0 ? messages[messages.length - 1] : null;
+            const firstUserMessage = messages.find(m => m.type === 'user');
+            
+            return {
+                id: conv._id,
+                title: firstUserMessage?.text?.substring(0, 50) || 'New Chat',
+                preview: lastMessage?.text?.substring(0, 100) || '',
+                messageCount: messages.length,
+                createdAt: conv.createdAt,
+                updatedAt: lastMessage?.createdAt || conv.createdAt
+            };
+        });
+
+        logger.info(`Retrieved ${formattedConversations.length} conversations for ${userType} ${userId}`);
+        return res.json({ conversations: formattedConversations });
+    } catch (err) {
+        logger.error(`Error fetching conversations: ${err.message}`);
+        return res.status(500).json({ error: err.message });
+    }
+};
+
+export const createNewConversation = async (req, res, next) => {
+    try {
+        const user = req.user;
+        if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+        const userId = user.id;
+        const userType = user.type || 'authenticated';
+        logger.info(`${userType === 'guest' ? 'Guest' : 'User'} ${userId} creating new conversation`);
+
+        const db = getDb();
+        const convColl = db.collection('conversations');
+
+        const newConversation = {
+            participants: [userId, 'ai'].sort(),
+            messages: [],
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            participantTypes: {
+                [userId]: userType,
+                'ai': 'ai'
+            }
+        };
+
+        const result = await convColl.insertOne(newConversation);
+        const conversation = await convColl.findOne({ _id: result.insertedId });
+
+        logger.info(`Created new conversation ${conversation._id} for ${userType} ${userId}`);
+        return res.json({ 
+            conversation: {
+                id: conversation._id,
+                title: 'New Chat',
+                messageCount: 0,
+                createdAt: conversation.createdAt
+            }
+        });
+    } catch (err) {
+        logger.error(`Error creating conversation: ${err.message}`);
         return res.status(500).json({ error: err.message });
     }
 };
