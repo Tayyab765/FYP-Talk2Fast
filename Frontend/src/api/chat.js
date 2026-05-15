@@ -83,7 +83,7 @@ async function getHistoryLookupId() {
   return ensureGuestSession()
 }
 
-export async function sendChatMessage(message) {
+export async function sendChatMessage(message, conversationId = null) {
   const trimmed = (message || '').trim()
   if (!trimmed) {
     throw new Error('Message is empty')
@@ -100,13 +100,19 @@ export async function sendChatMessage(message) {
     ...authHeadersForChat(),
   }
 
+  const body = {
+    recipient_id: AI_RECIPIENT_ID,
+    message: trimmed,
+  }
+
+  if (conversationId) {
+    body.conversationId = conversationId
+  }
+
   const res = await fetchOrExplain(`${baseUrl}/api/chatbot/message`, {
     method: 'POST',
     headers,
-    body: JSON.stringify({
-      recipient_id: AI_RECIPIENT_ID,
-      message: trimmed,
-    }),
+    body: JSON.stringify(body),
   })
 
   const data = await parseJson(res)
@@ -117,9 +123,9 @@ export async function sendChatMessage(message) {
   return data
 }
 
-export async function loadChatHistory() {
+export async function loadChatHistory(conversationId = null) {
   const baseUrl = getApiBaseUrl()
-  const lookupId = await getHistoryLookupId()
+  const lookupId = conversationId || await getHistoryLookupId()
   const headers = authHeadersForChat()
 
   const res = await fetchOrExplain(`${baseUrl}/api/chatbot/history/${encodeURIComponent(lookupId)}`, {
@@ -163,4 +169,47 @@ export async function deleteChatHistory(conversationId) {
   if (!res.ok) {
     throw new Error(errorFromJson(data, res.status))
   }
+}
+
+export async function getAllConversations() {
+  const baseUrl = getApiBaseUrl()
+  const headers = authHeadersForChat()
+
+  const res = await fetchOrExplain(`${baseUrl}/api/chatbot/conversations`, {
+    method: 'GET',
+    headers,
+  })
+
+  const data = await parseJson(res)
+  if (!res.ok) {
+    throw new Error(errorFromJson(data, res.status))
+  }
+
+  return data.conversations || []
+}
+
+export async function createNewConversation() {
+  const token = getAccessToken()
+  if (!token) {
+    await ensureGuestSession()
+  }
+
+  const baseUrl = getApiBaseUrl()
+  const headers = {
+    'Content-Type': 'application/json',
+    ...authHeadersForChat(),
+  }
+
+  const res = await fetchOrExplain(`${baseUrl}/api/chatbot/conversations/new`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({}),
+  })
+
+  const data = await parseJson(res)
+  if (!res.ok) {
+    throw new Error(errorFromJson(data, res.status))
+  }
+
+  return data.conversation
 }

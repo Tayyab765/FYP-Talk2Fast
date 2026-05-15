@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getReview } from '../../api/mockTestApi'
+import { getQuestionExplanation } from '../../api/groq'
 import './AnswerReview.css'
 
 /**
@@ -20,6 +21,10 @@ export default function AnswerReview({ attemptId, onBack }) {
   const [error, setError] = useState(null)
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0)
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [showExplanationModal, setShowExplanationModal] = useState(false)
+  const [aiExplanation, setAiExplanation] = useState('')
+  const [isLoadingExplanation, setIsLoadingExplanation] = useState(false)
+  const [explanationError, setExplanationError] = useState(null)
 
   // Fetch review data on mount
   useEffect(() => {
@@ -73,6 +78,36 @@ export default function AnswerReview({ attemptId, onBack }) {
 
   const handleQuestionJump = (questionIndex) => {
     setCurrentQuestionIndex(questionIndex)
+  }
+
+  // Handle AI Explanation
+  const handleGetExplanation = async () => {
+    setShowExplanationModal(true)
+    setIsLoadingExplanation(true)
+    setExplanationError(null)
+    setAiExplanation('')
+
+    try {
+      const explanation = await getQuestionExplanation(
+        currentQuestion.questionText,
+        currentQuestion.options,
+        currentQuestion.correctAnswer,
+        currentQuestion.userAnswer,
+        currentQuestion.topic
+      )
+      setAiExplanation(explanation)
+    } catch (err) {
+      console.error('Failed to get explanation:', err)
+      setExplanationError(err.message || 'Failed to generate explanation')
+    } finally {
+      setIsLoadingExplanation(false)
+    }
+  }
+
+  const handleCloseExplanation = () => {
+    setShowExplanationModal(false)
+    setAiExplanation('')
+    setExplanationError(null)
   }
 
   // Check if navigation is possible
@@ -218,6 +253,19 @@ export default function AnswerReview({ attemptId, onBack }) {
               </div>
             )}
 
+            {/* AI Explanation Button */}
+            <div className="ai-explanation-section">
+              <button
+                className="btn-ai-explain"
+                onClick={handleGetExplanation}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                Get AI Explanation
+              </button>
+            </div>
+
             {/* Navigation Buttons */}
             <div className="question-navigation">
               <button
@@ -276,6 +324,63 @@ export default function AnswerReview({ attemptId, onBack }) {
           </div>
         </div>
       </div>
+
+      {/* AI Explanation Modal */}
+      {showExplanationModal && (
+        <div className="modal-overlay" onClick={handleCloseExplanation}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+                AI Explanation
+              </h2>
+              <button className="modal-close" onClick={handleCloseExplanation}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="modal-body">
+              {isLoadingExplanation && (
+                <div className="explanation-loading">
+                  <div className="spinner"></div>
+                  <p>Generating explanation...</p>
+                </div>
+              )}
+              
+              {explanationError && (
+                <div className="explanation-error">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <p>{explanationError}</p>
+                  <button className="btn-retry" onClick={handleGetExplanation}>
+                    Try Again
+                  </button>
+                </div>
+              )}
+              
+              {aiExplanation && !isLoadingExplanation && (
+                <div className="explanation-content">
+                  <div className="explanation-question">
+                    <strong>Question:</strong> {currentQuestion.questionText}
+                  </div>
+                  <div className="explanation-text">
+                    {aiExplanation.split('\n').map((paragraph, index) => (
+                      paragraph.trim() && <p key={index}>{paragraph}</p>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

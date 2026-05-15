@@ -134,18 +134,98 @@ export default function TestAnalytics() {
         return data
     }
     
-    return data.filter(item => new Date(item.completedAt) >= cutoffDate)
+    return data.filter(item => new Date(item.completedAt || item.date) >= cutoffDate)
   }
 
   const filteredAttempts = history?.attempts ? filterDataByDateRange(history.attempts, dateRange) : []
   const filteredScoreTrend = scoreTrend.length > 0 ? filterDataByDateRange(scoreTrend, dateRange) : []
 
+  // Recalculate stats based on filtered attempts
+  const calculateFilteredStats = () => {
+    if (!filteredAttempts || filteredAttempts.length === 0) {
+      return {
+        overallStats: { totalAttempts: 0, averageScore: 0, highestScore: 0, lowestScore: 0 },
+        sectionStats: [],
+        topicStats: []
+      }
+    }
+
+    // Calculate overall stats
+    const scores = filteredAttempts.map(a => a.percentage)
+    const filteredOverallStats = {
+      totalAttempts: filteredAttempts.length,
+      averageScore: scores.reduce((sum, s) => sum + s, 0) / scores.length,
+      highestScore: Math.max(...scores),
+      lowestScore: Math.min(...scores)
+    }
+
+    // Calculate section-wise stats
+    const sectionMap = {}
+    filteredAttempts.forEach(attempt => {
+      if (attempt.sectionResults) {
+        attempt.sectionResults.forEach(section => {
+          if (!sectionMap[section.section]) {
+            sectionMap[section.section] = { totalCorrect: 0, totalQuestions: 0 }
+          }
+          sectionMap[section.section].totalCorrect += section.correct
+          sectionMap[section.section].totalQuestions += section.total
+        })
+      }
+    })
+    const filteredSectionStats = Object.entries(sectionMap).map(([section, data]) => ({
+      section,
+      averageAccuracy: (data.totalCorrect / data.totalQuestions) * 100
+    }))
+
+    // Calculate topic-wise stats
+    const topicMap = {}
+    filteredAttempts.forEach(attempt => {
+      if (attempt.topicResults) {
+        attempt.topicResults.forEach(topic => {
+          if (!topicMap[topic.topic]) {
+            topicMap[topic.topic] = { totalCorrect: 0, totalQuestions: 0 }
+          }
+          topicMap[topic.topic].totalCorrect += topic.correct
+          topicMap[topic.topic].totalQuestions += topic.total
+        })
+      }
+    })
+    const filteredTopicStats = Object.entries(topicMap).map(([topic, data]) => {
+      const accuracy = (data.totalCorrect / data.totalQuestions) * 100
+      let category = 'weak'
+      if (accuracy >= 80) category = 'strong'
+      else if (accuracy >= 60) category = 'average'
+      
+      return {
+        topic,
+        totalQuestions: data.totalQuestions,
+        correctAnswers: data.totalCorrect,
+        accuracy,
+        category
+      }
+    }).sort((a, b) => a.accuracy - b.accuracy)
+
+    return {
+      overallStats: filteredOverallStats,
+      sectionStats: filteredSectionStats,
+      topicStats: filteredTopicStats
+    }
+  }
+
+  const filteredStats = dateRange === 'all' 
+    ? { overallStats, sectionStats, topicStats }
+    : calculateFilteredStats()
+
+  const displayOverallStats = filteredStats.overallStats
+  const displaySectionStats = filteredStats.sectionStats
+  const displayTopicStats = filteredStats.topicStats
+
   // Calculate platform average (mock data - in real app, fetch from backend)
   const platformAverage = 65
   const topPerformers = 92
-  const userPercentile = overallStats.averageScore > platformAverage 
-    ? Math.min(Math.round(((overallStats.averageScore - platformAverage) / (topPerformers - platformAverage)) * 40 + 50), 99)
-    : Math.round((overallStats.averageScore / platformAverage) * 50)
+  const userPercentile = displayOverallStats.averageScore > platformAverage 
+    ? Math.min(Math.round(((displayOverallStats.averageScore - platformAverage) / (topPerformers - platformAverage)) * 40 + 50), 99)
+    : Math.round((displayOverallStats.averageScore / platformAverage) * 50)
 
   // Calculate improvement rate
   const calculateImprovementRate = () => {
@@ -237,7 +317,7 @@ export default function TestAnalytics() {
             </div>
             <div className="stat-card__content">
               <div className="stat-card__label">Total Attempts</div>
-              <div className="stat-card__value">{overallStats.totalAttempts}</div>
+              <div className="stat-card__value">{displayOverallStats.totalAttempts}</div>
             </div>
           </div>
 
@@ -249,7 +329,7 @@ export default function TestAnalytics() {
             </div>
             <div className="stat-card__content">
               <div className="stat-card__label">Average Score</div>
-              <div className="stat-card__value">{overallStats.averageScore.toFixed(1)}%</div>
+              <div className="stat-card__value">{displayOverallStats.averageScore.toFixed(1)}%</div>
             </div>
           </div>
 
@@ -261,7 +341,7 @@ export default function TestAnalytics() {
             </div>
             <div className="stat-card__content">
               <div className="stat-card__label">Highest Score</div>
-              <div className="stat-card__value">{overallStats.highestScore}</div>
+              <div className="stat-card__value">{displayOverallStats.highestScore}</div>
             </div>
           </div>
 
@@ -273,7 +353,7 @@ export default function TestAnalytics() {
             </div>
             <div className="stat-card__content">
               <div className="stat-card__label">Lowest Score</div>
-              <div className="stat-card__value">{overallStats.lowestScore}</div>
+              <div className="stat-card__value">{displayOverallStats.lowestScore}</div>
             </div>
           </div>
         </div>
@@ -284,7 +364,7 @@ export default function TestAnalytics() {
           <div className="comparison-grid">
             <div className="comparison-card">
               <div className="comparison-label">Your Average</div>
-              <div className="comparison-value your-score">{overallStats.averageScore.toFixed(1)}%</div>
+              <div className="comparison-value your-score">{displayOverallStats.averageScore.toFixed(1)}%</div>
             </div>
             <div className="comparison-card">
               <div className="comparison-label">Platform Average</div>
@@ -306,8 +386,8 @@ export default function TestAnalytics() {
               </div>
               <div 
                 className="bar-marker your-marker" 
-                style={{ left: `${overallStats.averageScore}%` }}
-                title={`You: ${overallStats.averageScore.toFixed(1)}%`}
+                style={{ left: `${displayOverallStats.averageScore}%` }}
+                title={`You: ${displayOverallStats.averageScore.toFixed(1)}%`}
               >
                 <div className="marker-dot"></div>
                 <span className="marker-label">You</span>
@@ -323,9 +403,9 @@ export default function TestAnalytics() {
             </div>
           </div>
           <p className="comparison-message">
-            {overallStats.averageScore > platformAverage 
-              ? `🎉 You're performing ${((overallStats.averageScore - platformAverage) / platformAverage * 100).toFixed(0)}% better than the platform average!`
-              : `Keep practicing! You're ${((platformAverage - overallStats.averageScore) / platformAverage * 100).toFixed(0)}% away from the platform average.`}
+            {displayOverallStats.averageScore > platformAverage 
+              ? `🎉 You're performing ${((displayOverallStats.averageScore - platformAverage) / platformAverage * 100).toFixed(0)}% better than the platform average!`
+              : `Keep practicing! You're ${((platformAverage - displayOverallStats.averageScore) / platformAverage * 100).toFixed(0)}% away from the platform average.`}
           </p>
         </div>
 
@@ -443,10 +523,10 @@ export default function TestAnalytics() {
         {/* Section-wise Performance Chart */}
         <div className="analytics-section">
           <h2 className="section-title">Section-wise Performance</h2>
-          {sectionStats && sectionStats.length > 0 ? (
+          {displaySectionStats && displaySectionStats.length > 0 ? (
             <div className="chart-container">
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={sectionStats}>
+                <BarChart data={displaySectionStats}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
                 <XAxis 
                   dataKey="section" 
@@ -483,12 +563,12 @@ export default function TestAnalytics() {
         </div>
 
         {/* Section Strength Radar Chart */}
-        {sectionStats && sectionStats.length > 0 && (
+        {displaySectionStats && displaySectionStats.length > 0 && (
         <div className="analytics-section">
           <h2 className="section-title">Section Strength Overview</h2>
           <div className="chart-container">
             <ResponsiveContainer width="100%" height={400}>
-              <RadarChart data={sectionStats}>
+              <RadarChart data={displaySectionStats}>
                 <PolarGrid stroke="#e5e7eb" />
                 <PolarAngleAxis 
                   dataKey="section" 
@@ -527,7 +607,7 @@ export default function TestAnalytics() {
         )}
 
         {/* Topic-wise Performance Table */}
-        {topicStats && topicStats.length > 0 && (
+        {displayTopicStats && displayTopicStats.length > 0 && (
         <div className="analytics-section">
           <h2 className="section-title">Topic-wise Performance</h2>
           <div className="topic-table-container">
@@ -542,7 +622,7 @@ export default function TestAnalytics() {
                 </tr>
               </thead>
               <tbody>
-                {topicStats.map((topic, index) => (
+                {displayTopicStats.map((topic, index) => (
                   <tr key={index}>
                     <td className="topic-name">{topic.topic}</td>
                     <td>{topic.totalQuestions}</td>
@@ -585,7 +665,7 @@ export default function TestAnalytics() {
         )}
 
         {/* Past Attempts History */}
-        {history?.attempts && history.attempts.length > 0 && (
+        {filteredAttempts && filteredAttempts.length > 0 && (
         <div className="analytics-section">
           <h2 className="section-title">Test History</h2>
           <div className="history-table-container">
@@ -600,7 +680,7 @@ export default function TestAnalytics() {
                 </tr>
               </thead>
               <tbody>
-                {history.attempts.map((attempt) => (
+                {filteredAttempts.map((attempt) => (
                   <tr key={attempt.attemptId}>
                     <td className="test-name">{attempt.testTitle}</td>
                     <td>
